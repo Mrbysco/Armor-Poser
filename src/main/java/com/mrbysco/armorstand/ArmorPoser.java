@@ -37,12 +37,6 @@ public class ArmorPoser {
 		eventBus.register(ModConfiguration.class);
 
 		eventBus.addListener(this::setup);
-
-		//Make sure the mod being absent on the other network side does not cause the client to display the server as incompatible
-		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(
-				() -> "Trans Rights Are Human Rights",
-				(remoteVersionString,networkBool) -> networkBool
-		));
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {
