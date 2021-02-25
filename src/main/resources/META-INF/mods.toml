@@ -1,0 +1,15 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+issueTrackerURL="https://github.com/Mrbysco/armor-poser/issues"
+license="MIT"
+
+[[mods]]
+modId="armorposer"
+version="${file.jarVersion}"
+displayName="Armor Poser"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/armor-poser"
+authors="Mrbysco"
+credits="crazysnailboy for the original mod"
+description='''
+A GUI to allow configuration of Armor Stand properties
+'''
