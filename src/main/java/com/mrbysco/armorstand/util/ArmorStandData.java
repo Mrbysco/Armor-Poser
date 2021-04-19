@@ -50,7 +50,7 @@ public class ArmorStandData {
 			String[] keys = new String[] { "Head", "Body", "LeftLeg", "RightLeg", "LeftArm", "RightArm" };
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];
-				if (poseTag.contains(key)) {
+				if (poseTag != null && poseTag.contains(key)) {
 					ListNBT tagList = poseTag.getList(key, NBT.TAG_FLOAT);
 					for (int j = 0; j <= 2; j++) {
 						int k = (i * 3) + j;

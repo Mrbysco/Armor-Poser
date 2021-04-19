@@ -10,11 +10,7 @@ import net.minecraftforge.fml.network.NetworkEvent.Context;
 import java.util.function.Supplier;
 
 public class ArmorStandScreenMessage {
-	private int entityID;
-
-	private ArmorStandScreenMessage(PacketBuffer buf) {
-		this.entityID = buf.readInt();
-	}
+	private final int entityID;
 
 	public ArmorStandScreenMessage(int playerUUID) {
 		this.entityID = playerUUID;
@@ -33,7 +29,10 @@ public class ArmorStandScreenMessage {
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
 				Minecraft mc = Minecraft.getInstance();
-				Entity entity = mc.world.getEntityByID(entityID);
+				Entity entity = null;
+				if (mc.world != null) {
+					entity = mc.world.getEntityByID(entityID);
+				}
 				if (entity instanceof ArmorStandEntity) {
 					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
 					ArmorStandScreen.openScreen(armorStandEntity);

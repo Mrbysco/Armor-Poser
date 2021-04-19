@@ -32,8 +32,8 @@ public class ArmorStandScreen extends Screen {
 	private final String[] sliderLabels = new String[] { "head", "body", "left_leg", "right_leg", "left_arm", "right_arm" };
 
 	private NumberFieldWidget rotationTextField;
-	private ToggleButton[] toggleButtons = new ToggleButton[5];
-	private NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
+	private final ToggleButton[] toggleButtons = new ToggleButton[5];
+	private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
 	public ArmorStandScreen(ArmorStandEntity entityArmorStand) {
 		super(NarratorChatListener.EMPTY);
@@ -108,16 +108,21 @@ public class ArmorStandScreen extends Screen {
 		this.addButton(new Button(offsetX, offsetY, 64, 20, new TranslationTextComponent(String.format("%s.gui.label.copy", ArmorPoser.MOD_ID)), (button) -> {
 			CompoundNBT compound = this.writeFieldsToNBT();
 			String clipboardData = compound.toString();
-			this.minecraft.keyboardListener.setClipboardString(clipboardData);
+			if (this.minecraft != null) {
+				this.minecraft.keyboardListener.setClipboardString(clipboardData);
+			}
 		}));
 		this.addButton(new Button(offsetX + 66, offsetY, 64, 20, new TranslationTextComponent(String.format("%s.gui.label.paste", ArmorPoser.MOD_ID)), (button) -> {
 			try {
-				String clipboardData = this.minecraft.keyboardListener.getClipboardString();
+				String clipboardData = null;
+				if (this.minecraft != null) {
+					clipboardData = this.minecraft.keyboardListener.getClipboardString();
+				}
 				CompoundNBT compound = JsonToNBT.getTagFromJson(clipboardData);
 				this.readFieldsFromNBT(compound);
 				this.updateEntity(compound);
 			} catch (Exception e) {
-
+				//Nope
 			}
 		}));
 
@@ -158,8 +163,8 @@ public class ArmorStandScreen extends Screen {
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		this.drawString(matrixStack, this.font, "X", offsetX + (0 * 35), 37, 0xA0A0A0);
-		this.drawString(matrixStack, this.font, "Y", offsetX + (1 * 35), 37, 0xA0A0A0);
+		this.drawString(matrixStack, this.font, "X", offsetX, 37, 0xA0A0A0);
+		this.drawString(matrixStack, this.font, "Y", offsetX + (35), 37, 0xA0A0A0);
 		this.drawString(matrixStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {

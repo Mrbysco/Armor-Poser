@@ -43,11 +43,11 @@ public class ModConfiguration {
 
 	@SubscribeEvent
 	public static void onLoad(final ModConfig.Loading configEvent) {
-		ArmorPoser.LOGGER.debug("Loaded %s's config file {}", ArmorPoser.MOD_ID,  configEvent.getConfig().getFileName());
+		ArmorPoser.LOGGER.debug("Loaded {}'s config file {}", ArmorPoser.MOD_ID,  configEvent.getConfig().getFileName());
 	}
 
 	@SubscribeEvent
 	public static void onFileChange(final ModConfig.Reloading configEvent) {
-		ArmorPoser.LOGGER.debug("%s's config just got changed on the file system!", ArmorPoser.MOD_ID);
+		ArmorPoser.LOGGER.debug("{}'s config just got changed on the file system!", ArmorPoser.MOD_ID);
 	}
 }

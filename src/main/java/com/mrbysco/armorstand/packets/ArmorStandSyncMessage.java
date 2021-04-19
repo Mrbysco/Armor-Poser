@@ -13,17 +13,12 @@ import java.util.function.Supplier;
 
 
 public class ArmorStandSyncMessage {
-	private UUID entityUUID;
-	private CompoundNBT data;
+	private final UUID entityUUID;
+	private final CompoundNBT data;
 
 	public ArmorStandSyncMessage(UUID playerUUID, CompoundNBT tag) {
 		this.entityUUID = playerUUID;
 		this.data = tag;
-	}
-
-	private ArmorStandSyncMessage(PacketBuffer buf) {
-		this.entityUUID = buf.readUniqueId();
-		this.data = buf.readCompoundTag();
 	}
 
 	public void encode(PacketBuffer buf) {
