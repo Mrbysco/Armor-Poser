@@ -2,10 +2,10 @@ package com.mrbysco.armorstand.packets;
 
 import com.mrbysco.armorstand.client.gui.ArmorStandScreen;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.network.PacketBuffer;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -16,11 +16,11 @@ public class ArmorStandScreenMessage {
 		this.entityID = playerUUID;
 	}
 
-	public void encode(PacketBuffer buf) {
+	public void encode(FriendlyByteBuf buf) {
 		buf.writeInt(entityID);
 	}
 
-	public static ArmorStandScreenMessage decode(final PacketBuffer packetBuffer) {
+	public static ArmorStandScreenMessage decode(final FriendlyByteBuf packetBuffer) {
 		return new ArmorStandScreenMessage(packetBuffer.readInt());
 	}
 
@@ -30,11 +30,11 @@ public class ArmorStandScreenMessage {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
 				Minecraft mc = Minecraft.getInstance();
 				Entity entity = null;
-				if (mc.world != null) {
-					entity = mc.world.getEntityByID(entityID);
+				if (mc.level != null) {
+					entity = mc.level.getEntity(entityID);
 				}
-				if (entity instanceof ArmorStandEntity) {
-					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
+				if (entity instanceof ArmorStand) {
+					ArmorStand armorStandEntity = (ArmorStand)entity;
 					ArmorStandScreen.openScreen(armorStandEntity);
 				}
 			}

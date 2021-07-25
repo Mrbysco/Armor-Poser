@@ -1,12 +1,12 @@
 package com.mrbysco.armorstand.packets;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.ArmorStandEntity;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.PacketBuffer;
-import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.NetworkEvent.Context;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraftforge.fmllegacy.network.NetworkEvent;
+import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -14,39 +14,39 @@ import java.util.function.Supplier;
 
 public class ArmorStandSyncMessage {
 	private final UUID entityUUID;
-	private final CompoundNBT data;
+	private final CompoundTag data;
 
-	public ArmorStandSyncMessage(UUID playerUUID, CompoundNBT tag) {
+	public ArmorStandSyncMessage(UUID playerUUID, CompoundTag tag) {
 		this.entityUUID = playerUUID;
 		this.data = tag;
 	}
 
-	public void encode(PacketBuffer buf) {
-		buf.writeUniqueId(entityUUID);
-		buf.writeCompoundTag(data);
+	public void encode(FriendlyByteBuf buf) {
+		buf.writeUUID(entityUUID);
+		buf.writeNbt(data);
 	}
 
-	public static ArmorStandSyncMessage decode(final PacketBuffer packetBuffer) {
-		return new ArmorStandSyncMessage(packetBuffer.readUniqueId(), packetBuffer.readCompoundTag());
+	public static ArmorStandSyncMessage decode(final FriendlyByteBuf packetBuffer) {
+		return new ArmorStandSyncMessage(packetBuffer.readUUID(), packetBuffer.readNbt());
 	}
 
 	public void handle(Supplier<Context> context) {
 		NetworkEvent.Context ctx = context.get();
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
-				final ServerWorld world = ctx.getSender().getServerWorld();
-				Entity entity = world.getEntityByUuid(this.entityUUID);
-				if (entity instanceof ArmorStandEntity) {
-					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
+				final ServerLevel world = ctx.getSender().getLevel();
+				Entity entity = world.getEntity(this.entityUUID);
+				if (entity instanceof ArmorStand) {
+					ArmorStand armorStandEntity = (ArmorStand)entity;
 
-					CompoundNBT entityTag = armorStandEntity.writeWithoutTypeId(new CompoundNBT());
-					CompoundNBT entityTagCopy = entityTag.copy();
+					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
+					CompoundTag entityTagCopy = entityTag.copy();
 
 					if(!this.data.isEmpty()) {
 						entityTagCopy.merge(this.data);
-						UUID uuid = armorStandEntity.getUniqueID();
-						armorStandEntity.read(entityTagCopy);
-						armorStandEntity.setUniqueId(uuid);
+						UUID uuid = armorStandEntity.getUUID();
+						armorStandEntity.load(entityTagCopy);
+						armorStandEntity.setUUID(uuid);
 					}
 				}
 			}

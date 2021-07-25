@@ -1,14 +1,14 @@
 package com.mrbysco.armorstand.client.gui.widgets;
 
-import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.TranslatableComponent;
 
 public class ToggleButton extends Button {
 
 	private boolean value;
 
-	public ToggleButton(int x, int y, int width, int height, boolean defaultValue, IPressable pressedAction) {
-		super(x, y, width, height, defaultValue ? new TranslationTextComponent("gui.yes") : new TranslationTextComponent("gui.no"), pressedAction);
+	public ToggleButton(int x, int y, int width, int height, boolean defaultValue, OnPress pressedAction) {
+		super(x, y, width, height, defaultValue ? new TranslatableComponent("gui.yes") : new TranslatableComponent("gui.no"), pressedAction);
 		this.value = defaultValue;
 	}
 
@@ -18,6 +18,6 @@ public class ToggleButton extends Button {
 
 	public void setValue(boolean value) {
 		this.value = value;
-		this.setMessage(value ? new TranslationTextComponent("gui.yes") : new TranslationTextComponent("gui.no"));
+		this.setMessage(value ? new TranslatableComponent("gui.yes") : new TranslatableComponent("gui.no"));
 	}
 }

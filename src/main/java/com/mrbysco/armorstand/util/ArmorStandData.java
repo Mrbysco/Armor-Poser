@@ -1,8 +1,8 @@
 package com.mrbysco.armorstand.util;
 
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.nbt.FloatNBT;
-import net.minecraft.nbt.ListNBT;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraftforge.common.util.Constants.NBT;
 
 public class ArmorStandData {
@@ -34,7 +34,7 @@ public class ArmorStandData {
 	}
 
 
-	public void readFromNBT(CompoundNBT compound) {
+	public void readFromNBT(CompoundTag compound) {
 		this.invisible = compound.getBoolean("Invisible");
 		this.noBasePlate = compound.getBoolean("NoBasePlate");
 		this.noGravity = compound.getBoolean("NoGravity");
@@ -45,13 +45,13 @@ public class ArmorStandData {
 			this.rotation = compound.getList("Rotation", NBT.TAG_FLOAT).getFloat(0);
 		}
 		if (compound.contains("Pose")) {
-			CompoundNBT poseTag = (CompoundNBT)compound.get("Pose");
+			CompoundTag poseTag = (CompoundTag)compound.get("Pose");
 
 			String[] keys = new String[] { "Head", "Body", "LeftLeg", "RightLeg", "LeftArm", "RightArm" };
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];
 				if (poseTag != null && poseTag.contains(key)) {
-					ListNBT tagList = poseTag.getList(key, NBT.TAG_FLOAT);
+					ListTag tagList = poseTag.getList(key, NBT.TAG_FLOAT);
 					for (int j = 0; j <= 2; j++) {
 						int k = (i * 3) + j;
 						this.pose[k] = tagList.getFloat(j);
@@ -61,54 +61,54 @@ public class ArmorStandData {
 		}
 	}
 
-	public CompoundNBT writeToNBT() {
-		CompoundNBT compound = new CompoundNBT();
+	public CompoundTag writeToNBT() {
+		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("Invisible", this.invisible);
 		compound.putBoolean("NoBasePlate", this.noBasePlate);
 		compound.putBoolean("NoGravity", this.noGravity);
 		compound.putBoolean("ShowArms", this.showArms);
 		compound.putBoolean("Small", this.small);
 
-		ListNBT rotationTag = new ListNBT();
-		rotationTag.add(FloatNBT.valueOf(this.rotation));
+		ListTag rotationTag = new ListTag();
+		rotationTag.add(FloatTag.valueOf(this.rotation));
 		compound.put("Rotation", rotationTag);
 
-		CompoundNBT poseTag = new CompoundNBT();
+		CompoundTag poseTag = new CompoundTag();
 
-		ListNBT poseHeadTag = new ListNBT();
-		poseHeadTag.add(FloatNBT.valueOf(this.pose[0]));
-		poseHeadTag.add(FloatNBT.valueOf(this.pose[1]));
-		poseHeadTag.add(FloatNBT.valueOf(this.pose[2]));
+		ListTag poseHeadTag = new ListTag();
+		poseHeadTag.add(FloatTag.valueOf(this.pose[0]));
+		poseHeadTag.add(FloatTag.valueOf(this.pose[1]));
+		poseHeadTag.add(FloatTag.valueOf(this.pose[2]));
 		poseTag.put("Head", poseHeadTag);
 
-		ListNBT poseBodyTag = new ListNBT();
-		poseBodyTag.add(FloatNBT.valueOf(this.pose[3]));
-		poseBodyTag.add(FloatNBT.valueOf(this.pose[4]));
-		poseBodyTag.add(FloatNBT.valueOf(this.pose[5]));
+		ListTag poseBodyTag = new ListTag();
+		poseBodyTag.add(FloatTag.valueOf(this.pose[3]));
+		poseBodyTag.add(FloatTag.valueOf(this.pose[4]));
+		poseBodyTag.add(FloatTag.valueOf(this.pose[5]));
 		poseTag.put("Body", poseBodyTag);
 
-		ListNBT poseLeftLegTag = new ListNBT();
-		poseLeftLegTag.add(FloatNBT.valueOf(this.pose[6]));
-		poseLeftLegTag.add(FloatNBT.valueOf(this.pose[7]));
-		poseLeftLegTag.add(FloatNBT.valueOf(this.pose[8]));
+		ListTag poseLeftLegTag = new ListTag();
+		poseLeftLegTag.add(FloatTag.valueOf(this.pose[6]));
+		poseLeftLegTag.add(FloatTag.valueOf(this.pose[7]));
+		poseLeftLegTag.add(FloatTag.valueOf(this.pose[8]));
 		poseTag.put("LeftLeg", poseLeftLegTag);
 
-		ListNBT poseRightLegTag = new ListNBT();
-		poseRightLegTag.add(FloatNBT.valueOf(this.pose[9]));
-		poseRightLegTag.add(FloatNBT.valueOf(this.pose[10]));
-		poseRightLegTag.add(FloatNBT.valueOf(this.pose[11]));
+		ListTag poseRightLegTag = new ListTag();
+		poseRightLegTag.add(FloatTag.valueOf(this.pose[9]));
+		poseRightLegTag.add(FloatTag.valueOf(this.pose[10]));
+		poseRightLegTag.add(FloatTag.valueOf(this.pose[11]));
 		poseTag.put("RightLeg", poseRightLegTag);
 
-		ListNBT poseLeftArmTag = new ListNBT();
-		poseLeftArmTag.add(FloatNBT.valueOf(this.pose[12]));
-		poseLeftArmTag.add(FloatNBT.valueOf(this.pose[13]));
-		poseLeftArmTag.add(FloatNBT.valueOf(this.pose[14]));
+		ListTag poseLeftArmTag = new ListTag();
+		poseLeftArmTag.add(FloatTag.valueOf(this.pose[12]));
+		poseLeftArmTag.add(FloatTag.valueOf(this.pose[13]));
+		poseLeftArmTag.add(FloatTag.valueOf(this.pose[14]));
 		poseTag.put("LeftArm", poseLeftArmTag);
 
-		ListNBT poseRightArmTag = new ListNBT();
-		poseRightArmTag.add(FloatNBT.valueOf(this.pose[15]));
-		poseRightArmTag.add(FloatNBT.valueOf(this.pose[16]));
-		poseRightArmTag.add(FloatNBT.valueOf(this.pose[17]));
+		ListTag poseRightArmTag = new ListTag();
+		poseRightArmTag.add(FloatTag.valueOf(this.pose[15]));
+		poseRightArmTag.add(FloatTag.valueOf(this.pose[16]));
+		poseRightArmTag.add(FloatTag.valueOf(this.pose[17]));
 		poseTag.put("RightArm", poseRightArmTag);
 
 		compound.put("Pose", poseTag);
