@@ -59,6 +59,7 @@ public class ArmorStandScreen extends Screen {
 
 	@Override
 	public void init() {
+		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		super.init();
 
 		int offsetX = 110;
@@ -136,6 +137,10 @@ public class ArmorStandScreen extends Screen {
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen)null);
 		}));
+	}
+
+	public void removed() {
+		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
 	}
 
 	@Override
