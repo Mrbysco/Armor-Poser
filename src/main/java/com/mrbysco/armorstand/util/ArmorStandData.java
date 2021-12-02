@@ -3,7 +3,6 @@ package com.mrbysco.armorstand.util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraftforge.common.util.Constants.NBT;
 
 public class ArmorStandData {
 	public boolean invisible = false;
@@ -18,19 +17,14 @@ public class ArmorStandData {
 
 
 	public boolean getBooleanValue(int index) {
-		switch (index) {
-			case 0:
-				return this.invisible;
-			case 1:
-				return this.noBasePlate;
-			case 2:
-				return this.noGravity;
-			case 3:
-				return this.showArms;
-			case 4:
-				return this.small;
-		}
-		return false;
+		return switch (index) {
+			case 0 -> this.invisible;
+			case 1 -> this.noBasePlate;
+			case 2 -> this.noGravity;
+			case 3 -> this.showArms;
+			case 4 -> this.small;
+			default -> false;
+		};
 	}
 
 
@@ -42,7 +36,7 @@ public class ArmorStandData {
 		this.small = compound.getBoolean("Small");
 
 		if (compound.contains("Rotation")) {
-			this.rotation = compound.getList("Rotation", NBT.TAG_FLOAT).getFloat(0);
+			this.rotation = compound.getList("Rotation", CompoundTag.TAG_FLOAT).getFloat(0);
 		}
 		if (compound.contains("Pose")) {
 			CompoundTag poseTag = (CompoundTag)compound.get("Pose");
@@ -51,7 +45,7 @@ public class ArmorStandData {
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];
 				if (poseTag != null && poseTag.contains(key)) {
-					ListTag tagList = poseTag.getList(key, NBT.TAG_FLOAT);
+					ListTag tagList = poseTag.getList(key, CompoundTag.TAG_FLOAT);
 					for (int j = 0; j <= 2; j++) {
 						int k = (i * 3) + j;
 						this.pose[k] = tagList.getFloat(j);

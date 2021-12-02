@@ -5,8 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraftforge.fmllegacy.network.NetworkEvent;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.UUID;
 import java.util.function.Supplier;
@@ -31,13 +30,12 @@ public class ArmorStandSyncMessage {
 	}
 
 	public void handle(Supplier<Context> context) {
-		NetworkEvent.Context ctx = context.get();
+		net.minecraftforge.network.NetworkEvent.Context ctx = context.get();
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
 				final ServerLevel world = ctx.getSender().getLevel();
 				Entity entity = world.getEntity(this.entityUUID);
-				if (entity instanceof ArmorStand) {
-					ArmorStand armorStandEntity = (ArmorStand)entity;
+				if (entity instanceof ArmorStand armorStandEntity) {
 
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
 					CompoundTag entityTagCopy = entityTag.copy();

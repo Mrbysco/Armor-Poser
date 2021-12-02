@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraftforge.fmllegacy.network.NetworkEvent.Context;
+import net.minecraftforge.network.NetworkEvent.Context;
 
 import java.util.function.Supplier;
 
@@ -33,8 +33,7 @@ public class ArmorStandScreenMessage {
 				if (mc.level != null) {
 					entity = mc.level.getEntity(entityID);
 				}
-				if (entity instanceof ArmorStand) {
-					ArmorStand armorStandEntity = (ArmorStand)entity;
+				if (entity instanceof ArmorStand armorStandEntity) {
 					ArmorStandScreen.openScreen(armorStandEntity);
 				}
 			}

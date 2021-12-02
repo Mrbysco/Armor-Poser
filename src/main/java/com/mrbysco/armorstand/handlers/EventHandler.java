@@ -11,7 +11,7 @@ import net.minecraft.world.item.Items;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fmllegacy.network.PacketDistributor;
+import net.minecraftforge.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = ArmorPoser.MOD_ID)
 public class EventHandler {
@@ -19,8 +19,7 @@ public class EventHandler {
 
     @SubscribeEvent
     public static void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-        if (event.getTarget() instanceof ArmorStand) {
-            ArmorStand armorstand = (ArmorStand) event.getTarget();
+        if (event.getTarget() instanceof ArmorStand armorstand) {
 
             if (ModConfiguration.COMMON.enableConfigGui.get() && event.getPlayer().isShiftKeyDown()) {
                 if (event.getHand() == InteractionHand.MAIN_HAND && !event.getWorld().isClientSide) {
