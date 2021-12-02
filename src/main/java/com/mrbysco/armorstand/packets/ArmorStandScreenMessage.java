@@ -30,8 +30,8 @@ public class ArmorStandScreenMessage {
 			if (ctx.getDirection().getReceptionSide().isClient()) {
 				Minecraft mc = Minecraft.getInstance();
 				Entity entity = null;
-				if (mc.world != null) {
-					entity = mc.world.getEntityByID(entityID);
+				if (mc.level != null) {
+					entity = mc.level.getEntity(entityID);
 				}
 				if (entity instanceof ArmorStandEntity) {
 					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;

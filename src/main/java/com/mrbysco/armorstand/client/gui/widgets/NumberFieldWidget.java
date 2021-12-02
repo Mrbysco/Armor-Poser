@@ -16,25 +16,25 @@ public class NumberFieldWidget extends TextFieldWidget {
 	}
 
 	@Override
-	public void writeText(String textToWrite) {
-		if (this.isNumeric(textToWrite)) super.writeText(textToWrite);
+	public void insertText(String textToWrite) {
+		if (this.isNumeric(textToWrite)) super.insertText(textToWrite);
 	}
 
 	@Override
-	public String getText() {
-		return (this.isNumeric(super.getText()) ? super.getText() : "0");
+	public String getValue() {
+		return (this.isNumeric(super.getValue()) ? super.getValue() : "0");
 	}
 
 	public float getFloat() {
-		return NumberUtils.toFloat(super.getText(), 0.0F);
+		return NumberUtils.toFloat(super.getValue(), 0.0F);
 	}
 
 	@Override
 	protected void setFocused(boolean focused) {
 		super.setFocused(focused);
 		if (!focused) {
-			this.setSelectionPos(this.getText().length());
-			this.setCursorPositionEnd();
+			this.setHighlightPos(this.getValue().length());
+			this.moveCursorToEnd();
 		}
 	}
 

@@ -22,31 +22,31 @@ public class ArmorStandSyncMessage {
 	}
 
 	public void encode(PacketBuffer buf) {
-		buf.writeUniqueId(entityUUID);
-		buf.writeCompoundTag(data);
+		buf.writeUUID(entityUUID);
+		buf.writeNbt(data);
 	}
 
 	public static ArmorStandSyncMessage decode(final PacketBuffer packetBuffer) {
-		return new ArmorStandSyncMessage(packetBuffer.readUniqueId(), packetBuffer.readCompoundTag());
+		return new ArmorStandSyncMessage(packetBuffer.readUUID(), packetBuffer.readNbt());
 	}
 
 	public void handle(Supplier<Context> context) {
 		NetworkEvent.Context ctx = context.get();
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
-				final ServerWorld world = ctx.getSender().getServerWorld();
-				Entity entity = world.getEntityByUuid(this.entityUUID);
+				final ServerWorld world = ctx.getSender().getLevel();
+				Entity entity = world.getEntity(this.entityUUID);
 				if (entity instanceof ArmorStandEntity) {
 					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
 
-					CompoundNBT entityTag = armorStandEntity.writeWithoutTypeId(new CompoundNBT());
+					CompoundNBT entityTag = armorStandEntity.saveWithoutId(new CompoundNBT());
 					CompoundNBT entityTagCopy = entityTag.copy();
 
 					if(!this.data.isEmpty()) {
 						entityTagCopy.merge(this.data);
-						UUID uuid = armorStandEntity.getUniqueID();
-						armorStandEntity.read(entityTagCopy);
-						armorStandEntity.setUniqueId(uuid);
+						UUID uuid = armorStandEntity.getUUID();
+						armorStandEntity.load(entityTagCopy);
+						armorStandEntity.setUUID(uuid);
 					}
 				}
 			}

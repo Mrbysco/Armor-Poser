@@ -36,20 +36,20 @@ public class ArmorStandScreen extends Screen {
 	private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
 	public ArmorStandScreen(ArmorStandEntity entityArmorStand) {
-		super(NarratorChatListener.EMPTY);
+		super(NarratorChatListener.NO_TITLE);
 		this.entityArmorStand = entityArmorStand;
 
 		this.armorStandData = new ArmorStandData();
-		this.armorStandData.readFromNBT(entityArmorStand.writeWithoutTypeId(new CompoundNBT()));
+		this.armorStandData.readFromNBT(entityArmorStand.saveWithoutId(new CompoundNBT()));
 
 		for (int i = 0; i < this.buttonLabels.length; i++)
-			this.buttonLabels[i] = I18n.format(String.format("%s.gui.label." + this.buttonLabels[i], ArmorPoser.MOD_ID));
+			this.buttonLabels[i] = I18n.get(String.format("%s.gui.label." + this.buttonLabels[i], ArmorPoser.MOD_ID));
 		for (int i = 0; i < this.sliderLabels.length; i++)
-			this.sliderLabels[i] = I18n.format(String.format("%s.gui.label." + this.sliderLabels[i], ArmorPoser.MOD_ID));
+			this.sliderLabels[i] = I18n.get(String.format("%s.gui.label." + this.sliderLabels[i], ArmorPoser.MOD_ID));
 	}
 
 	public static void openScreen(ArmorStandEntity armorStandEntity) {
-		Minecraft.getInstance().displayGuiScreen(new ArmorStandScreen(armorStandEntity));
+		Minecraft.getInstance().setScreen(new ArmorStandScreen(armorStandEntity));
 	}
 
 	@Override
@@ -81,9 +81,9 @@ public class ArmorStandScreen extends Screen {
 
 		// rotation textbox
 		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, new StringTextComponent("field.rotation"));
-		this.rotationTextField.setText(String.valueOf((int)this.armorStandData.rotation));
-		this.rotationTextField.setMaxStringLength(3);
-		this.addListener(this.rotationTextField);
+		this.rotationTextField.setValue(String.valueOf((int)this.armorStandData.rotation));
+		this.rotationTextField.setMaxLength(3);
+		this.addWidget(this.rotationTextField);
 
 		// pose textboxes
 		offsetX = this.width - 20 - 100;
@@ -96,9 +96,9 @@ public class ArmorStandScreen extends Screen {
 			String value = String.valueOf((int)this.armorStandData.pose[i]);
 
 			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new StringTextComponent(String.format("field.%s", i)));
-			this.poseTextFields[i].setText(value);
-			this.poseTextFields[i].setMaxStringLength(3);
-			this.addListener(this.poseTextFields[i]);
+			this.poseTextFields[i].setValue(value);
+			this.poseTextFields[i].setMaxLength(3);
+			this.addWidget(this.poseTextFields[i]);
 		}
 
 		offsetY = this.height / 4 + 120 + 12;
@@ -109,16 +109,16 @@ public class ArmorStandScreen extends Screen {
 			CompoundNBT compound = this.writeFieldsToNBT();
 			String clipboardData = compound.toString();
 			if (this.minecraft != null) {
-				this.minecraft.keyboardListener.setClipboardString(clipboardData);
+				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
 		}));
 		this.addButton(new Button(offsetX + 66, offsetY, 64, 20, new TranslationTextComponent(String.format("%s.gui.label.paste", ArmorPoser.MOD_ID)), (button) -> {
 			try {
 				String clipboardData = null;
 				if (this.minecraft != null) {
-					clipboardData = this.minecraft.keyboardListener.getClipboardString();
+					clipboardData = this.minecraft.keyboardHandler.getClipboard();
 				}
-				CompoundNBT compound = JsonToNBT.getTagFromJson(clipboardData);
+				CompoundNBT compound = JsonToNBT.parseTag(clipboardData);
 				this.readFieldsFromNBT(compound);
 				this.updateEntity(compound);
 			} catch (Exception e) {
@@ -130,11 +130,11 @@ public class ArmorStandScreen extends Screen {
 		offsetX = this.width - 20;
 		this.addButton(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslationTextComponent("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
-			this.minecraft.displayGuiScreen((Screen)null);
+			this.minecraft.setScreen((Screen)null);
 		}));
 		this.addButton(new Button(offsetX - 96, offsetY, 96, 20, new TranslationTextComponent("gui.cancel"), (button) -> {
 			this.updateEntity(this.armorStandData.writeToNBT());
-			this.minecraft.displayGuiScreen((Screen)null);
+			this.minecraft.setScreen((Screen)null);
 		}));
 	}
 
@@ -156,7 +156,7 @@ public class ArmorStandScreen extends Screen {
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
-			int y = offsetY + (i * 22) + (10 - (this.font.FONT_HEIGHT / 2));
+			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
 			this.drawString(matrixStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
 		}
 
@@ -168,8 +168,8 @@ public class ArmorStandScreen extends Screen {
 		this.drawString(matrixStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
-			int x = offsetX - this.font.getStringWidth(this.sliderLabels[i]) - 10;
-			int y = offsetY + (i * 22) + (10 - (this.font.FONT_HEIGHT / 2));
+			int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
+			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
 			this.drawString(matrixStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
 		}
 
@@ -199,13 +199,13 @@ public class ArmorStandScreen extends Screen {
 			for (int i = 0; i < this.poseTextFields.length; i++) {
 				if (this.poseTextFields[i].isFocused()) {
 					this.textFieldUpdated();
-					this.poseTextFields[i].setCursorPositionEnd();
-					this.poseTextFields[i].setFocused2(false);
+					this.poseTextFields[i].moveCursorToEnd();
+					this.poseTextFields[i].setFocus(false);
 
 					int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
-					this.poseTextFields[j].setFocused2(true);
-					this.poseTextFields[j].setCursorPosition(0);
-					this.poseTextFields[j].setSelectionPos(this.poseTextFields[j].getText().length());
+					this.poseTextFields[j].setFocus(true);
+					this.poseTextFields[j].moveCursorTo(0);
+					this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
 				}
 			}
 		} else {
@@ -301,19 +301,19 @@ public class ArmorStandScreen extends Screen {
 			this.toggleButtons[i].setValue(armorStandData.getBooleanValue(i));
 		}
 
-		this.rotationTextField.setText(String.valueOf((int)armorStandData.rotation));
+		this.rotationTextField.setValue(String.valueOf((int)armorStandData.rotation));
 
 		for (int i = 0; i < this.poseTextFields.length; i++) {
-			this.poseTextFields[i].setText(String.valueOf((int)armorStandData.pose[i]));
+			this.poseTextFields[i].setValue(String.valueOf((int)armorStandData.pose[i]));
 		}
 	}
 
 	private void updateEntity(CompoundNBT compound) {
-		CompoundNBT CompoundNBT = this.entityArmorStand.writeWithoutTypeId(new CompoundNBT()).copy();
+		CompoundNBT CompoundNBT = this.entityArmorStand.saveWithoutId(new CompoundNBT()).copy();
 		CompoundNBT.merge(compound);
-		this.entityArmorStand.read(CompoundNBT);
+		this.entityArmorStand.load(CompoundNBT);
 
-		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSyncMessage(entityArmorStand.getUniqueID(), compound));
+		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSyncMessage(entityArmorStand.getUUID(), compound));
 	}
 
 }
