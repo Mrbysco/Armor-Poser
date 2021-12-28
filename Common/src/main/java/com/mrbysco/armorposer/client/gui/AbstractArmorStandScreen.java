@@ -5,7 +5,6 @@ import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldWidget;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.util.ArmorStandData;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -19,7 +18,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
-public class ArmorStandScreen extends Screen {
+public abstract class AbstractArmorStandScreen extends Screen {
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
 
@@ -30,7 +29,7 @@ public class ArmorStandScreen extends Screen {
 	private final ToggleButton[] toggleButtons = new ToggleButton[5];
 	private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
-	public ArmorStandScreen(ArmorStand entityArmorStand) {
+	public AbstractArmorStandScreen(ArmorStand entityArmorStand) {
 		super(NarratorChatListener.NO_TITLE);
 		this.entityArmorStand = entityArmorStand;
 
@@ -41,10 +40,6 @@ public class ArmorStandScreen extends Screen {
 			this.buttonLabels[i] = I18n.get(String.format("%s.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
 		for (int i = 0; i < this.sliderLabels.length; i++)
 			this.sliderLabels[i] = I18n.get(String.format("%s.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
-	}
-
-	public static void openScreen(ArmorStand armorStandEntity) {
-		Minecraft.getInstance().setScreen(new ArmorStandScreen(armorStandEntity));
 	}
 
 	@Override
@@ -308,8 +303,6 @@ public class ArmorStandScreen extends Screen {
 		}
 	}
 
-	private void updateEntity(ArmorStand armorStand, CompoundTag compound) {
-		//NOOP
-	}
+	protected abstract void updateEntity(ArmorStand armorStand, CompoundTag compound);
 
 }

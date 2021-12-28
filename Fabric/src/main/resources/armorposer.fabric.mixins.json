@@ -7,7 +7,6 @@
       "ArmorStandMixin"
     ],
     "client": [
-      "ArmorStandScreenMixin"
     ],
     "injectors": {
       "defaultRequire": 1

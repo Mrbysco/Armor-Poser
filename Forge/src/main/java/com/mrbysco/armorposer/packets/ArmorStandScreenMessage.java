@@ -1,6 +1,5 @@
 package com.mrbysco.armorposer.packets;
 
-import com.mrbysco.armorposer.client.gui.ArmorStandScreen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -34,7 +33,7 @@ public class ArmorStandScreenMessage {
 					entity = mc.level.getEntity(entityID);
 				}
 				if (entity instanceof ArmorStand armorStandEntity) {
-					ArmorStandScreen.openScreen(armorStandEntity);
+					com.mrbysco.armorposer.client.ArmorStandScreen.openScreen(armorStandEntity);
 				}
 			}
 		});

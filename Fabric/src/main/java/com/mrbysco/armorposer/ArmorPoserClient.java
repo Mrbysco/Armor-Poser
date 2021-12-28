@@ -1,6 +1,7 @@
 package com.mrbysco.armorposer;
 
-import com.mrbysco.armorposer.client.gui.ArmorStandScreen;
+import com.mrbysco.armorposer.client.ArmorStandScreen;
+import com.mrbysco.armorposer.client.gui.AbstractArmorStandScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.Minecraft;
@@ -21,7 +22,7 @@ public class ArmorPoserClient implements ClientModInitializer {
             }
             if (entity instanceof ArmorStand armorStandEntity) {
                 client.execute(() -> {
-                    if (!(client.screen instanceof ArmorStandScreen)) {
+                    if (!(client.screen instanceof AbstractArmorStandScreen)) {
                         client.setScreen(new ArmorStandScreen(armorStandEntity));
                     }
                     client.setScreen(new ArmorStandScreen(armorStandEntity));
