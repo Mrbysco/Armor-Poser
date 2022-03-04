@@ -1,25 +1,16 @@
-package com.mrbysco.armorposer.client;
+package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
-import com.mrbysco.armorposer.client.gui.AbstractArmorStandScreen;
+import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
-public class ArmorStandScreen extends AbstractArmorStandScreen {
-	public ArmorStandScreen(ArmorStand entityArmorStand) {
-		super(entityArmorStand);
-	}
-
-	public static void openScreen(ArmorStand armorStandEntity) {
-		Minecraft.getInstance().setScreen(new ArmorStandScreen(armorStandEntity));
-	}
-
+public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
-	protected void updateEntity(ArmorStand armorStand, CompoundTag compound) {
+	public void updateEntity(ArmorStand armorStand, CompoundTag compound) {
 		CompoundTag CompoundNBT = armorStand.saveWithoutId(new CompoundTag()).copy();
 		CompoundNBT.merge(compound);
 		armorStand.load(CompoundNBT);

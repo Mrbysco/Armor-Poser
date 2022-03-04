@@ -35,6 +35,7 @@ public class PoserConfig {
 
 	public static final ForgeConfigSpec commonSpec;
 	public static final Common COMMON;
+
 	static {
 		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(Common::new);
 		commonSpec = specPair.getRight();
@@ -43,7 +44,7 @@ public class PoserConfig {
 
 	@SubscribeEvent
 	public static void onLoad(final ModConfigEvent.Loading configEvent) {
-		Reference.LOGGER.debug("Loaded {}'s config file {}", Reference.MOD_ID,  configEvent.getConfig().getFileName());
+		Reference.LOGGER.debug("Loaded {}'s config file {}", Reference.MOD_ID, configEvent.getConfig().getFileName());
 	}
 
 	@SubscribeEvent

@@ -16,36 +16,36 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import java.util.UUID;
 
 public class ArmorPoser implements ModInitializer {
-    
-    @Override
-    public void onInitialize() {
-        AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
 
-        CommonClass.init();
+	@Override
+	public void onInitialize() {
+		AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
 
-        UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
+		CommonClass.init();
 
-        ServerPlayNetworking.registerGlobalReceiver(Reference.SYNC_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-            final ServerLevel world = player.getLevel();
+		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
-            UUID standUUID = buf.readUUID();
-            CompoundTag data = buf.readNbt();
+		ServerPlayNetworking.registerGlobalReceiver(Reference.SYNC_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+			final ServerLevel world = player.getLevel();
 
-            server.execute(() -> {
-                Entity entity = world.getEntity(standUUID);
-                if (entity instanceof ArmorStand armorStandEntity) {
+			UUID standUUID = buf.readUUID();
+			CompoundTag data = buf.readNbt();
 
-                    CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
-                    CompoundTag entityTagCopy = entityTag.copy();
+			server.execute(() -> {
+				Entity entity = world.getEntity(standUUID);
+				if (entity instanceof ArmorStand armorStandEntity) {
 
-                    if(!data.isEmpty()) {
-                        entityTagCopy.merge(data);
-                        UUID uuid = armorStandEntity.getUUID();
-                        armorStandEntity.load(entityTagCopy);
-                        armorStandEntity.setUUID(uuid);
-                    }
-                }
-            });
-        });
-    }
+					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
+					CompoundTag entityTagCopy = entityTag.copy();
+
+					if (!data.isEmpty()) {
+						entityTagCopy.merge(data);
+						UUID uuid = armorStandEntity.getUUID();
+						armorStandEntity.load(entityTagCopy);
+						armorStandEntity.setUUID(uuid);
+					}
+				}
+			});
+		});
+	}
 }

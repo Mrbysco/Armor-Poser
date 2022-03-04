@@ -17,27 +17,27 @@ import net.minecraftforge.network.simple.SimpleChannel;
 @Mod(Reference.MOD_ID)
 public class ArmorPoser {
 
-    private static final String PROTOCOL_VERSION = "1";
-    public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
-            new ResourceLocation(Reference.MOD_ID, "main"),
-            () -> PROTOCOL_VERSION,
-            PROTOCOL_VERSION::equals,
-            PROTOCOL_VERSION::equals
-    );
+	private static final String PROTOCOL_VERSION = "1";
+	public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
+			new ResourceLocation(Reference.MOD_ID, "main"),
+			() -> PROTOCOL_VERSION,
+			PROTOCOL_VERSION::equals,
+			PROTOCOL_VERSION::equals
+	);
 
 
-    public ArmorPoser() {
-        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        ModLoadingContext.get().registerConfig(Type.COMMON, PoserConfig.commonSpec);
-        eventBus.register(PoserConfig.class);
+	public ArmorPoser() {
+		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+		ModLoadingContext.get().registerConfig(Type.COMMON, PoserConfig.commonSpec);
+		eventBus.register(PoserConfig.class);
 
-        CommonClass.init();
+		CommonClass.init();
 
-        eventBus.addListener(this::setup);
-    }
+		eventBus.addListener(this::setup);
+	}
 
-    private void setup(final FMLCommonSetupEvent event) {
-        CHANNEL.registerMessage(0, ArmorStandSyncMessage.class, ArmorStandSyncMessage::encode, ArmorStandSyncMessage::decode, ArmorStandSyncMessage::handle);
-        CHANNEL.registerMessage(1, ArmorStandScreenMessage.class, ArmorStandScreenMessage::encode, ArmorStandScreenMessage::decode, ArmorStandScreenMessage::handle);
-    }
+	private void setup(final FMLCommonSetupEvent event) {
+		CHANNEL.registerMessage(0, ArmorStandSyncMessage.class, ArmorStandSyncMessage::encode, ArmorStandSyncMessage::decode, ArmorStandSyncMessage::handle);
+		CHANNEL.registerMessage(1, ArmorStandScreenMessage.class, ArmorStandScreenMessage::encode, ArmorStandScreenMessage::decode, ArmorStandScreenMessage::handle);
+	}
 }

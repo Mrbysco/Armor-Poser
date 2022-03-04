@@ -40,7 +40,7 @@ public class ArmorStandSyncMessage {
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
 					CompoundTag entityTagCopy = entityTag.copy();
 
-					if(!this.data.isEmpty()) {
+					if (!this.data.isEmpty()) {
 						entityTagCopy.merge(this.data);
 						UUID uuid = armorStandEntity.getUUID();
 						armorStandEntity.load(entityTagCopy);

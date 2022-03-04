@@ -33,7 +33,7 @@ public class ArmorStandScreenMessage {
 					entity = mc.level.getEntity(entityID);
 				}
 				if (entity instanceof ArmorStand armorStandEntity) {
-					com.mrbysco.armorposer.client.ArmorStandScreen.openScreen(armorStandEntity);
+					com.mrbysco.armorposer.client.gui.ArmorStandScreen.openScreen(armorStandEntity);
 				}
 			}
 		});

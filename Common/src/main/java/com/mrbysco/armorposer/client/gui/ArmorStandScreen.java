@@ -4,7 +4,9 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldWidget;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
+import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -18,18 +20,18 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
-public abstract class AbstractArmorStandScreen extends Screen {
+public class ArmorStandScreen extends Screen {
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
 
-	private final String[] buttonLabels = new String[] { "invisible", "no_base_plate", "no_gravity", "show_arms", "small", "rotation" };
-	private final String[] sliderLabels = new String[] { "head", "body", "left_leg", "right_leg", "left_arm", "right_arm" };
+	private final String[] buttonLabels = new String[]{"invisible", "no_base_plate", "no_gravity", "show_arms", "small", "rotation"};
+	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm"};
 
 	private NumberFieldWidget rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[5];
 	private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
 
-	public AbstractArmorStandScreen(ArmorStand entityArmorStand) {
+	public ArmorStandScreen(ArmorStand entityArmorStand) {
 		super(NarratorChatListener.NO_TITLE);
 		this.entityArmorStand = entityArmorStand;
 
@@ -63,7 +65,7 @@ public abstract class AbstractArmorStandScreen extends Screen {
 			int height = 20;
 
 			this.toggleButtons[i] = new ToggleButton(x, y, width, height, this.armorStandData.getBooleanValue(i), (button) -> {
-				ToggleButton toggleButton = ((ToggleButton)button);
+				ToggleButton toggleButton = ((ToggleButton) button);
 				toggleButton.setValue(!toggleButton.getValue());
 				this.textFieldUpdated();
 			});
@@ -72,7 +74,7 @@ public abstract class AbstractArmorStandScreen extends Screen {
 
 		// rotation textbox
 		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, new TextComponent("field.rotation"));
-		this.rotationTextField.setValue(String.valueOf((int)this.armorStandData.rotation));
+		this.rotationTextField.setValue(String.valueOf((int) this.armorStandData.rotation));
 		this.rotationTextField.setMaxLength(3);
 		this.addWidget(this.rotationTextField);
 
@@ -84,7 +86,7 @@ public abstract class AbstractArmorStandScreen extends Screen {
 			int y = 1 + offsetY + ((i / 3) * 22);
 			int width = 28;
 			int height = 17;
-			String value = String.valueOf((int)this.armorStandData.pose[i]);
+			String value = String.valueOf((int) this.armorStandData.pose[i]);
 
 			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new TextComponent(String.format("field.%s", i)));
 			this.poseTextFields[i].setValue(value);
@@ -121,11 +123,11 @@ public abstract class AbstractArmorStandScreen extends Screen {
 		offsetX = this.width - 20;
 		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.writeFieldsToNBT());
-			this.minecraft.setScreen((Screen)null);
+			this.minecraft.setScreen((Screen) null);
 		}));
 		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.armorStandData.writeToNBT());
-			this.minecraft.setScreen((Screen)null);
+			this.minecraft.setScreen((Screen) null);
 		}));
 	}
 
@@ -182,7 +184,7 @@ public abstract class AbstractArmorStandScreen extends Screen {
 	@Override
 	public boolean charTyped(char codePoint, int modifiers) {
 		boolean typed = super.charTyped(codePoint, modifiers);
-		if(typed) {
+		if (typed) {
 			this.textFieldUpdated();
 		}
 		return typed;
@@ -296,13 +298,19 @@ public abstract class AbstractArmorStandScreen extends Screen {
 			this.toggleButtons[i].setValue(armorStandData.getBooleanValue(i));
 		}
 
-		this.rotationTextField.setValue(String.valueOf((int)armorStandData.rotation));
+		this.rotationTextField.setValue(String.valueOf((int) armorStandData.rotation));
 
 		for (int i = 0; i < this.poseTextFields.length; i++) {
-			this.poseTextFields[i].setValue(String.valueOf((int)armorStandData.pose[i]));
+			this.poseTextFields[i].setValue(String.valueOf((int) armorStandData.pose[i]));
 		}
 	}
 
-	protected abstract void updateEntity(ArmorStand armorStand, CompoundTag compound);
 
+	public static void openScreen(ArmorStand armorStandEntity) {
+		Minecraft.getInstance().setScreen(new ArmorStandScreen(armorStandEntity));
+	}
+
+	public void updateEntity(ArmorStand armorStand, CompoundTag compound) {
+		Services.PLATFORM.updateEntity(armorStand, compound);
+	}
 }

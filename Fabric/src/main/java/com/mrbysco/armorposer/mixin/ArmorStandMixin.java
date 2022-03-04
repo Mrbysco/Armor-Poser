@@ -18,8 +18,8 @@ public class ArmorStandMixin {
 			method = "interactAt(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/phys/Vec3;Lnet/minecraft/world/InteractionHand;)Lnet/minecraft/world/InteractionResult;",
 			cancellable = true)
 	public void poserInteractAt(Player player, Vec3 vec3, InteractionHand interactionHand, CallbackInfoReturnable<InteractionResult> cir) {
-		InteractionResult result = EventHandler.onPlayerEntityInteractSpecific(player, ((ArmorStand)(Object) this), interactionHand);
-		if(result == InteractionResult.SUCCESS) {
+		InteractionResult result = EventHandler.onPlayerEntityInteractSpecific(player, ((ArmorStand) (Object) this), interactionHand);
+		if (result == InteractionResult.SUCCESS) {
 			cir.setReturnValue(result);
 		}
 	}
