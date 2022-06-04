@@ -75,7 +75,7 @@ public class ArmorStandScreen extends Screen {
 		// rotation textbox
 		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, new TextComponent("field.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.armorStandData.rotation));
-		this.rotationTextField.setMaxLength(3);
+		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
 
 		// pose textboxes
@@ -90,7 +90,7 @@ public class ArmorStandScreen extends Screen {
 
 			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new TextComponent(String.format("field.%s", i)));
 			this.poseTextFields[i].setValue(value);
-			this.poseTextFields[i].setMaxLength(3);
+			this.poseTextFields[i].setMaxLength(4);
 			this.addWidget(this.poseTextFields[i]);
 		}
 
