@@ -21,7 +21,7 @@ public class NumberFieldWidget extends EditBox {
 			super.insertText(textToWrite);
 
 		float currentValue = getFloat();
-		if(currentValue > 360 || currentValue < -360) {
+		if (currentValue > 360 || currentValue < -360) {
 			this.setValue("0");
 		}
 	}

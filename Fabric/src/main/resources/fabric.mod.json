@@ -31,11 +31,11 @@
     ],
   
     "depends": {
-      "fabricloader": ">=0.12",
+      "fabricloader": ">=0.14",
       "fabric": "*",
-      "minecraft": "1.18.x",
+      "minecraft": "1.19.x",
       "java": ">=17",
-      "cloth-config": ">=6.0.42"
+      "cloth-config": ">=7"
     },
     "suggests": {
       "another-mod": "*"
