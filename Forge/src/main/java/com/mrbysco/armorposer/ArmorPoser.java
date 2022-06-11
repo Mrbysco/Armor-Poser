@@ -25,6 +25,7 @@ public class ArmorPoser {
 			PROTOCOL_VERSION::equals
 	);
 
+
 	public ArmorPoser() {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(Type.COMMON, PoserConfig.commonSpec);

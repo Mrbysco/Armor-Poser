@@ -16,7 +16,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 public class ArmorStandScreen extends Screen {
@@ -38,9 +39,9 @@ public class ArmorStandScreen extends Screen {
 		this.armorStandData.readFromNBT(entityArmorStand.saveWithoutId(new CompoundTag()));
 
 		for (int i = 0; i < this.buttonLabels.length; i++)
-			this.buttonLabels[i] = I18n.get(Reference.MOD_ID + ".gui.label." + this.buttonLabels[i]);
+			this.buttonLabels[i] = I18n.get(String.format("%s.gui.label." + this.buttonLabels[i], Reference.MOD_ID));
 		for (int i = 0; i < this.sliderLabels.length; i++)
-			this.sliderLabels[i] = I18n.get(Reference.MOD_ID + ".gui.label." + this.sliderLabels[i]);
+			this.sliderLabels[i] = I18n.get(String.format("%s.gui.label." + this.sliderLabels[i], Reference.MOD_ID));
 	}
 
 	@Override
@@ -72,7 +73,7 @@ public class ArmorStandScreen extends Screen {
 		}
 
 		// rotation textbox
-		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, Component.translatable("field.rotation"));
+		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, new TextComponent("field.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.armorStandData.rotation));
 		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
@@ -87,7 +88,7 @@ public class ArmorStandScreen extends Screen {
 			int height = 17;
 			String value = String.valueOf((int) this.armorStandData.pose[i]);
 
-			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, Component.translatable("field.%s", i));
+			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new TextComponent(String.format("field.%s", i)));
 			this.poseTextFields[i].setValue(value);
 			this.poseTextFields[i].setMaxLength(4);
 			this.addWidget(this.poseTextFields[i]);
@@ -97,14 +98,14 @@ public class ArmorStandScreen extends Screen {
 
 		// copy & paste buttons
 		offsetX = 20;
-		this.addRenderableWidget(new Button(offsetX, offsetY, 64, 20, Component.translatable("armorposer.gui.label.copy"), (button) -> {
+		this.addRenderableWidget(new Button(offsetX, offsetY, 64, 20, new TranslatableComponent(String.format("%s.gui.label.copy", Reference.MOD_ID)), (button) -> {
 			CompoundTag compound = this.writeFieldsToNBT();
 			String clipboardData = compound.toString();
 			if (this.minecraft != null) {
 				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
 		}));
-		this.addRenderableWidget(new Button(offsetX + 66, offsetY, 64, 20, Component.translatable("armorposer.gui.label.paste"), (button) -> {
+		this.addRenderableWidget(new Button(offsetX + 66, offsetY, 64, 20, new TranslatableComponent(String.format("%s.gui.label.paste", Reference.MOD_ID)), (button) -> {
 			try {
 				String clipboardData = null;
 				if (this.minecraft != null) {
@@ -120,11 +121,11 @@ public class ArmorStandScreen extends Screen {
 
 		// done & cancel buttons
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, Component.translatable("gui.done"), (button) -> {
+		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslatableComponent("gui.done"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
-		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, Component.translatable("gui.cancel"), (button) -> {
+		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, new TranslatableComponent("gui.cancel"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
@@ -139,7 +140,7 @@ public class ArmorStandScreen extends Screen {
 		this.renderBackground(matrixStack);
 
 		// gui title
-		this.drawCenteredString(matrixStack, this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 20, 0xFFFFFF);
+		this.drawCenteredString(matrixStack, this.font, new TranslatableComponent(String.format("%s.gui.title", Reference.MOD_ID)), this.width / 2, 20, 0xFFFFFF);
 
 		// textboxes
 		this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);
