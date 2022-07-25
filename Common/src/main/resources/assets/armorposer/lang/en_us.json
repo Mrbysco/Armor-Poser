@@ -27,6 +27,9 @@
     "armorposer.config.overrideEntityInteract": "Process Interactions",
     "armorposer.config.overrideEntityInteract.tooltip": "Use custom logic when right-clicking an Armor Stand",
 
+    "armorposer.config.allowScrolling": "Allow Scrolling",
+    "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen",
+
     "armorposer.key.openArmorStandGui": "Open GUI",
     "armorposer.key.categories.general": "Armor Stand Configurator"
 }

@@ -36,7 +36,6 @@ public class ArmorStandSyncMessage {
 				final ServerLevel world = ctx.getSender().getLevel();
 				Entity entity = world.getEntity(this.entityUUID);
 				if (entity instanceof ArmorStand armorStandEntity) {
-
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
 					CompoundTag entityTagCopy = entityTag.copy();
 

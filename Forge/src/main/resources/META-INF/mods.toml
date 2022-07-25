@@ -19,3 +19,9 @@ mandatory=true
 versionRange="[1.19,1.20)"
 ordering="NONE"
 side="BOTH"
+[[dependencies.armorposer]]
+modId="forge"
+mandatory=true
+versionRange="[41.0.94,)"
+ordering="NONE"
+side="BOTH"

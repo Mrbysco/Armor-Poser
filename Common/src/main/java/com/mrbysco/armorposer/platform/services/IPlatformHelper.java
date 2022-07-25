@@ -8,4 +8,9 @@ public interface IPlatformHelper {
 	 * Update Armor Stand Entity
 	 */
 	void updateEntity(ArmorStand armorStand, CompoundTag compound);
+
+	/**
+	 * Allow scrolling to increase/decrease the angle of text fields
+	 */
+	boolean allowScrolling();
 }

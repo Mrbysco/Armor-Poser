@@ -16,5 +16,7 @@ public class PoserConfig implements ConfigData {
 		public boolean enableConfigGui = true;
 		@Comment("Allow Armor Stand to be renamed using name tags")
 		public boolean enableNameTags = true;
+		@Comment("Allow scrolling to add / decrease an angle value in the posing screen")
+		public boolean allowScrolling = true;
 	}
 }

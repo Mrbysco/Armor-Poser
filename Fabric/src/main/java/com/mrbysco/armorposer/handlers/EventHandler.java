@@ -23,7 +23,6 @@ public class EventHandler {
 	public static InteractionResult onPlayerEntityInteractSpecific(Player player, Entity target, InteractionHand hand) {
 		if (target instanceof ArmorStand armorstand) {
 			PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
-
 			if (config.general.enableConfigGui && player.isShiftKeyDown()) {
 				if (hand == InteractionHand.MAIN_HAND && !player.getLevel().isClientSide) {
 					FriendlyByteBuf buf = PacketByteBufs.create();

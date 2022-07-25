@@ -28,5 +28,8 @@
     "armorposer.config.overrideEntityInteract.tooltip": "Utilisez une logique personnalisée lorsque vous faites un clic droit sur un prote-armure",
 
     "armorposer.key.openArmorStandGui": "Ouvrir le menu",
-    "armorposer.key.categories.general": "Configurateur du porte-armure"
+    "armorposer.key.categories.general": "Configurateur du porte-armure",
+
+    "armorposer.config.allowScrolling": "Allow Scrolling",
+    "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen"
 }

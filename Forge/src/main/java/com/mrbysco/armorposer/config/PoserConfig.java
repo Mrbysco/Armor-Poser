@@ -13,6 +13,7 @@ public class PoserConfig {
 	public static class Common {
 		public final BooleanValue enableConfigGui;
 		public final BooleanValue enableNameTags;
+		public final BooleanValue allowScrolling;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -27,6 +28,11 @@ public class PoserConfig {
 					.comment("Allow Armor Stand to be renamed using name tags")
 					.translation("armorposer.config.enableNameTags.tooltip")
 					.define("enableNameTags", true);
+
+			allowScrolling = builder
+					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
+					.translation("armorposer.config.allowScrolling.tooltip")
+					.define("allowScrolling", true);
 
 			builder.pop();
 		}

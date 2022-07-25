@@ -29,6 +29,7 @@ public class ArmorStandScreen extends Screen {
 	private NumberFieldWidget rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[5];
 	private final NumberFieldWidget[] poseTextFields = new NumberFieldWidget[18];
+	private final boolean allowScrolling;
 
 	public ArmorStandScreen(ArmorStand entityArmorStand) {
 		super(NarratorChatListener.NO_TITLE);
@@ -36,6 +37,8 @@ public class ArmorStandScreen extends Screen {
 
 		this.armorStandData = new ArmorStandData();
 		this.armorStandData.readFromNBT(entityArmorStand.saveWithoutId(new CompoundTag()));
+
+		this.allowScrolling = Services.PLATFORM.allowScrolling();
 
 		for (int i = 0; i < this.buttonLabels.length; i++)
 			this.buttonLabels[i] = I18n.get(Reference.MOD_ID + ".gui.label." + this.buttonLabels[i]);
@@ -187,6 +190,44 @@ public class ArmorStandScreen extends Screen {
 			this.textFieldUpdated();
 		}
 		return typed;
+	}
+
+	@Override
+	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+		if (allowScrolling && delta > 0) {
+			//Add 1 to the value
+			if (rotationTextField.isFocused()) {
+				int nextValue = (int) (rotationTextField.getFloat() + 1);
+				rotationTextField.setValue(String.valueOf(nextValue));
+				this.textFieldUpdated();
+				return true;
+			}
+			for (NumberFieldWidget textField : this.poseTextFields) {
+				if (textField.isHoveredOrFocused()) {
+					int nextValue = (int) (textField.getFloat() + 1);
+					textField.setValue(String.valueOf(nextValue));
+					this.textFieldUpdated();
+					return true;
+				}
+			}
+		} else if (allowScrolling && delta < 0) {
+			//Remove 1 to the value
+			if (rotationTextField.isFocused()) {
+				int previousValue = (int) (rotationTextField.getFloat() - 1);
+				rotationTextField.setValue(String.valueOf(previousValue));
+				this.textFieldUpdated();
+				return true;
+			}
+			for (NumberFieldWidget textField : this.poseTextFields) {
+				if (textField.isHoveredOrFocused()) {
+					int previousValue = (int) (textField.getFloat() - 1);
+					textField.setValue(String.valueOf(previousValue));
+					this.textFieldUpdated();
+					return true;
+				}
+			}
+		}
+		return super.mouseScrolled(mouseX, mouseY, delta);
 	}
 
 	@Override

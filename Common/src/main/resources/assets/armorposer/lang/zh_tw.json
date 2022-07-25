@@ -28,5 +28,8 @@
     "armorposer.config.enableNameTags.tooltip": "允許盔甲座使用命名牌重新命名",
 
     "armorposer.key.openArmorStandGui": "打開GUI",
-    "armorposer.key.categories.general": "盔甲座配置"
+    "armorposer.key.categories.general": "盔甲座配置",
+
+    "armorposer.config.allowScrolling": "Allow Scrolling",
+    "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen"
 }
