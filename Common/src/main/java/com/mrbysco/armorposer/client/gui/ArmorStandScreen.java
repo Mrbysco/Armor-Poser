@@ -6,8 +6,8 @@ import com.mrbysco.armorposer.client.gui.widgets.NumberFieldWidget;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
+import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -32,7 +32,7 @@ public class ArmorStandScreen extends Screen {
 	private final boolean allowScrolling;
 
 	public ArmorStandScreen(ArmorStand entityArmorStand) {
-		super(NarratorChatListener.NO_TITLE);
+		super(GameNarrator.NO_TITLE);
 		this.entityArmorStand = entityArmorStand;
 
 		this.armorStandData = new ArmorStandData();
