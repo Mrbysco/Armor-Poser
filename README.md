@@ -1,3 +1,5 @@
+[![build](https://github.com/Mrbysco/Armor-Poser/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/Armor-Poser/actions/workflows/build.yml) [![](http://cf.way2muchnoise.eu/versions/450663.svg)](https://www.curseforge.com/minecraft/mc-mods/armor-poser)
+
 # Armor Poser #
 
 ## About ##
@@ -12,4 +14,4 @@ This mod is a continuation of ["Armor Stand Configurator"](https://www.curseforg
 
 
 ## Downloads ##
-Downloads will be available on CurseForge
+Downloads will be located on [CurseForge](https://www.curseforge.com/minecraft/mc-mods/armor-poser)
