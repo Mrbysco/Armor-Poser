@@ -53,7 +53,6 @@ public class ArmorStandScreen extends Screen {
 
 	@Override
 	public void init() {
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(true);
 		super.init();
 
 		int offsetX = 110;
@@ -66,12 +65,11 @@ public class ArmorStandScreen extends Screen {
 			int width = 40;
 			int height = 20;
 
-			this.toggleButtons[i] = new ToggleButton(x, y, width, height, this.armorStandData.getBooleanValue(i), (button) -> {
+			this.addRenderableWidget(this.toggleButtons[i] = new ToggleButton.Builder(this.armorStandData.getBooleanValue(i), (button) -> {
 				ToggleButton toggleButton = ((ToggleButton) button);
 				toggleButton.setValue(!toggleButton.getValue());
 				this.textFieldUpdated();
-			});
-			this.addRenderableWidget(this.toggleButtons[i]);
+			}).bounds(x, y, width, height).build());
 		}
 
 		// rotation textbox
@@ -100,14 +98,14 @@ public class ArmorStandScreen extends Screen {
 
 		// copy & paste buttons
 		offsetX = 20;
-		this.addRenderableWidget(new Button(offsetX, offsetY, 64, 20, Component.translatable("armorposer.gui.label.copy"), (button) -> {
+		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.copy"), (button) -> {
 			CompoundTag compound = this.writeFieldsToNBT();
 			String clipboardData = compound.toString();
 			if (this.minecraft != null) {
 				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
-		}));
-		this.addRenderableWidget(new Button(offsetX + 66, offsetY, 64, 20, Component.translatable("armorposer.gui.label.paste"), (button) -> {
+		}).bounds(offsetX, offsetY, 64, 20).build());
+		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.paste"), (button) -> {
 			try {
 				String clipboardData = null;
 				if (this.minecraft != null) {
@@ -119,22 +117,18 @@ public class ArmorStandScreen extends Screen {
 			} catch (Exception e) {
 				//Nope
 			}
-		}));
+		}).bounds(offsetX + 66, offsetY, 64, 20).build());
 
 		// done & cancel buttons
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, Component.translatable("gui.done"), (button) -> {
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}));
-		this.addRenderableWidget(new Button(offsetX - 96, offsetY, 96, 20, Component.translatable("gui.cancel"), (button) -> {
+		}).bounds(offsetX - ((2 * 96) + 2), offsetY, 96, 20).build());
+		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
 			this.updateEntity(this.entityArmorStand, this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}));
-	}
-
-	public void removed() {
-		this.minecraft.keyboardHandler.setSendRepeatsToGui(false);
+		}).bounds(offsetX - 96, offsetY, 96, 20).build());
 	}
 
 	@Override
