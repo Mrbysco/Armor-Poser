@@ -20,13 +20,18 @@ body:
           required: true
         - label: I am crashing and can provide my crash report(s)
         - label: I am using the latest version of the mod
-    validations:
-      required: false
   - type: input
     id: forge-info
     attributes:
       label: Forge version
       placeholder: ex. 36.2.0
+    validations:
+      required: true
+  - type: input
+    id: minecraft-info
+    attributes:
+      label: Minecraft version
+      placeholder: ex. 1.16.5
     validations:
       required: true
   - type: input
