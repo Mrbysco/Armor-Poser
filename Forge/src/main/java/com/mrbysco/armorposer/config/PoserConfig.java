@@ -20,12 +20,10 @@ public class PoserConfig {
 
 			enableConfigGui = builder
 					.comment("Show the Armor Stand configuration GUI on shift right click")
-					.translation("armorposer.config.enableConfigGui.tooltip")
 					.define("enableConfigGui", true);
 
 			enableNameTags = builder
 					.comment("Allow Armor Stand to be renamed using name tags")
-					.translation("armorposer.config.enableNameTags.tooltip")
 					.define("enableNameTags", true);
 
 			builder.pop();

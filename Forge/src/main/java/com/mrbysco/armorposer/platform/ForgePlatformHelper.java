@@ -5,7 +5,7 @@ import com.mrbysco.armorposer.packets.ArmorStandSyncMessage;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraftforge.network.PacketDistributor;
+import net.minecraftforge.fmllegacy.network.PacketDistributor;
 
 public class ForgePlatformHelper implements IPlatformHelper {
 	@Override

@@ -1,44 +1,44 @@
 {
-    "schemaVersion": 1,
-    "id": "armorposer",
-    "version": "${version}",
-  
-    "name": "Armor Poser",
-    "description": "A GUI to allow configuration of Armor Stand properties",
-    "authors": [
-      "Mrbysco"
+  "schemaVersion": 1,
+  "id": "armorposer",
+  "version": "${version}",
+  "name": "Armor Poser",
+  "description": "A GUI to allow configuration of Armor Stand properties",
+  "authors": [
+    "Mrbysco",
+    "ShyNieke"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/durability-notifier",
+    "sources": "https://github.com/Mrbysco/durability-notifier",
+    "issues": "https://github.com/Mrbysco/durability-notifier/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/armorposer/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mrbysco.armorposer.ArmorPoser"
     ],
-    "contact": {
-      "homepage": "https://www.curseforge.com/minecraft/mc-mods/durability-notifier",
-      "sources": "https://github.com/Mrbysco/durability-notifier",
-      "issues": "https://github.com/Mrbysco/durability-notifier/issues"
-    },
-
-    "license": "MIT",
-    "icon": "assets/armorposer/icon.png",
-  
-    "environment": "*",
-    "entrypoints": {
-      "main": [
-        "com.mrbysco.armorposer.ArmorPoser"
-      ],
-      "client": [
-        "com.mrbysco.armorposer.ArmorPoserClient"
-      ]
-    },
-    "mixins": [
-	  "armorposer.fabric.mixins.json"
+    "client": [
+      "com.mrbysco.armorposer.ArmorPoserClient"
     ],
-  
-    "depends": {
-      "fabricloader": ">=0.12",
-      "fabric": "*",
-      "minecraft": "1.18.x",
-      "java": ">=17",
-      "cloth-config": ">=6.0.42"
-    },
-    "suggests": {
-      "another-mod": "*"
-    }
+    "modmenu": [
+      "com.mrbysco.armorposer.config.PoserModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "armorposer.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14.13",
+    "minecraft": "~1.17.1",
+    "java": ">=17",
+    "fabric": "*",
+    "cloth-config2": ">=5.3.63"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
+}
   

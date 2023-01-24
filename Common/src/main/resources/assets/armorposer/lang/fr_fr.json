@@ -20,12 +20,10 @@
     "armorposer.gui.label.copy": "Copier",
     "armorposer.gui.label.paste": "Coller",
 
-
-    "armorposer.config.enableConfigGui": "Activer l'interface",
-    "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",
-
-    "armorposer.config.overrideEntityInteract": "Interaction de processus",
-    "armorposer.config.overrideEntityInteract.tooltip": "Utilisez une logique personnalisée lorsque vous faites un clic droit sur un prote-armure",
+    "text.autoconfig.armorposer.title": "Armor Poser",
+    "text.autoconfig.armorposer.option.general": "General",
+    "text.autoconfig.armorposer.option.general.enableConfigGui": "Enable GUI",
+    "text.autoconfig.armorposer.option.general.enableNameTags": "Enable NameTags",
 
     "armorposer.key.openArmorStandGui": "Ouvrir le menu",
     "armorposer.key.categories.general": "Configurateur du porte-armure"

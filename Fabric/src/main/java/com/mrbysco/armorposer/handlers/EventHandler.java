@@ -2,7 +2,6 @@ package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
-import io.netty.buffer.Unpooled;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -26,7 +25,7 @@ public class EventHandler {
 			PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
 
 			if (config.general.enableConfigGui && player.isShiftKeyDown()) {
-				if (hand == InteractionHand.MAIN_HAND && !player.getLevel().isClientSide) {
+				if (hand == InteractionHand.MAIN_HAND && !player.getCommandSenderWorld().isClientSide) {
 					FriendlyByteBuf buf = PacketByteBufs.create();
 					buf.writeInt(armorstand.getId());
 					ServerPlayNetworking.send((ServerPlayer) player, Reference.SCREEN_PACKET_ID, buf);
@@ -38,7 +37,7 @@ public class EventHandler {
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
 					cancelRightClick = true;
-					if (hand == InteractionHand.MAIN_HAND && !player.getLevel().isClientSide) {
+					if (hand == InteractionHand.MAIN_HAND && !player.getCommandSenderWorld().isClientSide) {
 						armorstand.setCustomName(stack.getHoverName());
 						armorstand.setCustomNameVisible(true);
 					}
