@@ -1,6 +1,6 @@
 name: Build and Maven
 
-on: [push, workflow_dispatch]
+on: [ push, workflow_dispatch ]
 
 jobs:
   build:
@@ -19,8 +19,12 @@ jobs:
         run: ./gradlew build
       - uses: actions/upload-artifact@v3
         with:
-          name: Artifact
-          path: ./build/libs/*.jar
+          name: ForgeArtifact
+          path: ./Forge/build/libs/*.jar
+      - uses: actions/upload-artifact@v3
+        with:
+          name: FabricArtifact
+          path: ./Fabric/build/libs/*.jar
       - name: Publish the Mod
         if: contains(github.event.head_commit.message, '[push]') || contains(github.event.head_commit.message, '[build]')
         env:
