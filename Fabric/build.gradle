@@ -81,7 +81,7 @@ publishing {
     repositories {
         if (System.getenv().SAP_SECRET) {
             maven {
-                url "https://maven.saps.dev/minecraft"
+                url "https://maven.saps.dev/releases"
                 credentials {
                     username = "mrbysco"
                     password = "${System.getenv().SAP_SECRET}"
