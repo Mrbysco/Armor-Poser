@@ -81,19 +81,13 @@ processResources {
 
 jar.finalizedBy('reobfJar')
 
-def reobfFile = file("$buildDir/reobfJar/output.jar")
-def reobfArtifact = artifacts.add('default', reobfFile) {
-    type 'jar'
-    builtBy 'reobfJar'
-}
-
 publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
             artifactId project.archivesBaseName
             version project.version
-            artifact jar
+            from components.java
         }
     }
     repositories {
