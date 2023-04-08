@@ -1,6 +1,5 @@
 [![build](https://github.com/Mrbysco/Armor-Poser/actions/workflows/build.yml/badge.svg)](https://github.com/Mrbysco/Armor-Poser/actions/workflows/build.yml)
 [![](http://cf.way2muchnoise.eu/versions/450663.svg)](https://www.curseforge.com/minecraft/mc-mods/armor-poser)
-[![](https://modrinth-utils.vercel.app/api/badge/versions?id=PFwYNrHb)](https://modrinth.com/mod/armor-poser)
 
 # Armor Poser #
 
