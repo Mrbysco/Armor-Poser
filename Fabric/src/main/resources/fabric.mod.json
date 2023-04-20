@@ -8,9 +8,9 @@
     "Mrbysco"
   ],
   "contact": {
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/durability-notifier",
-    "sources": "https://github.com/Mrbysco/durability-notifier",
-    "issues": "https://github.com/Mrbysco/durability-notifier/issues"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/armor-poser",
+    "sources": "https://github.com/Mrbysco/armor-poser",
+    "issues": "https://github.com/Mrbysco/armor-poser/issues"
   },
   "license": "MIT",
   "icon": "assets/armorposer/icon.png",
@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.mrbysco.armorposer.ArmorPoserClient"
+    ],
+    "modmenu": [
+      "com.mrbysco.armorposer.config.PoserModMenuIntegration"
     ]
   },
   "mixins": [
