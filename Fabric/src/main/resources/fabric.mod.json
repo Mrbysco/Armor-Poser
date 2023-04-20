@@ -1,44 +1,43 @@
 {
-    "schemaVersion": 1,
-    "id": "armorposer",
-    "version": "${version}",
-  
-    "name": "Armor Poser",
-    "description": "A GUI to allow configuration of Armor Stand properties",
-    "authors": [
-      "Mrbysco"
+  "schemaVersion": 1,
+  "id": "armorposer",
+  "version": "${version}",
+  "name": "Armor Poser",
+  "description": "A GUI to allow configuration of Armor Stand properties",
+  "authors": [
+    "Mrbysco"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/armor-poser",
+    "sources": "https://github.com/Mrbysco/armor-poser",
+    "issues": "https://github.com/Mrbysco/armor-poser/issues"
+  },
+  "license": "MIT",
+  "icon": "assets/armorposer/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.mrbysco.armorposer.ArmorPoser"
     ],
-    "contact": {
-      "homepage": "https://www.curseforge.com/minecraft/mc-mods/durability-notifier",
-      "sources": "https://github.com/Mrbysco/durability-notifier",
-      "issues": "https://github.com/Mrbysco/durability-notifier/issues"
-    },
-
-    "license": "MIT",
-    "icon": "assets/armorposer/icon.png",
-  
-    "environment": "*",
-    "entrypoints": {
-      "main": [
-        "com.mrbysco.armorposer.ArmorPoser"
-      ],
-      "client": [
-        "com.mrbysco.armorposer.ArmorPoserClient"
-      ]
-    },
-    "mixins": [
-	  "armorposer.fabric.mixins.json"
+    "client": [
+      "com.mrbysco.armorposer.ArmorPoserClient"
     ],
-  
-    "depends": {
-      "fabricloader": ">=0.14",
-      "fabric": "*",
-      "minecraft": "1.19.x",
-      "java": ">=17",
-      "cloth-config": ">=7"
-    },
-    "suggests": {
-      "another-mod": "*"
-    }
+    "modmenu": [
+      "com.mrbysco.armorposer.config.PoserModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "armorposer.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.14",
+    "fabric": "*",
+    "minecraft": "1.19.x",
+    "java": ">=17",
+    "cloth-config": ">=7"
+  },
+  "suggests": {
+    "another-mod": "*"
   }
+}
   
