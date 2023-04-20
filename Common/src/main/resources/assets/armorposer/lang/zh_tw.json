@@ -24,8 +24,6 @@
     "armorposer.config.enableConfigGui.tooltip": "按\"Shift+右鍵\"點撃盔甲座時顯示盔甲座配置GUI",
     "armorposer.config.overrideEntityInteract": "過程交互",
     "armorposer.config.overrideEntityInteract.tooltip": "按右鍵點撃盔甲座時使用自定義邏輯",
-    "armorposer.config.enableNameTags": "啟用命名功能",
-    "armorposer.config.enableNameTags.tooltip": "允許盔甲座使用命名牌重新命名",
 
     "armorposer.key.openArmorStandGui": "打開GUI",
     "armorposer.key.categories.general": "盔甲座配置",
