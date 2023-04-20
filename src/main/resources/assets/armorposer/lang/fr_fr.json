@@ -1,0 +1,32 @@
+{
+  "_comment": "fr_fr",
+
+  "armorposer.gui.title": "Armor Stand",
+
+  "armorposer.gui.label.invisible": "Invisible",
+  "armorposer.gui.label.no_base_plate": "Sans base",
+  "armorposer.gui.label.no_gravity": "Sans gravité",
+  "armorposer.gui.label.show_arms": "Afficher les bras",
+  "armorposer.gui.label.small": "Petit",
+  "armorposer.gui.label.rotation": "Rotation",
+
+  "armorposer.gui.label.head": "Tête",
+  "armorposer.gui.label.body": "Corps",
+  "armorposer.gui.label.left_leg": "Jambe gauche",
+  "armorposer.gui.label.right_leg": "Jambe droite",
+  "armorposer.gui.label.left_arm": "Bras gauche",
+  "armorposer.gui.label.right_arm": "Bras droit",
+
+  "armorposer.gui.label.copy": "Copier",
+  "armorposer.gui.label.paste": "Coller",
+
+
+  "armorposer.config.enableConfigGui": "Activer l'interface",
+  "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",
+
+  "armorposer.config.overrideEntityInteract": "Interaction de processus",
+  "armorposer.config.overrideEntityInteract.tooltip": "Utilisez une logique personnalisée lorsque vous faites un clic droit sur un prote-armure",
+
+  "armorposer.key.openArmorStandGui": "Ouvrir le menu",
+  "armorposer.key.categories.general": "Configurateur du porte-armure"
+}
