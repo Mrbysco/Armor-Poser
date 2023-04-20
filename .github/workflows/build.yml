@@ -1,6 +1,6 @@
 name: Build and Maven
 
-on: [ push, workflow_dispatch ]
+on: [push, workflow_dispatch]
 
 jobs:
   build:
@@ -25,7 +25,17 @@ jobs:
         with:
           name: FabricArtifact
           path: ./Fabric/build/libs/*.jar
-      - name: Publish the Mod
+      - name: Publish To Curseforge
+        if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[curseforge]')
+        env:
+          CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
+        run: ./gradlew curseforge
+      - name: Publish To Modrinth
+        if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[modrinth]')
+        env:
+          MODRINTH_KEY: ${{ secrets.MODRINTH_KEY }}
+        run: ./gradlew modrinth
+      - name: Publish to maven
         if: contains(github.event.head_commit.message, '[push]') || contains(github.event.head_commit.message, '[build]')
         env:
           SAP_SECRET: ${{ secrets.SAP_SECRET }}
