@@ -1,0 +1,17 @@
+apply plugin: "com.matthewprenger.cursegradle"
+
+if (System.getenv().CURSEFORGE_KEY) {
+    curseforge {
+        apiKey = System.getenv().CURSEFORGE_KEY
+        project {
+            id = project.curseforge_id
+            releaseType = "release"
+            addGameVersion "Forge"
+            addGameVersion "${mc_version}"
+            addGameVersion "Java 17"
+            mainArtifact(jar)
+            changelog = file("$project.rootDir/changelog.md")
+            changelogType = 'markdown'
+        }
+    }
+}
