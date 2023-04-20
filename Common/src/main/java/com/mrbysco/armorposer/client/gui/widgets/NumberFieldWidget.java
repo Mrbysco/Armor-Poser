@@ -36,7 +36,7 @@ public class NumberFieldWidget extends EditBox {
 	}
 
 	@Override
-	public void setFocused(boolean focused) {
+	protected void setFocused(boolean focused) {
 		super.setFocused(focused);
 		if (!focused) {
 			this.setHighlightPos(this.getValue().length());
