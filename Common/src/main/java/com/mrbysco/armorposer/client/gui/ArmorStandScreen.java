@@ -231,10 +231,10 @@ public class ArmorStandScreen extends Screen {
 				if (this.poseTextFields[i].isFocused()) {
 					this.textFieldUpdated();
 					this.poseTextFields[i].moveCursorToEnd();
-					this.poseTextFields[i].setFocus(false);
+					this.poseTextFields[i].setFocused(false);
 
 					int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
-					this.poseTextFields[j].setFocus(true);
+					this.poseTextFields[j].setFocused(true);
 					this.poseTextFields[j].moveCursorTo(0);
 					this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
 				}

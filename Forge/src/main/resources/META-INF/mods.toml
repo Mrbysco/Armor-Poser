@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[41,)"
+loaderVersion="[45,)"
 issueTrackerURL="https://github.com/Mrbysco/armor-poser/issues"
 license="MIT"
 
@@ -16,12 +16,6 @@ A GUI to allow configuration of Armor Stand properties
 [[dependencies.armorposer]]
 modId="minecraft"
 mandatory=true
-versionRange="[1.19,1.20)"
-ordering="NONE"
-side="BOTH"
-[[dependencies.armorposer]]
-modId="forge"
-mandatory=true
-versionRange="[41.0.94,)"
+versionRange="[1.19.4,1.20)"
 ordering="NONE"
 side="BOTH"

@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.mrbysco.armorposer.ArmorPoserClient"
+    ],
+    "modmenu": [
+      "com.mrbysco.armorposer.config.PoserModMenuIntegration"
     ]
   },
   "mixins": [
@@ -29,9 +32,9 @@
   "depends": {
     "fabricloader": ">=0.14",
     "fabric": "*",
-    "minecraft": ">=1.19.3",
+    "minecraft": ">=1.19.4",
     "java": ">=17",
-    "cloth-config": ">=9"
+    "cloth-config": ">=10"
   },
   "suggests": {
     "another-mod": "*"
