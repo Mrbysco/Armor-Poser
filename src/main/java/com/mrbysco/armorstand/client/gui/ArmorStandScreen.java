@@ -28,8 +28,8 @@ public class ArmorStandScreen extends Screen {
 	private final ArmorStandEntity entityArmorStand;
 	private final ArmorStandData armorStandData;
 
-	private final String[] buttonLabels = new String[] { "invisible", "no_base_plate", "no_gravity", "show_arms", "small", "rotation" };
-	private final String[] sliderLabels = new String[] { "head", "body", "left_leg", "right_leg", "left_arm", "right_arm" };
+	private final String[] buttonLabels = new String[]{"invisible", "no_base_plate", "no_gravity", "show_arms", "small", "rotation"};
+	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm"};
 
 	private NumberFieldWidget rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[5];
@@ -72,7 +72,7 @@ public class ArmorStandScreen extends Screen {
 			int height = 20;
 
 			this.toggleButtons[i] = new ToggleButton(x, y, width, height, this.armorStandData.getBooleanValue(i), (button) -> {
-				ToggleButton toggleButton = ((ToggleButton)button);
+				ToggleButton toggleButton = ((ToggleButton) button);
 				toggleButton.setValue(!toggleButton.getValue());
 				this.textFieldUpdated();
 			});
@@ -81,7 +81,7 @@ public class ArmorStandScreen extends Screen {
 
 		// rotation textbox
 		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, new StringTextComponent("field.rotation"));
-		this.rotationTextField.setValue(String.valueOf((int)this.armorStandData.rotation));
+		this.rotationTextField.setValue(String.valueOf((int) this.armorStandData.rotation));
 		this.rotationTextField.setMaxLength(3);
 		this.addWidget(this.rotationTextField);
 
@@ -93,7 +93,7 @@ public class ArmorStandScreen extends Screen {
 			int y = 1 + offsetY + ((i / 3) * 22);
 			int width = 28;
 			int height = 17;
-			String value = String.valueOf((int)this.armorStandData.pose[i]);
+			String value = String.valueOf((int) this.armorStandData.pose[i]);
 
 			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, new StringTextComponent(String.format("field.%s", i)));
 			this.poseTextFields[i].setValue(value);
@@ -130,11 +130,11 @@ public class ArmorStandScreen extends Screen {
 		offsetX = this.width - 20;
 		this.addButton(new Button(offsetX - ((2 * 96) + 2), offsetY, 96, 20, new TranslationTextComponent("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
-			this.minecraft.setScreen((Screen)null);
+			this.minecraft.setScreen((Screen) null);
 		}));
 		this.addButton(new Button(offsetX - 96, offsetY, 96, 20, new TranslationTextComponent("gui.cancel"), (button) -> {
 			this.updateEntity(this.armorStandData.writeToNBT());
-			this.minecraft.setScreen((Screen)null);
+			this.minecraft.setScreen((Screen) null);
 		}));
 	}
 
@@ -187,7 +187,7 @@ public class ArmorStandScreen extends Screen {
 	@Override
 	public boolean charTyped(char codePoint, int modifiers) {
 		boolean typed = super.charTyped(codePoint, modifiers);
-		if(typed) {
+		if (typed) {
 			this.textFieldUpdated();
 		}
 		return typed;
@@ -301,10 +301,10 @@ public class ArmorStandScreen extends Screen {
 			this.toggleButtons[i].setValue(armorStandData.getBooleanValue(i));
 		}
 
-		this.rotationTextField.setValue(String.valueOf((int)armorStandData.rotation));
+		this.rotationTextField.setValue(String.valueOf((int) armorStandData.rotation));
 
 		for (int i = 0; i < this.poseTextFields.length; i++) {
-			this.poseTextFields[i].setValue(String.valueOf((int)armorStandData.pose[i]));
+			this.poseTextFields[i].setValue(String.valueOf((int) armorStandData.pose[i]));
 		}
 	}
 

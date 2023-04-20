@@ -37,12 +37,12 @@ public class ArmorStandSyncMessage {
 				final ServerWorld world = ctx.getSender().getLevel();
 				Entity entity = world.getEntity(this.entityUUID);
 				if (entity instanceof ArmorStandEntity) {
-					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
+					ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
 
 					CompoundNBT entityTag = armorStandEntity.saveWithoutId(new CompoundNBT());
 					CompoundNBT entityTagCopy = entityTag.copy();
 
-					if(!this.data.isEmpty()) {
+					if (!this.data.isEmpty()) {
 						entityTagCopy.merge(this.data);
 						UUID uuid = armorStandEntity.getUUID();
 						armorStandEntity.load(entityTagCopy);

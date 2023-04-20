@@ -3,8 +3,6 @@ package com.mrbysco.armorstand.client.gui.widgets;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.util.text.TranslationTextComponent;
 
-import net.minecraft.client.gui.widget.button.Button.IPressable;
-
 public class ToggleButton extends Button {
 
 	private boolean value;

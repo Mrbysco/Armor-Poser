@@ -34,7 +34,7 @@ public class ArmorStandScreenMessage {
 					entity = mc.level.getEntity(entityID);
 				}
 				if (entity instanceof ArmorStandEntity) {
-					ArmorStandEntity armorStandEntity = (ArmorStandEntity)entity;
+					ArmorStandEntity armorStandEntity = (ArmorStandEntity) entity;
 					ArmorStandScreen.openScreen(armorStandEntity);
 				}
 			}

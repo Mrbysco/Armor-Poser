@@ -35,6 +35,7 @@ public class ModConfiguration {
 
 	public static final ForgeConfigSpec commonSpec;
 	public static final ModConfiguration.Common COMMON;
+
 	static {
 		final Pair<Common, ForgeConfigSpec> specPair = new ForgeConfigSpec.Builder().configure(ModConfiguration.Common::new);
 		commonSpec = specPair.getRight();
@@ -43,7 +44,7 @@ public class ModConfiguration {
 
 	@SubscribeEvent
 	public static void onLoad(final ModConfig.Loading configEvent) {
-		ArmorPoser.LOGGER.debug("Loaded {}'s config file {}", ArmorPoser.MOD_ID,  configEvent.getConfig().getFileName());
+		ArmorPoser.LOGGER.debug("Loaded {}'s config file {}", ArmorPoser.MOD_ID, configEvent.getConfig().getFileName());
 	}
 
 	@SubscribeEvent
