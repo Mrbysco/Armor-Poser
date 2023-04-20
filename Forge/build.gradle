@@ -8,6 +8,10 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
     }
 }
+plugins {
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'com.modrinth.minotaur' version "2.+"
+}
 apply plugin: 'java'
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
@@ -101,5 +105,36 @@ publishing {
                 }
             }
         }
+    }
+}
+
+if (System.getenv().CURSEFORGE_KEY) {
+    curseforge {
+        apiKey = System.getenv().CURSEFORGE_KEY
+        project {
+            id = project.curseforge_id
+            releaseType = "release"
+            addGameVersion "Forge"
+            addGameVersion "${minecraft_version}"
+            addGameVersion "Java 17"
+            mainArtifact(jar)
+            changelog = file("$project.rootDir/changelog.md")
+            changelogType = 'markdown'
+        }
+    }
+}
+
+if (System.getenv().MODRINTH_KEY) {
+    String fileContents = file("$project.rootDir/changelog.md").text
+    modrinth {
+        token = System.getenv().MODRINTH_KEY
+        projectId = project.modrinth_id
+        versionType = "release"
+        versionName = "${mod_name} ${minecraft_version}"
+        versionNumber = project.version
+        uploadFile = jar
+        changelog = fileContents
+        gameVersions = ["${minecraft_version}"]
+        loaders = ["forge"]
     }
 }

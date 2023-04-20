@@ -2,6 +2,8 @@ plugins {
     id 'fabric-loom' version '1.1-SNAPSHOT'
     id 'maven-publish'
     id 'idea'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'com.modrinth.minotaur' version "2.+"
 }
 
 archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
@@ -81,6 +83,51 @@ publishing {
                     password = "${System.getenv().SAP_SECRET}"
                 }
             }
+        }
+    }
+}
+
+if (System.getenv().CURSEFORGE_KEY) {
+    curseforge {
+        apiKey = System.getenv().CURSEFORGE_KEY
+        project {
+            id = project.curseforge_id
+            releaseType = "beta"
+            addGameVersion "Fabric"
+            addGameVersion "${minecraft_version}"
+            addGameVersion "Java 17"
+            mainArtifact(remapJar)
+            changelog = file("$project.rootDir/changelog.md")
+            changelogType = 'markdown'
+
+            relations {
+                requiredDependency "fabric-api"
+                requiredDependency "cloth-config"
+            }
+        }
+
+        options {
+            forgeGradleIntegration = false
+        }
+    }
+}
+
+if (System.getenv().MODRINTH_KEY) {
+    String fileContents = file("$project.rootDir/changelog.md").text
+    modrinth {
+        token = System.getenv().MODRINTH_KEY
+        projectId = project.modrinth_id
+        versionType = "beta"
+        versionName = "${mod_name} ${minecraft_version}"
+        versionNumber = project.version
+        uploadFile = remapJar
+        changelog = fileContents
+        gameVersions = ["${minecraft_version}"]
+        loaders = ["fabric"]
+
+        dependencies {
+            required.project "fabric-api"
+            required.project "cloth-config"
         }
     }
 }
