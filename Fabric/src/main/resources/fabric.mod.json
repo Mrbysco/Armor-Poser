@@ -21,6 +21,9 @@
     ],
     "client": [
       "com.mrbysco.armorposer.ArmorPoserClient"
+    ],
+    "modmenu": [
+      "com.mrbysco.armorposer.config.PoserModMenuIntegration"
     ]
   },
   "mixins": [
