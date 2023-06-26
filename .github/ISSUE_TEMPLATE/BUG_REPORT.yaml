@@ -21,10 +21,11 @@ body:
         - label: I am crashing and can provide my crash report(s)
         - label: I am using the latest version of the mod
   - type: input
-    id: forge-info
+    id: loader-info
     attributes:
-      label: Forge version
-      placeholder: ex. 36.2.0
+      label: Loader version
+      placeholder: ex. Forge 36.2.0 / Fabric 0.14.12
+      description: Please be as specific as possible, latest is not a valid version
     validations:
       required: true
   - type: input
@@ -32,6 +33,7 @@ body:
     attributes:
       label: Minecraft version
       placeholder: ex. 1.16.5
+      description: Please be as specific as possible, latest is not a valid version
     validations:
       required: true
   - type: input
@@ -39,6 +41,7 @@ body:
     attributes:
       label: Mod version
       placeholder: ex. 0.0.1
+      description: Please be as specific as possible, latest is not a valid version
     validations:
       required: true
   - type: input
@@ -46,6 +49,7 @@ body:
     attributes:
       label: Java version
       placeholder: ex. Java 8 update 51
+      description: Please be as specific as possible, latest is not a valid version
     validations:
       required: true
   - type: textarea

@@ -1,8 +1,6 @@
 {
-    "pack": {
-        "description": "${mod_name} resources",
-        "pack_format": 13,
-        "forge:client_resources_pack_format": 13,
-        "forge:server_data_pack_format": 12
-    }
+  "pack": {
+    "description": "${mod_name} resources",
+    "pack_format": 15
+  }
 }

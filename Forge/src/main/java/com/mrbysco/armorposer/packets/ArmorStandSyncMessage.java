@@ -33,7 +33,7 @@ public class ArmorStandSyncMessage {
 		Context ctx = context.get();
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
-				final ServerLevel world = ctx.getSender().getLevel();
+				final ServerLevel world = ctx.getSender().serverLevel();
 				Entity entity = world.getEntity(this.entityUUID);
 				if (entity instanceof ArmorStand armorStandEntity) {
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());

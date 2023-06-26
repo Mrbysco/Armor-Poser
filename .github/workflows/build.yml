@@ -20,11 +20,11 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: ForgeArtifact
-          path: ./Forge/build/libs/*.jar
+          path: ./forge/build/libs/*.jar
       - uses: actions/upload-artifact@v3
         with:
           name: FabricArtifact
-          path: ./Fabric/build/libs/*.jar
+          path: ./fabric/build/libs/*.jar
       - name: Publish To Curseforge
         if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[curseforge]')
         env:
