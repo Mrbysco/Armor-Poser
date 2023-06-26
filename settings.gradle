@@ -2,10 +2,6 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
         maven {
-            name = 'Forge'
-            url = 'https://maven.minecraftforge.net/'
-        }
-        maven {
             name = 'Fabric'
             url = 'https://maven.fabricmc.net/'
         }
@@ -16,8 +12,5 @@ pluginManagement {
     }
 }
 
-// This should match the folder name of the project, or else IDEA may complain (see https://youtrack.jetbrains.com/issue/IDEA-317606)
 rootProject.name = 'ArmorPoser'
-include("common")
-include("fabric")
-include("forge")
+include("Common", "Fabric", "Forge")

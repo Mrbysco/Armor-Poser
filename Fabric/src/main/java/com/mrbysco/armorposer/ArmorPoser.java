@@ -3,7 +3,6 @@ package com.mrbysco.armorposer;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.handlers.EventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -16,18 +15,17 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import java.util.UUID;
 
 public class ArmorPoser implements ModInitializer {
-	public static ConfigHolder<PoserConfig> config;
 
 	@Override
 	public void onInitialize() {
-		config = AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
+		AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
 
 		CommonClass.init();
 
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
 		ServerPlayNetworking.registerGlobalReceiver(Reference.SYNC_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-			final ServerLevel world = player.serverLevel();
+			final ServerLevel world = player.getLevel();
 
 			UUID standUUID = buf.readUUID();
 			CompoundTag data = buf.readNbt();

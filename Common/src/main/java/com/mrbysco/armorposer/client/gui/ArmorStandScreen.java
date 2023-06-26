@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.client.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldWidget;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
@@ -7,7 +8,6 @@ import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
 import net.minecraft.client.GameNarrator;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
@@ -73,7 +73,7 @@ public class ArmorStandScreen extends Screen {
 		}
 
 		// rotation textbox
-		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, Component.translatable("armorposer.gui.label.rotation"));
+		this.rotationTextField = new NumberFieldWidget(this.font, 1 + offsetX, 1 + offsetY + (this.toggleButtons.length * 22), 38, 17, Component.translatable("field.rotation"));
 		this.rotationTextField.setValue(String.valueOf((int) this.armorStandData.rotation));
 		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
@@ -88,7 +88,7 @@ public class ArmorStandScreen extends Screen {
 			int height = 17;
 			String value = String.valueOf((int) this.armorStandData.pose[i]);
 
-			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, Component.literal(value));
+			this.poseTextFields[i] = new NumberFieldWidget(this.font, x, y, width, height, Component.translatable("field.%s", i));
 			this.poseTextFields[i].setValue(value);
 			this.poseTextFields[i].setMaxLength(4);
 			this.addWidget(this.poseTextFields[i]);
@@ -132,16 +132,16 @@ public class ArmorStandScreen extends Screen {
 	}
 
 	@Override
-	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics);
+	public void render(PoseStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+		this.renderBackground(matrixStack);
 
 		// gui title
-		guiGraphics.drawCenteredString(this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 20, 0xFFFFFF);
+		this.drawCenteredString(matrixStack, this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 20, 0xFFFFFF);
 
 		// textboxes
-		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
+		this.rotationTextField.render(matrixStack, mouseX, mouseY, partialTicks);
 		for (EditBox textField : this.poseTextFields)
-			textField.render(guiGraphics, mouseX, mouseY, partialTicks);
+			textField.render(matrixStack, mouseX, mouseY, partialTicks);
 
 		int offsetY = 50;
 
@@ -150,23 +150,23 @@ public class ArmorStandScreen extends Screen {
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(this.font, this.buttonLabels[i], x, y, 0xA0A0A0, false);
+			this.drawString(matrixStack, this.font, this.buttonLabels[i], x, y, 0xA0A0A0);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		guiGraphics.drawString(this.font, "X", offsetX, 37, 0xA0A0A0, false);
-		guiGraphics.drawString(this.font, "Y", offsetX + (35), 37, 0xA0A0A0, false);
-		guiGraphics.drawString(this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0, false);
+		this.drawString(matrixStack, this.font, "X", offsetX, 37, 0xA0A0A0);
+		this.drawString(matrixStack, this.font, "Y", offsetX + (35), 37, 0xA0A0A0);
+		this.drawString(matrixStack, this.font, "Z", offsetX + (2 * 35), 37, 0xA0A0A0);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			int x = offsetX - this.font.width(this.sliderLabels[i]) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(this.font, this.sliderLabels[i], x, y, 0xA0A0A0, false);
+			this.drawString(matrixStack, this.font, this.sliderLabels[i], x, y, 0xA0A0A0);
 		}
 
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		super.render(matrixStack, mouseX, mouseY, partialTicks);
 	}
 
 	@Override

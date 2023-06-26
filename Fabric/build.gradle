@@ -1,15 +1,12 @@
 plugins {
-    id 'java'
-    id 'idea'
+    id 'fabric-loom' version '1.1-SNAPSHOT'
     id 'maven-publish'
-    id 'fabric-loom'
-    id 'com.matthewprenger.cursegradle'
-    id 'com.modrinth.minotaur'
+    id 'idea'
+    id 'com.matthewprenger.cursegradle' version '1.4.0'
+    id 'com.modrinth.minotaur' version "2.+"
 }
 
-base {
-    archivesName = "${mod_name}-fabric-${minecraft_version}"
-}
+archivesBaseName = "${mod_name}-fabric-${minecraft_version}"
 
 repositories {
     maven {
@@ -28,7 +25,8 @@ dependencies {
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${fabric_loader_version}"
     modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
-    implementation project(":common")
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
+    implementation project(":Common")
 
     modApi("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
@@ -37,12 +35,6 @@ dependencies {
 }
 
 loom {
-    if (project(":common").file("src/main/resources/${mod_id}.accesswidener").exists()) {
-        accessWidenerPath.set(project(":common").file("src/main/resources/${mod_id}.accesswidener"))
-    }
-    mixin {
-        defaultRefmapName.set("${mod_id}.refmap.json")
-    }
     runs {
         client {
             client()
@@ -59,25 +51,25 @@ loom {
     }
 }
 
-tasks.withType(JavaCompile).configureEach {
-    source(project(":common").sourceSets.main.allSource)
-}
-tasks.withType(Javadoc).configureEach {
-    source(project(":common").sourceSets.main.allJava)
-}
-tasks.named("sourcesJar", Jar) {
-    from(project(":common").sourceSets.main.allSource)
-}
 
 processResources {
-    from project(":common").sourceSets.main.resources
+    from project(":Common").sourceSets.main.resources
+    inputs.property "version", project.version
+
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+}
+
+tasks.withType(JavaCompile) {
+    source(project(":Common").sourceSets.main.allSource)
 }
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             groupId project.group
-            artifactId base.archivesName.get()
+            artifactId project.archivesBaseName
             version project.version
             from components.java
         }
