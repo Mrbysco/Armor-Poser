@@ -10,10 +10,11 @@ public class ArmorStandData {
 	public boolean noGravity = false;
 	public boolean showArms = false;
 	public boolean small = false;
+	public boolean nameVisible = true;
 
 	public float rotation = 0F;
 
-	public float[] pose = new float[18];
+	public final float[] pose = new float[3 * 7];
 
 
 	public boolean getBooleanValue(int index) {
@@ -23,6 +24,7 @@ public class ArmorStandData {
 			case 2 -> this.noGravity;
 			case 3 -> this.showArms;
 			case 4 -> this.small;
+			case 5 -> this.nameVisible;
 			default -> false;
 		};
 	}
@@ -34,6 +36,7 @@ public class ArmorStandData {
 		this.noGravity = compound.getBoolean("NoGravity");
 		this.showArms = compound.getBoolean("ShowArms");
 		this.small = compound.getBoolean("Small");
+		this.nameVisible = compound.getBoolean("CustomNameVisible");
 
 		if (compound.contains("Rotation")) {
 			this.rotation = compound.getList("Rotation", CompoundTag.TAG_FLOAT).getFloat(0);
@@ -62,6 +65,7 @@ public class ArmorStandData {
 		compound.putBoolean("NoGravity", this.noGravity);
 		compound.putBoolean("ShowArms", this.showArms);
 		compound.putBoolean("Small", this.small);
+		compound.putBoolean("CustomNameVisible", this.nameVisible);
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotation));

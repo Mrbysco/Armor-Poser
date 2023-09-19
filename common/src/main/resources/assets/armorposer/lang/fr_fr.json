@@ -9,6 +9,7 @@
     "armorposer.gui.label.show_arms": "Afficher les bras",
     "armorposer.gui.label.small": "Petit",
     "armorposer.gui.label.rotation": "Rotation",
+    "armorposer.gui.label.name_visible": "Name Visible",
 
     "armorposer.gui.label.head": "Tête",
     "armorposer.gui.label.body": "Corps",
@@ -16,20 +17,40 @@
     "armorposer.gui.label.right_leg": "Jambe droite",
     "armorposer.gui.label.left_arm": "Bras gauche",
     "armorposer.gui.label.right_arm": "Bras droit",
+    "armorposer.gui.label.position": "Position",
 
     "armorposer.gui.label.copy": "Copier",
     "armorposer.gui.label.paste": "Coller",
+
+    "armorposer.gui.tooltip.invisible": "Toggle invisibility",
+    "armorposer.gui.tooltip.no_base_plate": "Toggle base plate",
+    "armorposer.gui.tooltip.no_gravity": "Toggle gravity",
+    "armorposer.gui.tooltip.show_arms": "Toggle arms",
+    "armorposer.gui.tooltip.small": "Toggle size",
+    "armorposer.gui.tooltip.rotation": "Change rotation",
+    "armorposer.gui.tooltip.name_visible": "Toggle name visibility",
+
+    "armorposer.gui.tooltip.x_rotation": "Adjust X rotation",
+    "armorposer.gui.tooltip.y_rotation": "Adjust Y rotation",
+    "armorposer.gui.tooltip.z_rotation": "Adjust Z rotation",
+    "armorposer.gui.tooltip.x_position": "Adjust X position",
+    "armorposer.gui.tooltip.y_position": "Adjust Y position",
+    "armorposer.gui.tooltip.y_position.disabled": "Disable gravity to adjust Y position",
+    "armorposer.gui.tooltip.z_position": "Adjust Z position",
+
+    "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
+    "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
 
 
     "armorposer.config.enableConfigGui": "Activer l'interface",
     "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",
 
-    "armorposer.config.overrideEntityInteract": "Interaction de processus",
-    "armorposer.config.overrideEntityInteract.tooltip": "Utilisez une logique personnalisée lorsque vous faites un clic droit sur un prote-armure",
-
-    "armorposer.key.openArmorStandGui": "Ouvrir le menu",
-    "armorposer.key.categories.general": "Configurateur du porte-armure",
+    "armorposer.config.enableNameTags": "Enable Name Tags",
+    "armorposer.config.enableNameTags.tooltip": "Allow Armor Stand to be renamed using name tags",
 
     "armorposer.config.allowScrolling": "Allow Scrolling",
-    "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen"
+    "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen",
+
+    "armorposer.key.openArmorStandGui": "Ouvrir le menu",
+    "armorposer.key.categories.general": "Configurateur du porte-armure"
 }

@@ -27,6 +27,7 @@
     ]
   },
   "mixins": [
+    "armorposer.mixins.json",
     "armorposer.fabric.mixins.json"
   ],
   "depends": {

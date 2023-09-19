@@ -5,8 +5,14 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import org.apache.commons.lang3.math.NumberUtils;
 
-public class NumberFieldWidget extends EditBox {
-	public NumberFieldWidget(Font font, int x, int y, int width, int height, Component defaultValue) {
+public class NumberFieldBox extends EditBox {
+
+	public float scrollMultiplier = 1;
+
+	public float modValue = 360;
+	public int decimalPoints = 0;
+
+	public NumberFieldBox(Font font, int x, int y, int width, int height, Component defaultValue) {
 		super(font, x, y, width, height, defaultValue);
 	}
 
@@ -17,8 +23,7 @@ public class NumberFieldWidget extends EditBox {
 
 	@Override
 	public void insertText(String textToWrite) {
-		if (this.isNumeric(textToWrite))
-			super.insertText(textToWrite);
+		if (this.isNumeric(textToWrite)) super.insertText(textToWrite);
 
 		float currentValue = getFloat();
 		if (currentValue > 360 || currentValue < -360) {
@@ -29,6 +34,11 @@ public class NumberFieldWidget extends EditBox {
 	@Override
 	public String getValue() {
 		return (this.isNumeric(super.getValue()) ? super.getValue() : "0");
+	}
+
+	@Override
+	public void setValue(String value) {
+		super.setValue(String.format("%." + decimalPoints + "f", Float.parseFloat(value)));
 	}
 
 	public float getFloat() {
@@ -44,7 +54,7 @@ public class NumberFieldWidget extends EditBox {
 		}
 	}
 
-	private boolean isNumeric(String value) {
+	protected boolean isNumeric(String value) {
 		return value.equals("-") || NumberUtils.isParsable(value);
 	}
 }

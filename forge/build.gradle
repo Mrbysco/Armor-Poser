@@ -4,10 +4,17 @@ plugins {
     id 'net.minecraftforge.gradle'
     id 'com.matthewprenger.cursegradle'
     id 'com.modrinth.minotaur'
+    id 'org.spongepowered.mixin'
 }
 
 base {
     archivesName = "${mod_name}-forge-${minecraft_version}"
+}
+
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+
+    config("${mod_id}.mixins.json")
 }
 
 minecraft {
@@ -71,6 +78,7 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
     compileOnly project(":common")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }
 
 tasks.withType(JavaCompile).configureEach {
