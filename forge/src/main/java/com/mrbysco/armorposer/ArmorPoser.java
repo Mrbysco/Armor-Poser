@@ -1,6 +1,5 @@
 package com.mrbysco.armorposer;
 
-
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenMessage;
 import com.mrbysco.armorposer.packets.ArmorStandSyncMessage;
@@ -29,8 +28,6 @@ public class ArmorPoser {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(Type.COMMON, PoserConfig.commonSpec);
 		eventBus.register(PoserConfig.class);
-
-		CommonClass.init();
 
 		eventBus.addListener(this::setup);
 	}

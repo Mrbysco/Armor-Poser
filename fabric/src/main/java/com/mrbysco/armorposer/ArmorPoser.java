@@ -2,6 +2,7 @@ package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.handlers.EventHandler;
+import com.mrbysco.armorposer.data.SyncData;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
@@ -22,25 +23,23 @@ public class ArmorPoser implements ModInitializer {
 	public void onInitialize() {
 		config = AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
 
-		CommonClass.init();
-
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
 		ServerPlayNetworking.registerGlobalReceiver(Reference.SYNC_PACKET_ID, (server, player, handler, buf, responseSender) -> {
 			final ServerLevel world = player.serverLevel();
 
-			UUID standUUID = buf.readUUID();
-			CompoundTag data = buf.readNbt();
+			SyncData syncData = SyncData.decode(buf);
 
 			server.execute(() -> {
-				Entity entity = world.getEntity(standUUID);
+				Entity entity = world.getEntity(syncData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
 					CompoundTag entityTagCopy = entityTag.copy();
 
-					if (!data.isEmpty()) {
-						entityTagCopy.merge(data);
+					CompoundTag tag = syncData.tag();
+					if (!tag.isEmpty()) {
+						entityTagCopy.merge(tag);
 						UUID uuid = armorStandEntity.getUUID();
 						armorStandEntity.load(entityTagCopy);
 						armorStandEntity.setUUID(uuid);

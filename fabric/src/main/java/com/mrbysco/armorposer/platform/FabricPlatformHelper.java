@@ -2,6 +2,7 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -18,8 +19,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		armorStand.load(CompoundNBT);
 
 		FriendlyByteBuf buf = PacketByteBufs.create();
-		buf.writeUUID(armorStand.getUUID());
-		buf.writeNbt(compound);
+		SyncData data = new SyncData(armorStand.getUUID(), compound);
+		data.encode(buf);
 		ClientPlayNetworking.send(Reference.SYNC_PACKET_ID, buf);
 	}
 

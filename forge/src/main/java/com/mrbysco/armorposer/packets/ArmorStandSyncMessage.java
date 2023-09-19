@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.packets;
 
+import com.mrbysco.armorposer.data.SyncData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
@@ -12,35 +13,33 @@ import java.util.function.Supplier;
 
 
 public class ArmorStandSyncMessage {
-	private final UUID entityUUID;
-	private final CompoundTag data;
+	private final SyncData data;
 
-	public ArmorStandSyncMessage(UUID playerUUID, CompoundTag tag) {
-		this.entityUUID = playerUUID;
-		this.data = tag;
+	public ArmorStandSyncMessage(SyncData syncData) {
+		this.data = syncData;
 	}
 
 	public void encode(FriendlyByteBuf buf) {
-		buf.writeUUID(entityUUID);
-		buf.writeNbt(data);
+		data.encode(buf);
 	}
 
 	public static ArmorStandSyncMessage decode(final FriendlyByteBuf packetBuffer) {
-		return new ArmorStandSyncMessage(packetBuffer.readUUID(), packetBuffer.readNbt());
+		return new ArmorStandSyncMessage(SyncData.decode(packetBuffer));
 	}
 
 	public void handle(Supplier<Context> context) {
 		Context ctx = context.get();
 		ctx.enqueueWork(() -> {
 			if (ctx.getDirection().getReceptionSide().isServer() && ctx.getSender() != null) {
-				final ServerLevel world = ctx.getSender().serverLevel();
-				Entity entity = world.getEntity(this.entityUUID);
+				final ServerLevel serverLevel = ctx.getSender().serverLevel();
+				Entity entity = serverLevel.getEntity(data.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 					CompoundTag entityTag = armorStandEntity.saveWithoutId(new CompoundTag());
 					CompoundTag entityTagCopy = entityTag.copy();
 
-					if (!this.data.isEmpty()) {
-						entityTagCopy.merge(this.data);
+					CompoundTag tag = data.tag();
+					if (!tag.isEmpty()) {
+						entityTagCopy.merge(tag);
 						UUID uuid = armorStandEntity.getUUID();
 						armorStandEntity.load(entityTagCopy);
 						armorStandEntity.setUUID(uuid);

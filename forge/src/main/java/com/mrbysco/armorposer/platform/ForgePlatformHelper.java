@@ -2,6 +2,7 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.ArmorPoser;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.packets.ArmorStandSyncMessage;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
@@ -15,7 +16,7 @@ public class ForgePlatformHelper implements IPlatformHelper {
 		CompoundNBT.merge(compound);
 		armorStand.load(CompoundNBT);
 
-		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSyncMessage(armorStand.getUUID(), compound));
+		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSyncMessage(new SyncData(armorStand.getUUID(), compound)));
 	}
 
 	@Override
