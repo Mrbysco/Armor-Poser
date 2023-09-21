@@ -21,6 +21,7 @@
 
     "armorposer.gui.label.copy": "Copier",
     "armorposer.gui.label.paste": "Coller",
+    "armorposer.gui.label.poses": "Poses",
 
     "armorposer.gui.tooltip.invisible": "Toggle invisibility",
     "armorposer.gui.tooltip.no_base_plate": "Toggle base plate",
@@ -40,6 +41,32 @@
 
     "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
+    "armorposer.gui.tooltip.poses": "Check built-in poses",
+
+    "armorposer.gui.pose.attention": "Attention",
+    "armorposer.gui.pose.walking": "Walking",
+    "armorposer.gui.pose.running": "Running",
+    "armorposer.gui.pose.pointing": "Pointing",
+    "armorposer.gui.pose.blocking": "Blocking",
+    "armorposer.gui.pose.lunging": "Lunging",
+    "armorposer.gui.pose.winning": "Winning",
+    "armorposer.gui.pose.sitting": "Sitting",
+    "armorposer.gui.pose.arabesque": "Arabesque",
+    "armorposer.gui.pose.cupid": "Cupid",
+    "armorposer.gui.pose.point_and_laugh": "Point and Laugh",
+    "armorposer.gui.pose.confident": "Confident",
+    "armorposer.gui.pose.salute": "Salute",
+    "armorposer.gui.pose.death": "Death",
+    "armorposer.gui.pose.facepalm": "Facepalm",
+    "armorposer.gui.pose.lazing": "Lazing",
+    "armorposer.gui.pose.confused": "Confused",
+    "armorposer.gui.pose.formal": "Formal",
+    "armorposer.gui.pose.sad": "Sad",
+    "armorposer.gui.pose.joyous": "Joyous",
+    "armorposer.gui.pose.stargazing": "Stargazing",
+    "armorposer.gui.pose.block": "Block",
+    "armorposer.gui.pose.item": "Item",
+    "armorposer.gui.pose.random": "Random",
 
 
     "armorposer.config.enableConfigGui": "Activer l'interface",
