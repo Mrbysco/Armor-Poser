@@ -8,3 +8,4 @@
 * Added a Mirror Legs button
 * Added a button to swap the item in the main and off-hand
 * Added a button to swap the item in the main head with the head slot
+* Fix a crash from 2.1.0 that prevented the game from working properly 
