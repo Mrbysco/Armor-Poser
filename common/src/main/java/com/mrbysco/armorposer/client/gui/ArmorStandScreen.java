@@ -6,7 +6,6 @@ import com.mrbysco.armorposer.client.gui.widgets.PoseButton;
 import com.mrbysco.armorposer.client.gui.widgets.PoseImageButton;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
-import com.mrbysco.armorposer.mixin.EditBoxAccessor;
 import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
 import net.minecraft.ChatFormatting;
@@ -400,7 +399,7 @@ public class ArmorStandScreen extends Screen {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
 		if (allowScrolling && delta > 0) {
 			//Add 1 to the value
-			if (rotationTextField.isHoveredOrFocused()) {
+			if (rotationTextField.canConsumeInput()) {
 				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(nextValue));
 				rotationTextField.setCursorPosition(0);
@@ -409,7 +408,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
-				if (textField.isHoveredOrFocused() && ((EditBoxAccessor) textField).armorposer_isEditable()) {
+				if (textField.canConsumeInput()) {
 					float nextValue = (textField.getFloat() + multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(nextValue));
 					textField.setCursorPosition(0);
@@ -420,7 +419,7 @@ public class ArmorStandScreen extends Screen {
 			}
 		} else if (allowScrolling && delta < 0) {
 			//Remove 1 to the value
-			if (rotationTextField.isHoveredOrFocused()) {
+			if (rotationTextField.canConsumeInput()) {
 				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(previousValue));
 				rotationTextField.setCursorPosition(0);
@@ -429,7 +428,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			for (NumberFieldBox textField : this.poseTextFields) {
-				if (textField.isHoveredOrFocused() && ((EditBoxAccessor) textField).armorposer_isEditable()) {
+				if (textField.canConsumeInput()) {
 					float previousValue = (textField.getFloat() - multiplier * textField.scrollMultiplier) % textField.modValue;
 					textField.setValue(String.valueOf(previousValue));
 					textField.setCursorPosition(0);

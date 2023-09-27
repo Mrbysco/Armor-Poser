@@ -27,7 +27,7 @@ publishing {
             groupId project.group
             artifactId base.archivesName.get()
             version project.version
-            artifact jar
+            from components.java
         }
     }
     repositories {
