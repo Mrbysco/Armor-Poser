@@ -2,6 +2,7 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -22,6 +23,14 @@ public class FabricPlatformHelper implements IPlatformHelper {
 		SyncData data = new SyncData(armorStand.getUUID(), compound);
 		data.encode(buf);
 		ClientPlayNetworking.send(Reference.SYNC_PACKET_ID, buf);
+	}
+
+	@Override
+	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
+		FriendlyByteBuf buf = PacketByteBufs.create();
+		SwapData data = new SwapData(armorStand.getUUID(), action);
+		data.encode(buf);
+		ClientPlayNetworking.send(Reference.SWAP_PACKET_ID, buf);
 	}
 
 	@Override

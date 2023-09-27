@@ -1,6 +1,7 @@
 package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -31,6 +32,20 @@ public class ArmorPoser implements ModInitializer {
 				Entity entity = world.getEntity(syncData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 					syncData.handleData(armorStandEntity);
+				}
+			});
+		});
+
+
+		ServerPlayNetworking.registerGlobalReceiver(Reference.SWAP_PACKET_ID, (server, player, handler, buf, responseSender) -> {
+			final ServerLevel world = player.serverLevel();
+
+			SwapData swapData = SwapData.decode(buf);
+
+			server.execute(() -> {
+				Entity entity = world.getEntity(swapData.entityUUID());
+				if (entity instanceof ArmorStand armorStandEntity) {
+					swapData.handleData(armorStandEntity);
 				}
 			});
 		});

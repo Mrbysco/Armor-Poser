@@ -43,6 +43,12 @@
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
     "armorposer.gui.tooltip.poses": "Check built-in poses",
 
+    "armorposer.gui.tooltip.mirror": "Mirror pose",
+    "armorposer.gui.tooltip.mirror_legs": "Mirror legs",
+    "armorposer.gui.tooltip.mirror_arms": "Mirror Arms",
+    "armorposer.gui.tooltip.swap_head": "Swap main hand and head",
+    "armorposer.gui.tooltip.swap_hands": "Swap main and off hand",
+
     "armorposer.gui.pose.attention": "Attention",
     "armorposer.gui.pose.walking": "Walking",
     "armorposer.gui.pose.running": "Running",

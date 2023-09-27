@@ -14,6 +14,7 @@ public class Reference {
 
 
 	public static final ResourceLocation SYNC_PACKET_ID = new ResourceLocation(Reference.MOD_ID, "sync_packet");
+	public static final ResourceLocation SWAP_PACKET_ID = new ResourceLocation(Reference.MOD_ID, "swap_packet");
 	public static final ResourceLocation SCREEN_PACKET_ID = new ResourceLocation(Reference.MOD_ID, "screen_packet");
 
 	public static final Map<String, String> defaultPoseMap = initializePoseMap();

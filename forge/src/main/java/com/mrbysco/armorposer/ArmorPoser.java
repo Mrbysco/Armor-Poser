@@ -2,6 +2,7 @@ package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenMessage;
+import com.mrbysco.armorposer.packets.ArmorStandSwapMessage;
 import com.mrbysco.armorposer.packets.ArmorStandSyncMessage;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -34,6 +35,7 @@ public class ArmorPoser {
 
 	private void setup(final FMLCommonSetupEvent event) {
 		CHANNEL.registerMessage(0, ArmorStandSyncMessage.class, ArmorStandSyncMessage::encode, ArmorStandSyncMessage::decode, ArmorStandSyncMessage::handle);
-		CHANNEL.registerMessage(1, ArmorStandScreenMessage.class, ArmorStandScreenMessage::encode, ArmorStandScreenMessage::decode, ArmorStandScreenMessage::handle);
+		CHANNEL.registerMessage(1, ArmorStandSwapMessage.class, ArmorStandSwapMessage::encode, ArmorStandSwapMessage::decode, ArmorStandSwapMessage::handle);
+		CHANNEL.registerMessage(2, ArmorStandScreenMessage.class, ArmorStandScreenMessage::encode, ArmorStandScreenMessage::decode, ArmorStandScreenMessage::handle);
 	}
 }
