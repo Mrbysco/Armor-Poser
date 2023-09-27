@@ -1,7 +1,6 @@
 package com.mrbysco.armorposer.packets;
 
 import com.mrbysco.armorposer.data.SwapData;
-import com.mrbysco.armorposer.data.SyncData;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
