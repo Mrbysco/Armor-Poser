@@ -11,6 +11,7 @@ public class ArmorStandData {
 	public boolean showArms = false;
 	public boolean small = false;
 	public boolean nameVisible = true;
+	public boolean locked = true;
 
 	public float rotation = 0F;
 
@@ -25,6 +26,7 @@ public class ArmorStandData {
 			case 3 -> this.showArms;
 			case 4 -> this.small;
 			case 5 -> this.nameVisible;
+			case 6 -> this.locked;
 			default -> false;
 		};
 	}
@@ -37,6 +39,7 @@ public class ArmorStandData {
 		this.showArms = compound.getBoolean("ShowArms");
 		this.small = compound.getBoolean("Small");
 		this.nameVisible = compound.getBoolean("CustomNameVisible");
+		this.locked = compound.getBoolean("Invulnerable");
 
 		if (compound.contains("Rotation")) {
 			this.rotation = compound.getList("Rotation", CompoundTag.TAG_FLOAT).getFloat(0);
@@ -66,6 +69,8 @@ public class ArmorStandData {
 		compound.putBoolean("ShowArms", this.showArms);
 		compound.putBoolean("Small", this.small);
 		compound.putBoolean("CustomNameVisible", this.nameVisible);
+		compound.putBoolean("Invulnerable", this.locked);
+		compound.putInt("DisabledSlots", this.locked ? 4144959 : 0);
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotation));

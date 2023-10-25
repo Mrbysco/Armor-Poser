@@ -14,6 +14,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.LockIconButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
@@ -39,6 +40,7 @@ public class ArmorStandScreen extends Screen {
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
 	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
 	private final PoseButton[] poseButtons = new PoseButton[Reference.defaultPoseMap.size()];
+	private LockIconButton lockButton;
 	private final boolean allowScrolling;
 	private boolean poseTabVisible = false;
 
@@ -110,6 +112,7 @@ public class ArmorStandScreen extends Screen {
 				this.poseTextFields[i].scrollMultiplier = 0.01f;
 				this.poseTextFields[i].modValue = Integer.MAX_VALUE;
 				this.poseTextFields[i].decimalPoints = 2;
+				this.poseTextFields[i].allowDecimal = true;
 				this.poseTextFields[i].setMaxLength(6);
 			}
 
@@ -157,7 +160,7 @@ public class ArmorStandScreen extends Screen {
 		}).bounds(offsetX + 66, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
 
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 5) - 41, offsetY, (button) -> {
+		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 6) - 30, offsetY, (button) -> {
 			//Mirror head
 			float[] head = new float[]{poseTextFields[0].getFloat(), poseTextFields[1].getFloat(), poseTextFields[2].getFloat()};
 			poseTextFields[0].setValue(String.valueOf(head[0]));
@@ -195,7 +198,7 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
 
 		}, 0, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 4) - 41, offsetY, (button) -> {
+		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 5) - 30, offsetY, (button) -> {
 			//Mirror Legs
 			float[] leftLeg = new float[]{poseTextFields[6].getFloat(), poseTextFields[7].getFloat(), poseTextFields[8].getFloat()};
 			float[] rightLeg = new float[]{poseTextFields[9].getFloat(), poseTextFields[10].getFloat(), poseTextFields[11].getFloat()};
@@ -208,7 +211,7 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[10].setValue(String.valueOf(leftLeg[1] != 0 ? -leftLeg[1] : 0));
 			poseTextFields[11].setValue(String.valueOf(leftLeg[2] != 0 ? -leftLeg[2] : 0));
 		}, 1, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 3) - 41, offsetY, (button) -> {
+		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 4) - 30, offsetY, (button) -> {
 			//Mirror Arms
 			float[] leftArm = new float[]{poseTextFields[12].getFloat(), poseTextFields[13].getFloat(), poseTextFields[14].getFloat()};
 			float[] rightArm = new float[]{poseTextFields[15].getFloat(), poseTextFields[16].getFloat(), poseTextFields[17].getFloat()};
@@ -221,16 +224,21 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
 		}, 2, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 2) - 41, offsetY, (button) -> {
+		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 3) - 30, offsetY, (button) -> {
 			//Swap item in main hand with head
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_WITH_HEAD);
 
 		}, 3, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22) - 41, offsetY, (button) -> {
+		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 2) - 30, offsetY, (button) -> {
 			//Swap item in main and offhand
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_HANDS);
 
 		}, 4, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands"))));
+		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22) - 30, offsetY, (button) -> {
+			this.lockButton.setLocked(!this.lockButton.isLocked());
+		}));
+		this.lockButton.setLocked(this.armorStandData.getBooleanValue(6));
+		this.lockButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.lock")));
 
 		// done & cancel buttons
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
@@ -492,6 +500,8 @@ public class ArmorStandScreen extends Screen {
 		compound.putBoolean("ShowArms", this.toggleButtons[3].getValue());
 		compound.putBoolean("Small", this.toggleButtons[4].getValue());
 		compound.putBoolean("CustomNameVisible", this.toggleButtons[5].getValue());
+		compound.putBoolean("Invulnerable", this.lockButton.isLocked());
+		compound.putInt("DisabledSlots", this.lockButton.isLocked() ? 4144959 : 0);
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotationTextField.getFloat()));

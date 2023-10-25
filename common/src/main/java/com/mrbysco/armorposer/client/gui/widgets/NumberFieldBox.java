@@ -11,6 +11,7 @@ public class NumberFieldBox extends EditBox {
 
 	public float modValue = 360;
 	public int decimalPoints = 0;
+	public boolean allowDecimal = false;
 
 	public NumberFieldBox(Font font, int x, int y, int width, int height, Component defaultValue) {
 		super(font, x, y, width, height, defaultValue);
@@ -55,6 +56,9 @@ public class NumberFieldBox extends EditBox {
 	}
 
 	protected boolean isNumeric(String value) {
-		return value.equals("-") || NumberUtils.isParsable(value);
+		if (allowDecimal && value.equals("."))
+			return true;
+		else
+			return value.equals("-") || NumberUtils.isParsable(value);
 	}
 }

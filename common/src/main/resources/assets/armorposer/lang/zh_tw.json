@@ -48,6 +48,7 @@
     "armorposer.gui.tooltip.mirror_arms": "Mirror Arms",
     "armorposer.gui.tooltip.swap_head": "Swap main hand and head",
     "armorposer.gui.tooltip.swap_hands": "Swap main and off hand",
+    "armorposer.gui.tooltip.lock": "Lock Interaction",
 
     "armorposer.gui.pose.attention": "Attention",
     "armorposer.gui.pose.walking": "Walking",
