@@ -17,10 +17,13 @@ import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.function.Function;
 
 public class PoseButton extends Button {
+	private static final Vector3f ARMOR_STAND_TRANSLATION = new Vector3f();
+	private static final Quaternionf ARMOR_STAND_ANGLE = new Quaternionf().rotationXYZ(0.43633232F, 0.0F, (float) Math.PI);
 
 	private final String poseID;
 	private final CompoundTag tag;
@@ -60,8 +63,7 @@ public class PoseButton extends Button {
 
 		if (cachedEntity != null) {
 			InventoryScreen.renderEntityInInventory(guiGraphics, getX() + 20, getY() + 38, 15,
-					(new Quaternionf()).rotationXYZ(0.43633232F, 0.0F, (float) Math.PI), (Quaternionf) null, this.cachedEntity);
-
+					ARMOR_STAND_TRANSLATION, ARMOR_STAND_ANGLE, (Quaternionf) null, this.cachedEntity);
 		}
 
 		PoseStack poseStack = guiGraphics.pose();

@@ -24,12 +24,12 @@ public class ArmorPoser implements ModInitializer {
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
 		ServerPlayNetworking.registerGlobalReceiver(Reference.SYNC_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-			final ServerLevel world = player.serverLevel();
+			final ServerLevel serverLevel = player.serverLevel();
 
 			SyncData syncData = SyncData.decode(buf);
 
 			server.execute(() -> {
-				Entity entity = world.getEntity(syncData.entityUUID());
+				Entity entity = serverLevel.getEntity(syncData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 					syncData.handleData(armorStandEntity);
 				}
@@ -38,12 +38,12 @@ public class ArmorPoser implements ModInitializer {
 
 
 		ServerPlayNetworking.registerGlobalReceiver(Reference.SWAP_PACKET_ID, (server, player, handler, buf, responseSender) -> {
-			final ServerLevel world = player.serverLevel();
+			final ServerLevel serverLevel = player.serverLevel();
 
 			SwapData swapData = SwapData.decode(buf);
 
 			server.execute(() -> {
-				Entity entity = world.getEntity(swapData.entityUUID());
+				Entity entity = serverLevel.getEntity(swapData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 					swapData.handleData(armorStandEntity);
 				}

@@ -304,7 +304,7 @@ public class ArmorStandScreen extends Screen {
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
 		guiGraphics.drawCenteredString(this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 10, 0xFFFFFF);
@@ -340,16 +340,11 @@ public class ArmorStandScreen extends Screen {
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
 			if (!poseTabVisible) guiGraphics.drawString(this.font, translatedLabel, x, y, 0xA0A0A0, false);
 		}
-
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 	}
 
 	@Override
 	public void tick() {
 		super.tick();
-		this.rotationTextField.tick();
-		for (EditBox textField : this.poseTextFields)
-			if (textField != null) textField.tick();
 
 		//Disable the Y position field when gravity is enabled (So you can't get it stuck in the ground)
 		boolean disabledGravity = this.toggleButtons[2].getValue();
@@ -403,9 +398,9 @@ public class ArmorStandScreen extends Screen {
 	}
 
 	@Override
-	public boolean mouseScrolled(double mouseX, double mouseY, double delta) {
+	public boolean mouseScrolled(double mouseX, double mouseY, double xScroll, double yScroll) {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
-		if (allowScrolling && delta > 0) {
+		if (allowScrolling && (xScroll > 0 || yScroll > 0)) {
 			//Add 1 to the value
 			if (rotationTextField.canConsumeInput()) {
 				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
@@ -425,7 +420,7 @@ public class ArmorStandScreen extends Screen {
 					return true;
 				}
 			}
-		} else if (allowScrolling && delta < 0) {
+		} else if (allowScrolling && (xScroll < 0 || yScroll < 0)) {
 			//Remove 1 to the value
 			if (rotationTextField.canConsumeInput()) {
 				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
@@ -446,7 +441,7 @@ public class ArmorStandScreen extends Screen {
 				}
 			}
 		}
-		return super.mouseScrolled(mouseX, mouseY, delta);
+		return super.mouseScrolled(mouseX, mouseY, xScroll, yScroll);
 	}
 
 	@Override
@@ -455,12 +450,12 @@ public class ArmorStandScreen extends Screen {
 			for (int i = 0; i < this.poseTextFields.length; i++) {
 				if (this.poseTextFields[i].isFocused()) {
 					this.textFieldUpdated();
-					this.poseTextFields[i].moveCursorToEnd();
+					this.poseTextFields[i].moveCursorToEnd(false);
 					this.poseTextFields[i].setFocused(false);
 
 					int j = (!Screen.hasShiftDown() ? (i == this.poseTextFields.length - 1 ? 0 : i + 1) : (i == 0 ? this.poseTextFields.length - 1 : i - 1));
 					this.poseTextFields[j].setFocused(true);
-					this.poseTextFields[j].moveCursorTo(0);
+					this.poseTextFields[j].moveCursorTo(0, false);
 					this.poseTextFields[j].setHighlightPos(this.poseTextFields[j].getValue().length());
 				}
 			}

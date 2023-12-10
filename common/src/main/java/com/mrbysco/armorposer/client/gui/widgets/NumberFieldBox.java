@@ -51,7 +51,7 @@ public class NumberFieldBox extends EditBox {
 		super.setFocused(focused);
 		if (!focused) {
 			this.setHighlightPos(this.getValue().length());
-			this.moveCursorToEnd();
+			this.moveCursorToEnd(false);
 		}
 	}
 
