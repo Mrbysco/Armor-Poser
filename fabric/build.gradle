@@ -98,29 +98,22 @@ publishing {
 }
 
 if (System.getenv().CURSEFORGE_KEY) {
-    curseforge {
-        apiKey = System.getenv().CURSEFORGE_KEY
-        project {
-            id = project.curseforge_id
-            releaseType = "beta"
-            addGameVersion "Fabric"
-            addGameVersion "${minecraft_version}"
-            addGameVersion "Java 17"
-            mainArtifact(remapJar)
-            changelog = file("$project.rootDir/changelog.md")
-            changelogType = 'markdown'
+    task curseforge(type: net.darkhax.curseforgegradle.TaskPublishCurseForge) {
+        apiToken = System.getenv().CURSEFORGE_KEY
 
-            relations {
-                requiredDependency "fabric-api"
-                requiredDependency "cloth-config"
-            }
-        }
+        def mainFile = upload(project.curseforge_id, remapJar)
+        mainFile.releaseType = 'beta'
+        mainFile.addGameVersion "Fabric"
+        mainFile.addGameVersion "${minecraft_version}"
+        mainFile.addGameVersion "Java 17"
 
-        options {
-            forgeGradleIntegration = false
-        }
+        mainFile.changelog = file("$project.rootDir/changelog.md")
+        mainFile.changelogType = 'markdown'
+
+        mainFile.addRequirement("fabric-api", "cloth-config")
     }
 }
+
 
 if (System.getenv().MODRINTH_KEY) {
     String fileContents = file("$project.rootDir/changelog.md").text
