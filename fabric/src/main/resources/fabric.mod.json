@@ -30,10 +30,10 @@
     "armorposer.fabric.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.14.24",
-    "fabric": "*",
-    "minecraft": "~1.20.2",
+    "fabricloader": ">=0.15.3",
+    "minecraft": "~1.20.4",
     "java": ">=17",
+    "fabric-api": "*",
     "cloth-config": ">=12.0.108"
   }
 }

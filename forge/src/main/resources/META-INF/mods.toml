@@ -15,7 +15,13 @@ A GUI to allow configuration of Armor Stand properties
 '''
 [[dependencies.armorposer]]
 modId="minecraft"
-mandatory=true
-versionRange="[1.20.2,1.21)"
+type="required"
+versionRange="[1.20.4,1.21)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.armorposer]]
+modId="neoforge"
+type="required"
+versionRange="[20.4.11-beta,)"
 ordering="NONE"
 side="BOTH"

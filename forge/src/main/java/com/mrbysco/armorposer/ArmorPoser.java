@@ -10,7 +10,6 @@ import net.neoforged.fml.ModLoadingContext;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig.Type;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.neoforged.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.neoforged.neoforge.network.NetworkRegistry;
 import net.neoforged.neoforge.network.simple.SimpleChannel;
 
@@ -25,8 +24,7 @@ public class ArmorPoser {
 			PROTOCOL_VERSION::equals
 	);
 
-	public ArmorPoser() {
-		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+	public ArmorPoser(IEventBus eventBus) {
 		ModLoadingContext.get().registerConfig(Type.COMMON, PoserConfig.commonSpec);
 		eventBus.register(PoserConfig.class);
 
