@@ -22,13 +22,11 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onPlayerEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
-		Reference.LOGGER.info("hey");
 		if (event.getTarget() instanceof ArmorStand armorstand) {
 			final Player player = event.getEntity();
 			final Level level = event.getLevel();
 			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
-					System.out.println("hey2");
 					ArmorPoser.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ArmorStandScreenMessage(armorstand.getId()));
 				}
 				event.setCanceled(true);
