@@ -1,1 +1,1 @@
-* Initial update to 1.20.4
+* Update to support NeoForge's networking change (Requires NeoForge 24.4.70-beta (On the NeoForge build))
