@@ -92,4 +92,8 @@
     "text.autoconfig.armorposer.option.general.enableConfigGui": "Enable Config Gui",
     "text.autoconfig.armorposer.option.general.enableNameTags": "Enable Name Tags",
     "text.autoconfig.armorposer.option.general.allowScrolling": "Allow Scrolling",
+
+    "armorposer.networking.screen.failed": "Armor poser networking screen packet failed",
+    "armorposer.networking.swap.failed": "Armor poser networking swap packet failed",
+    "armorposer.networking.sync.failed": "Armor poser networking sync packet failed"
 }

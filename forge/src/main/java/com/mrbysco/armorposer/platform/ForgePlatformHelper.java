@@ -1,11 +1,10 @@
 package com.mrbysco.armorposer.platform;
 
-import com.mrbysco.armorposer.ArmorPoser;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
-import com.mrbysco.armorposer.packets.ArmorStandSwapMessage;
-import com.mrbysco.armorposer.packets.ArmorStandSyncMessage;
+import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -18,12 +17,12 @@ public class ForgePlatformHelper implements IPlatformHelper {
 		CompoundNBT.merge(compound);
 		armorStand.load(CompoundNBT);
 
-		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSyncMessage(new SyncData(armorStand.getUUID(), compound)));
+		PacketDistributor.SERVER.noArg().send(new ArmorStandSyncPayload(new SyncData(armorStand.getUUID(), compound)));
 	}
 
 	@Override
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
-		ArmorPoser.CHANNEL.send(PacketDistributor.SERVER.noArg(), new ArmorStandSwapMessage(new SwapData(armorStand.getUUID(), action)));
+		PacketDistributor.SERVER.noArg().send(new ArmorStandSwapPayload(new SwapData(armorStand.getUUID(), action)));
 	}
 
 	@Override
