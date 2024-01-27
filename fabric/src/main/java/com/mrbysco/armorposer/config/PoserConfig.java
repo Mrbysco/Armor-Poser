@@ -18,7 +18,7 @@ public class PoserConfig implements ConfigData {
 		public boolean enableNameTags = true;
 		@Comment("Allow scrolling to add / decrease an angle value in the posing screen")
 		public boolean allowScrolling = true;
-		@Comment("Open the configuration GUI when sprint instead shift")
+		@Comment("Open the configuration GUI when sprinting instead pressing the shift key")
 		public  boolean useSprint = false;
 	}
 }
