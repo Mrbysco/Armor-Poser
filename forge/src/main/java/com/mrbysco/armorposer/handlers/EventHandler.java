@@ -25,7 +25,7 @@ public class EventHandler {
 		if (event.getTarget() instanceof ArmorStand armorstand) {
 			final Player player = event.getEntity();
 			final Level level = event.getLevel();
-			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
+			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown() && !PoserConfig.COMMON.useSprint.get()) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
 					ArmorPoser.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ArmorStandScreenMessage(armorstand.getId()));
 				}
@@ -33,7 +33,27 @@ public class EventHandler {
 				return;
 			}
 
-			if (PoserConfig.COMMON.enableNameTags.get() && !player.isShiftKeyDown()) {
+			if (PoserConfig.COMMON.enableNameTags.get() && !player.isShiftKeyDown() && !PoserConfig.COMMON.useSprint.get()) {
+				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
+					cancelRightClick = true;
+					if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
+						armorstand.setCustomName(stack.getHoverName());
+						armorstand.setCustomNameVisible(true);
+					}
+					event.setCanceled(true);
+				}
+			}
+
+			if (PoserConfig.COMMON.enableConfigGui.get() && player.isSprinting() && PoserConfig.COMMON.useSprint.get()) {
+				if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
+					ArmorPoser.CHANNEL.send(PacketDistributor.PLAYER.with(() -> (ServerPlayer) player), new ArmorStandScreenMessage(armorstand.getId()));
+				}
+				event.setCanceled(true);
+				return;
+			}
+
+			if (PoserConfig.COMMON.enableNameTags.get() && !player.isSprinting() && PoserConfig.COMMON.useSprint.get()) {
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
 					cancelRightClick = true;

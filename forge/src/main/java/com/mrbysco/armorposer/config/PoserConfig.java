@@ -14,6 +14,7 @@ public class PoserConfig {
 		public final BooleanValue enableConfigGui;
 		public final BooleanValue enableNameTags;
 		public final BooleanValue allowScrolling;
+		public final BooleanValue useSprint;
 
 		Common(ForgeConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -33,6 +34,11 @@ public class PoserConfig {
 					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
 					.translation("armorposer.config.allowScrolling.tooltip")
 					.define("allowScrolling", true);
+
+			useSprint = builder
+					.comment("Open the configuration GUI when sprint instead shift")
+					.translation("armorposer.config.useCtrlKey")
+					.define("useSprint", false);
 
 			builder.pop();
 		}

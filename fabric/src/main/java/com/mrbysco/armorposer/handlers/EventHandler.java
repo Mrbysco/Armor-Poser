@@ -23,7 +23,7 @@ public class EventHandler {
 	public static InteractionResult onPlayerEntityInteractSpecific(Player player, Entity target, InteractionHand hand) {
 		if (target instanceof ArmorStand armorstand) {
 			PoserConfig config = ArmorPoser.config.get();
-			if (config.general.enableConfigGui && player.isShiftKeyDown()) {
+			if (config.general.enableConfigGui && player.isShiftKeyDown() && !config.general.useSprint) {
 				if (hand == InteractionHand.MAIN_HAND && !player.level().isClientSide) {
 					FriendlyByteBuf buf = PacketByteBufs.create();
 					buf.writeInt(armorstand.getId());
@@ -32,7 +32,28 @@ public class EventHandler {
 				return InteractionResult.SUCCESS;
 			}
 
-			if (config.general.enableNameTags && !player.isShiftKeyDown()) {
+			if (config.general.enableNameTags && !player.isShiftKeyDown() && !config.general.useSprint) {
+				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
+				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
+					cancelRightClick = true;
+					if (hand == InteractionHand.MAIN_HAND && !player.level().isClientSide) {
+						armorstand.setCustomName(stack.getHoverName());
+						armorstand.setCustomNameVisible(true);
+					}
+					return InteractionResult.SUCCESS;
+				}
+			}
+
+			if (config.general.enableConfigGui && player.isSprinting() && config.general.useSprint) {
+				if (hand == InteractionHand.MAIN_HAND && !player.level().isClientSide) {
+					FriendlyByteBuf buf = PacketByteBufs.create();
+					buf.writeInt(armorstand.getId());
+					ServerPlayNetworking.send((ServerPlayer) player, Reference.SCREEN_PACKET_ID, buf);
+				}
+				return InteractionResult.SUCCESS;
+			}
+
+			if (config.general.enableNameTags && !player.isSprinting() && config.general.useSprint) {
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
 				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
 					cancelRightClick = true;
