@@ -36,7 +36,7 @@ public class PoserConfig {
 					.define("allowScrolling", true);
 
 			useSprint = builder
-					.comment("Open the configuration GUI when sprint instead shift")
+					.comment("Open the configuration GUI when sprinting instead pressing the shift key")
 					.translation("armorposer.config.useCtrlKey")
 					.define("useSprint", false);
 
