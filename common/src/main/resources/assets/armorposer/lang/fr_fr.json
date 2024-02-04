@@ -86,5 +86,11 @@
     "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen",
 
     "armorposer.key.openArmorStandGui": "Ouvrir le menu",
-    "armorposer.key.categories.general": "Configurateur du porte-armure"
+    "armorposer.key.categories.general": "Configurateur du porte-armure",
+
+    "text.autoconfig.armorposer.title": "Armor Poser",
+    "text.autoconfig.armorposer.option.general": "Général",
+    "text.autoconfig.armorposer.option.general.enableConfigGui": "Activer l'interface",
+    "text.autoconfig.armorposer.option.general.enableNameTags": "Activer les balises de nom",
+    "text.autoconfig.armorposer.option.general.allowScrolling": "Autoriser le défilement"
 }
