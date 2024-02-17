@@ -86,5 +86,11 @@
     "armorposer.config.allowScrolling.tooltip": "Permite el desplazamiento para aumentar y disminuir un valor en la pantalla de pose",
 
     "armorposer.key.openArmorStandGui": "Abrir interfaz",
-    "armorposer.key.categories.general": "Configurador de soporte para armadura"
+    "armorposer.key.categories.general": "Configurador de soporte para armadura",
+
+    "text.autoconfig.armorposer.title": "Armor Poser",
+    "text.autoconfig.armorposer.option.general": "General",
+    "text.autoconfig.armorposer.option.general.enableConfigGui": "Enable Config Gui",
+    "text.autoconfig.armorposer.option.general.enableNameTags": "Enable Name Tags",
+    "text.autoconfig.armorposer.option.general.allowScrolling": "Allow Scrolling"
 }

@@ -85,5 +85,11 @@
     "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen",
 
     "armorposer.key.openArmorStandGui": "打開GUI",
-    "armorposer.key.categories.general": "盔甲座配置"
+    "armorposer.key.categories.general": "盔甲座配置",
+
+    "text.autoconfig.armorposer.title": "Armor Poser",
+    "text.autoconfig.armorposer.option.general": "General",
+    "text.autoconfig.armorposer.option.general.enableConfigGui": "Enable Config Gui",
+    "text.autoconfig.armorposer.option.general.enableNameTags": "Enable Name Tags",
+    "text.autoconfig.armorposer.option.general.allowScrolling": "Allow Scrolling"
 }
