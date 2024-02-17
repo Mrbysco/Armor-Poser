@@ -1,2 +1,2 @@
-* Allow decimal insertion into the positional fields
-* Add a button to lock the Armor Stand (Which makes it Invulnerable and locks the slots)
+* Fix mod menu localization (Fabric) Thanks to [MulesGaming](https://github.com/Mrbysco/Armor-Poser/pull/14)
+* Add es_mx translation Thanks to [CANALETA](https://github.com/Mrbysco/Armor-Poser/pull/11)
