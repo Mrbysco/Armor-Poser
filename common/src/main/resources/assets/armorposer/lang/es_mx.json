@@ -1,0 +1,90 @@
+{
+    "_comment": "es_mx",
+
+    "armorposer.gui.title": "Soporte para armaduras",
+
+    "armorposer.gui.label.invisible": "Invisible",
+    "armorposer.gui.label.no_base_plate": "Sin base",
+    "armorposer.gui.label.no_gravity": "Sin gravedad",
+    "armorposer.gui.label.show_arms": "Mostrar brazos",
+    "armorposer.gui.label.small": "Pequeño",
+    "armorposer.gui.label.rotation": "Rotación",
+    "armorposer.gui.label.name_visible": "Nombre visible",
+
+    "armorposer.gui.label.head": "Cabeza",
+    "armorposer.gui.label.body": "Cuerpo",
+    "armorposer.gui.label.left_leg": "Pierna izquierda",
+    "armorposer.gui.label.right_leg": "Pierna derecha",
+    "armorposer.gui.label.left_arm": "Brazo izquierdo",
+    "armorposer.gui.label.right_arm": "Brazo derecho",
+    "armorposer.gui.label.position": "Posición",
+
+    "armorposer.gui.label.copy": "Copiar",
+    "armorposer.gui.label.paste": "Pegar",
+    "armorposer.gui.label.poses": "Posiciones",
+
+    "armorposer.gui.tooltip.invisible": "Alternar invisibilidad",
+    "armorposer.gui.tooltip.no_base_plate": "Alternar base",
+    "armorposer.gui.tooltip.no_gravity": "Alternar gravedad",
+    "armorposer.gui.tooltip.show_arms": "Alternar brazos",
+    "armorposer.gui.tooltip.small": "Alternar tamaño",
+    "armorposer.gui.tooltip.rotation": "Cambiar rotación",
+    "armorposer.gui.tooltip.name_visible": "Alternar visibilidad de nombre",
+
+    "armorposer.gui.tooltip.x_rotation": "Ajustar rotación X",
+    "armorposer.gui.tooltip.y_rotation": "Ajustar rotación Y",
+    "armorposer.gui.tooltip.z_rotation": "Ajustar rotación Z",
+    "armorposer.gui.tooltip.x_position": "Ajustar posición X",
+    "armorposer.gui.tooltip.y_position": "Ajustar posición Y",
+    "armorposer.gui.tooltip.y_position.disabled": "Desactiva la gravedad para ajustar la posición Y",
+    "armorposer.gui.tooltip.z_position": "Ajustar posición Z",
+
+    "armorposer.gui.tooltip.copy": "Copiar la pose actual al portapapeles",
+    "armorposer.gui.tooltip.paste": "pegar la pose actual desde el portapapeles",
+    "armorposer.gui.tooltip.poses": "Poses predeterminadas",
+
+    "armorposer.gui.tooltip.mirror": "Postura en espejo",
+    "armorposer.gui.tooltip.mirror_legs": "Piernas en espejo",
+    "armorposer.gui.tooltip.mirror_arms": "Brazos en espejo",
+    "armorposer.gui.tooltip.swap_head": "Intercambiar mano principal y cabeza",
+    "armorposer.gui.tooltip.swap_hands": "Intercambiar mano principal y secundaria",
+    "armorposer.gui.tooltip.lock": "Bloquear interacción",
+
+    "armorposer.gui.pose.attention": "Alerta",
+    "armorposer.gui.pose.walking": "Caminar",
+    "armorposer.gui.pose.running": "Correr",
+    "armorposer.gui.pose.pointing": "Apuntar",
+    "armorposer.gui.pose.blocking": "Bloquear",
+    "armorposer.gui.pose.lunging": "Embestir",
+    "armorposer.gui.pose.winning": "Ganador",
+    "armorposer.gui.pose.sitting": "Sentado",
+    "armorposer.gui.pose.arabesque": "Ballet",
+    "armorposer.gui.pose.cupid": "Cupido",
+    "armorposer.gui.pose.point_and_laugh": "Señalar y reír",
+    "armorposer.gui.pose.confident": "Seguro",
+    "armorposer.gui.pose.salute": "Saludo",
+    "armorposer.gui.pose.death": "Muerto",
+    "armorposer.gui.pose.facepalm": "Frustración",
+    "armorposer.gui.pose.lazing": "Holgazanear",
+    "armorposer.gui.pose.confused": "Confuso",
+    "armorposer.gui.pose.formal": "Formal",
+    "armorposer.gui.pose.sad": "Triste",
+    "armorposer.gui.pose.joyous": "Jubiloso",
+    "armorposer.gui.pose.stargazing": "Observando estrellas",
+    "armorposer.gui.pose.block": "Block",
+    "armorposer.gui.pose.item": "Objeto",
+    "armorposer.gui.pose.random": "Aleatorio",
+
+
+    "armorposer.config.enableConfigGui": "Habilitar interfaz",
+    "armorposer.config.enableConfigGui.tooltip": "Muestra la interfaz de configuración del soporte para armadura al hacer shift y clic con el botón derecho",
+
+    "armorposer.config.enableNameTags": "Habilitar etiquetas",
+    "armorposer.config.enableNameTags.tooltip": "Permite que se cambie el nombre del soporte para armadura usando etiquetas",
+
+    "armorposer.config.allowScrolling": "Habilitar desplazamiento",
+    "armorposer.config.allowScrolling.tooltip": "Permite el desplazamiento para aumentar y disminuir un valor en la pantalla de pose",
+
+    "armorposer.key.openArmorStandGui": "Abrir interfaz",
+    "armorposer.key.categories.general": "Configurador de soporte para armadura"
+}
