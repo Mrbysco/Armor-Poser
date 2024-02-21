@@ -16,7 +16,7 @@ public class ServerPayloadHandler {
 	}
 
 	public void handleSwapData(final ArmorStandSwapPayload swapData, final PlayPayloadContext context) {
-		// Do something with the data, on the main thread
+		// Do something with the pose, on the main thread
 		context.workHandler().submitAsync(() -> {
 					if (context.level().isPresent() && context.level().get() instanceof ServerLevel serverLevel) {
 						Entity entity = serverLevel.getEntity(swapData.data().entityUUID());
@@ -33,7 +33,7 @@ public class ServerPayloadHandler {
 	}
 
 	public void handleSyncData(final ArmorStandSyncPayload syncData, final PlayPayloadContext context) {
-		// Do something with the data, on the main thread
+		// Do something with the pose, on the main thread
 		context.workHandler().submitAsync(() -> {
 					if (context.level().isPresent() && context.level().get() instanceof ServerLevel serverLevel) {
 						Entity entity = serverLevel.getEntity(syncData.data().entityUUID());

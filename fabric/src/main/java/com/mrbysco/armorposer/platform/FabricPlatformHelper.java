@@ -8,9 +8,12 @@ import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.decoration.ArmorStand;
+
+import java.nio.file.Path;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
@@ -37,5 +40,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public boolean allowScrolling() {
 		PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
 		return config.general.allowScrolling;
+	}
+
+	@Override
+	public Path getUserPresetFolder() {
+		return FabricLoader.getInstance().getConfigDir();
 	}
 }

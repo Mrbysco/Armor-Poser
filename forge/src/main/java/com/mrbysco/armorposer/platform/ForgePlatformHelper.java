@@ -8,7 +8,10 @@ import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
+
+import java.nio.file.Path;
 
 public class ForgePlatformHelper implements IPlatformHelper {
 	@Override
@@ -28,5 +31,10 @@ public class ForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public boolean allowScrolling() {
 		return PoserConfig.COMMON.allowScrolling.get();
+	}
+
+	@Override
+	public Path getUserPresetFolder() {
+		return FMLPaths.CONFIGDIR.get();
 	}
 }

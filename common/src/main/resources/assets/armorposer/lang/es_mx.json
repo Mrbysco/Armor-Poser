@@ -3,6 +3,14 @@
 
     "armorposer.gui.title": "Soporte para armaduras",
 
+    "armorposer.gui.poses.title": "Armor Stand Poses",
+    "armorposer.gui.poses.default": "Default Poses",
+    "armorposer.gui.poses.user": "User Poses",
+    "armorposer.gui.poses.selection.apply": "Apply",
+    "armorposer.gui.poses.search": "Search",
+    "armorposer.gui.poses.search.a_to_z": "A-Z",
+    "armorposer.gui.poses.search.z_to_a": "Z-A",
+
     "armorposer.gui.label.invisible": "Invisible",
     "armorposer.gui.label.no_base_plate": "Sin base",
     "armorposer.gui.label.no_gravity": "Sin gravedad",

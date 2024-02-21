@@ -3,6 +3,14 @@
 
     "armorposer.gui.title": "Armor Stand",
 
+    "armorposer.gui.poses.title": "Armor Stand Poses",
+    "armorposer.gui.poses.default": "Default Poses",
+    "armorposer.gui.poses.user": "User Poses",
+    "armorposer.gui.poses.selection.apply": "Apply",
+    "armorposer.gui.poses.search": "Search",
+    "armorposer.gui.poses.search.a_to_z": "A-Z",
+    "armorposer.gui.poses.search.z_to_a": "Z-A",
+
     "armorposer.gui.label.invisible": "Invisible",
     "armorposer.gui.label.no_base_plate": "No Base Plate",
     "armorposer.gui.label.no_gravity": "No Gravity",
@@ -41,7 +49,7 @@
 
     "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
-    "armorposer.gui.tooltip.poses": "Check built-in poses",
+    "armorposer.gui.tooltip.poses": "Check pose presets",
 
     "armorposer.gui.tooltip.mirror": "Mirror pose",
     "armorposer.gui.tooltip.mirror_legs": "Mirror legs",
