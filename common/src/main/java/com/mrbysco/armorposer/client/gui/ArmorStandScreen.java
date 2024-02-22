@@ -1,7 +1,7 @@
 package com.mrbysco.armorposer.client.gui;
 
+import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
-import com.mrbysco.armorposer.client.gui.widgets.PoseImageButton;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.platform.Services;
@@ -11,8 +11,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
+import net.minecraft.client.gui.components.ImageButton;
 import net.minecraft.client.gui.components.LockIconButton;
 import net.minecraft.client.gui.components.Tooltip;
+import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
 import net.minecraft.nbt.CompoundTag;
@@ -21,10 +23,26 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.phys.Vec3;
 
 public class ArmorStandScreen extends Screen {
+	private static final WidgetSprites MIRROR_POSE_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/mirror_pose"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_pose_highlighted")
+	);
+	private static final WidgetSprites MIRROR_LEGS_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/mirror_legs"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_legs_highlighted")
+	);
+	private static final WidgetSprites MIRROR_ARMS_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/mirror_arms"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_arms_highlighted")
+	);
+	private static final WidgetSprites SWAP_TO_HEAD_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/swap_to_head"), new ResourceLocation(Reference.MOD_ID, "widget/swap_to_head_highlighted")
+	);
+	private static final WidgetSprites MIRROR_HANDS_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands_highlighted")
+	);
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
 
@@ -152,14 +170,14 @@ public class ArmorStandScreen extends Screen {
 		}).bounds(offsetX + 66, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
 
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 6) - 30, offsetY, (button) -> {
+		ImageButton mirrorPose = this.addRenderableWidget(new ImageButton(offsetX - (22 * 6) - 30, offsetY, 20, 20, MIRROR_POSE_SPRITES, (button) -> {
 			//Mirror head
 			float[] head = new float[]{poseTextFields[0].getFloat(), poseTextFields[1].getFloat(), poseTextFields[2].getFloat()};
 			poseTextFields[0].setValue(String.valueOf(head[0]));
 			poseTextFields[1].setValue(String.valueOf(head[1] != 0 ? -head[1] : 0));
 			poseTextFields[2].setValue(String.valueOf(head[2] != 0 ? -head[2] : 0));
 
-			//Mirror head
+			//Mirror Body
 			float[] body = new float[]{poseTextFields[3].getFloat(), poseTextFields[4].getFloat(), poseTextFields[5].getFloat()};
 			poseTextFields[3].setValue(String.valueOf(body[0]));
 			poseTextFields[4].setValue(String.valueOf(body[1] != 0 ? -body[1] : 0));
@@ -188,9 +206,10 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[15].setValue(String.valueOf(leftArm[0]));
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
+		}));
+		mirrorPose.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror")));
 
-		}, 0, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 5) - 30, offsetY, (button) -> {
+		ImageButton mirrorLegs = this.addRenderableWidget(new ImageButton(offsetX - (22 * 5) - 30, offsetY, 20, 20, MIRROR_LEGS_SPRITES, (button) -> {
 			//Mirror Legs
 			float[] leftLeg = new float[]{poseTextFields[6].getFloat(), poseTextFields[7].getFloat(), poseTextFields[8].getFloat()};
 			float[] rightLeg = new float[]{poseTextFields[9].getFloat(), poseTextFields[10].getFloat(), poseTextFields[11].getFloat()};
@@ -202,8 +221,10 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[9].setValue(String.valueOf(leftLeg[0]));
 			poseTextFields[10].setValue(String.valueOf(leftLeg[1] != 0 ? -leftLeg[1] : 0));
 			poseTextFields[11].setValue(String.valueOf(leftLeg[2] != 0 ? -leftLeg[2] : 0));
-		}, 1, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 4) - 30, offsetY, (button) -> {
+		}));
+		mirrorLegs.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs")));
+
+		ImageButton mirrorArms = this.addRenderableWidget(new ImageButton(offsetX - (22 * 4) - 30, offsetY, 20, 20, MIRROR_ARMS_SPRITES, (button) -> {
 			//Mirror Arms
 			float[] leftArm = new float[]{poseTextFields[12].getFloat(), poseTextFields[13].getFloat(), poseTextFields[14].getFloat()};
 			float[] rightArm = new float[]{poseTextFields[15].getFloat(), poseTextFields[16].getFloat(), poseTextFields[17].getFloat()};
@@ -215,17 +236,23 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[15].setValue(String.valueOf(leftArm[0]));
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
-		}, 2, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 3) - 30, offsetY, (button) -> {
+		}));
+		mirrorArms.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms")));
+
+		ImageButton swapToHead = this.addRenderableWidget(new ImageButton(offsetX - (22 * 3) - 30, offsetY, 20, 20, SWAP_TO_HEAD_SPRITES, (button) -> {
 			//Swap item in main hand with head
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_WITH_HEAD);
 
-		}, 3, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 2) - 30, offsetY, (button) -> {
+		}));
+		swapToHead.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head")));
+
+		ImageButton swapHands = this.addRenderableWidget(new ImageButton(offsetX - (22 * 2) - 30, offsetY, 20, 20, MIRROR_HANDS_SPRITES, (button) -> {
 			//Swap item in main and offhand
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_HANDS);
 
-		}, 4, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands"))));
+		}));
+		swapHands.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands")));
+
 		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22) - 30, offsetY, (button) -> {
 			this.lockButton.setLocked(!this.lockButton.isLocked());
 		}));
