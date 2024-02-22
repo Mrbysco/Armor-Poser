@@ -152,7 +152,7 @@ public class ArmorStandScreen extends Screen {
 			if (this.minecraft != null) {
 				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
-		}).bounds(offsetX, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.copy"))).build());
+		}).bounds(offsetX, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.copy"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.paste"), (button) -> {
 			try {
 				String clipboardData = null;
@@ -167,7 +167,10 @@ public class ArmorStandScreen extends Screen {
 			} catch (Exception e) {
 				//Nope
 			}
-		}).bounds(offsetX + 66, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
+		}).bounds(offsetX + 44, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
+		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.save"), (button) -> {
+			this.minecraft.setScreen(new SavePoseScreen(this));
+		}).bounds(offsetX + 88, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.save"))).build());
 
 		offsetX = this.width - 20;
 		ImageButton mirrorPose = this.addRenderableWidget(new ImageButton(offsetX - (22 * 6) - 30, offsetY, 20, 20, MIRROR_POSE_SPRITES, (button) -> {
@@ -428,7 +431,7 @@ public class ArmorStandScreen extends Screen {
 		this.updateEntity(this.writeFieldsToNBT());
 	}
 
-	private CompoundTag writeFieldsToNBT() {
+	protected CompoundTag writeFieldsToNBT() {
 		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("Invisible", this.toggleButtons[0].getValue());
 		compound.putBoolean("NoBasePlate", this.toggleButtons[1].getValue());

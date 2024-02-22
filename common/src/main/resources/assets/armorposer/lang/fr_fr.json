@@ -29,6 +29,7 @@
 
     "armorposer.gui.label.copy": "Copier",
     "armorposer.gui.label.paste": "Coller",
+    "armorposer.gui.label.save": "Save",
     "armorposer.gui.label.poses": "Poses",
 
     "armorposer.gui.tooltip.invisible": "Toggle invisibility",
@@ -49,6 +50,7 @@
 
     "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
+    "armorposer.gui.tooltip.save": "Save the current pose to the user poses",
     "armorposer.gui.tooltip.poses": "Check built-in poses",
 
     "armorposer.gui.tooltip.mirror": "Mirror pose",
@@ -83,6 +85,7 @@
     "armorposer.gui.pose.item": "Item",
     "armorposer.gui.pose.random": "Random",
 
+    "armorposer.gui.save_pose.title": "Save pose",
 
     "armorposer.config.enableConfigGui": "Activer l'interface",
     "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",

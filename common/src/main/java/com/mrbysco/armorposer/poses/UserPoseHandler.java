@@ -29,6 +29,20 @@ public class UserPoseHandler {
 		}
 	}
 
+	public static void saveUserPoses() {
+		if (!PRESET_FOLDER.exists()) {
+			PRESET_FOLDER.mkdirs();
+		}
+
+		UserPoses userPresets = new UserPoses(Reference.userPoses);
+		try (FileWriter writer = new FileWriter(PRESET_FILE)) {
+			GSON.toJson(userPresets, writer);
+			writer.flush();
+		} catch (IOException e) {
+			Reference.LOGGER.error("Failed to user presets {}", e.getMessage());
+		}
+	}
+
 	public static void loadUserPoses() {
 		if (!PRESET_FOLDER.exists() || !PRESET_FILE.exists()) {
 			initializePresets();

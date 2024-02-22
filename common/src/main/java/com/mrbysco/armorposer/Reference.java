@@ -1,7 +1,9 @@
 package com.mrbysco.armorposer;
 
 import com.mojang.logging.LogUtils;
+import com.mrbysco.armorposer.poses.UserPoseHandler;
 import com.mrbysco.armorposer.util.PoseData;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
@@ -52,4 +54,14 @@ public class Reference {
 	}
 
 	public static final List<PoseData> userPoses = new ArrayList<>();
+
+	public static void savePose(String poseName, CompoundTag tag) {
+		String tagString = tag.toString();
+		userPoses.add(new PoseData(poseName, tagString));
+		UserPoseHandler.saveUserPoses();
+	}
+
+	public static void removePose(String poseName) {
+		userPoses.removeIf(pose -> pose.name().equalsIgnoreCase(poseName));
+	}
 }

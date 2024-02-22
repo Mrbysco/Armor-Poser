@@ -29,6 +29,7 @@
 
     "armorposer.gui.label.copy": "Copiar",
     "armorposer.gui.label.paste": "Pegar",
+    "armorposer.gui.label.save": "Save",
     "armorposer.gui.label.poses": "Posiciones",
 
     "armorposer.gui.tooltip.invisible": "Alternar invisibilidad",
@@ -49,6 +50,7 @@
 
     "armorposer.gui.tooltip.copy": "Copiar la pose actual al portapapeles",
     "armorposer.gui.tooltip.paste": "pegar la pose actual desde el portapapeles",
+    "armorposer.gui.tooltip.save": "Save the current pose to the user poses",
     "armorposer.gui.tooltip.poses": "Poses predeterminadas",
 
     "armorposer.gui.tooltip.mirror": "Postura en espejo",
@@ -83,6 +85,7 @@
     "armorposer.gui.pose.item": "Objeto",
     "armorposer.gui.pose.random": "Aleatorio",
 
+    "armorposer.gui.save_pose.title": "Save pose",
 
     "armorposer.config.enableConfigGui": "Habilitar interfaz",
     "armorposer.config.enableConfigGui.tooltip": "Muestra la interfaz de configuración del soporte para armadura al hacer shift y clic con el botón derecho",

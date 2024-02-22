@@ -29,6 +29,7 @@
 
     "armorposer.gui.label.copy": "複製",
     "armorposer.gui.label.paste": "貼上",
+    "armorposer.gui.label.save": "Save",
     "armorposer.gui.label.poses": "Poses",
 
     "armorposer.gui.tooltip.invisible": "Toggle invisibility",
@@ -49,6 +50,7 @@
 
     "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
+    "armorposer.gui.tooltip.save": "Save the current pose to the user poses",
     "armorposer.gui.tooltip.poses": "Check built-in poses",
 
     "armorposer.gui.tooltip.mirror": "Mirror pose",
@@ -82,6 +84,8 @@
     "armorposer.gui.pose.block": "Block",
     "armorposer.gui.pose.item": "Item",
     "armorposer.gui.pose.random": "Random",
+
+    "armorposer.gui.save_pose.title": "Save pose",
 
     "armorposer.config.enableConfigGui": "啟用GUI",
     "armorposer.config.enableConfigGui.tooltip": "按\"Shift+右鍵\"點撃盔甲座時顯示盔甲座配置GUI",

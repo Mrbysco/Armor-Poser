@@ -128,7 +128,10 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 		@Override
 		public boolean mouseClicked(double mouseX, double mouseY, int button) {
 			parent.setSelected(this);
-			PoseListWidget.this.setSelected(this);
+			if (PoseListWidget.this.getSelected() == this)
+				PoseListWidget.this.setSelected(null);
+			else
+				PoseListWidget.this.setSelected(this);
 			return false;
 		}
 
