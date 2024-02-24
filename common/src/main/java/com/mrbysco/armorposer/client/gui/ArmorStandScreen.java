@@ -363,7 +363,7 @@ public class ArmorStandScreen extends Screen {
 					//Get the amount subtracted of z to get .205
 					double zDiff = 0.205D - z;
 
-					CompoundTag tag = TagParser.parseTag(Reference.flatItemPose);
+					CompoundTag tag = TagParser.parseTag(Reference.alignedFlatItemPose);
 					this.readFieldsFromNBT(tag);
 					this.toggleButtons[0].setValue(true); //Set invisible
 					this.toggleButtons[2].setValue(true); //Set no gravity
@@ -382,11 +382,32 @@ public class ArmorStandScreen extends Screen {
 		buttonsLeft--;
 
 		ImageButton toolButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, TOOL_SPRITES, (button) -> {
-			String itemPose = Reference.defaultPoseMap.get("item");
 			try {
-				CompoundTag tag = TagParser.parseTag(itemPose);
+				Vec3 pos = this.entityArmorStand.position();
+				//Get the x decimals after the comma
+				double x = pos.x - (int) pos.x;
+				//Get the y decimals after the comma
+				double y = pos.y - (int) pos.y;
+				//Get the z decimals after the comma
+				double z = pos.z - (int) pos.z;
+
+				//Get the amount subtracted of x to get .886
+				double xDiff = 0.33D - x;
+				//Get the amount subtracted of y to get .22
+				double yDiff = -1.285D - y;
+				//Get the amount subtracted of z to get .205
+				double zDiff = 0.059999D - z;
+
+				CompoundTag tag = TagParser.parseTag(Reference.alignedToolPose);
 				this.readFieldsFromNBT(tag);
-				this.updateEntity(tag);
+				this.toggleButtons[0].setValue(true); //Set invisible
+				this.toggleButtons[2].setValue(true); //Set no gravity
+				this.toggleButtons[3].setValue(true); //Set show arms
+				this.rotationTextField.setValue("0"); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+				this.textFieldUpdated();
 			} catch (CommandSyntaxException e) {
 				//Nope
 			}
@@ -402,7 +423,7 @@ public class ArmorStandScreen extends Screen {
 
 		// done & cancel buttons
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
-			this.updateEntity(this.writeFieldsToNBT());
+			this.textFieldUpdated();
 			this.minecraft.setScreen((Screen) null);
 		}).bounds(offsetX - ((2 * 96) + 2), offsetY + 22, 97, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
