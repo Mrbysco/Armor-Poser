@@ -26,6 +26,7 @@
     "armorposer.gui.label.left_arm": "Brazo izquierdo",
     "armorposer.gui.label.right_arm": "Brazo derecho",
     "armorposer.gui.label.position": "Posición",
+    "armorposer.gui.label.scroll": "Click and scroll",
 
     "armorposer.gui.label.copy": "Copiar",
     "armorposer.gui.label.paste": "Pegar",
@@ -58,6 +59,10 @@
     "armorposer.gui.tooltip.mirror_arms": "Brazos en espejo",
     "armorposer.gui.tooltip.swap_head": "Intercambiar mano principal y cabeza",
     "armorposer.gui.tooltip.swap_hands": "Intercambiar mano principal y secundaria",
+    "armorposer.gui.tooltip.block": "Align held block, so it appears on the surface",
+    "armorposer.gui.tooltip.item": "Align held item, so it appears flat on the surface",
+    "armorposer.gui.tooltip.item2": "Holding shift aligns the item so it appears upright on the surface",
+    "armorposer.gui.tooltip.tool": "Align held tool, so it appears flat on the surface",
     "armorposer.gui.tooltip.lock": "Bloquear interacción",
 
     "armorposer.gui.pose.attention": "Alerta",
@@ -86,6 +91,8 @@
     "armorposer.gui.pose.random": "Aleatorio",
 
     "armorposer.gui.save_pose.title": "Save pose",
+    "armorposer.gui.delete_poose.title": "Delete pose",
+    "armorposer.gui.delete_poose.message": "Are you sure you want to remove this pose?",
 
     "armorposer.config.enableConfigGui": "Habilitar interfaz",
     "armorposer.config.enableConfigGui.tooltip": "Muestra la interfaz de configuración del soporte para armadura al hacer shift y clic con el botón derecho",
