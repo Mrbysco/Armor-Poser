@@ -63,5 +63,10 @@ public class Reference {
 
 	public static void removePose(String poseName) {
 		userPoses.removeIf(pose -> pose.name().equalsIgnoreCase(poseName));
+		UserPoseHandler.saveUserPoses();
 	}
+
+	public static final String alignedBlockPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:0b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[-15.0f,135.0f,0.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
+	public static final String alignedUprightItemPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:1b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[-90.0f,0.0f,0.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
+	public static final String flatItemPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:1b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[0.0f,0.0f,0.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
 }

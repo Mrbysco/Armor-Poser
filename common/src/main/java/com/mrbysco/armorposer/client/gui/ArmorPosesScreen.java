@@ -12,6 +12,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import org.lwjgl.glfw.GLFW;
 
 import java.util.Collections;
 import java.util.List;
@@ -100,6 +101,7 @@ public class ArmorPosesScreen extends Screen {
 				} else {
 					this.parentScreen.readFieldsFromNBT(selected.getTag());
 				}
+				this.parentScreen.textFieldUpdated();
 				this.parentScreen.updateEntity(selected.getTag());
 			}
 			this.onClose();
@@ -215,6 +217,16 @@ public class ArmorPosesScreen extends Screen {
 				search.getY() - getScreenFont().lineHeight - 2, 0xFFFFFF);
 
 		this.search.render(guiGraphics, mouseX, mouseY, partialTicks);
+	}
+
+	@Override
+	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+		if (keyCode == GLFW.GLFW_KEY_DELETE) {
+			if(selected != null && selected.userAdded()) {
+				this.minecraft.setScreen(new DeletePoseScreen(this.parentScreen, selected));
+			}
+		}
+		return super.keyPressed(keyCode, scanCode, modifiers);
 	}
 
 	@Override

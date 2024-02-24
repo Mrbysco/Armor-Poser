@@ -1,5 +1,8 @@
 package com.mrbysco.armorposer.client.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.math.Axis;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
@@ -43,6 +46,15 @@ public class ArmorStandScreen extends Screen {
 	private static final WidgetSprites MIRROR_HANDS_SPRITES = new WidgetSprites(
 			new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands_highlighted")
 	);
+	private static final WidgetSprites BLOCK_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/block"), new ResourceLocation(Reference.MOD_ID, "widget/block_highlighted")
+	);
+	private static final WidgetSprites ITEM_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/item"), new ResourceLocation(Reference.MOD_ID, "widget/item_highlighted")
+	);
+	private static final WidgetSprites TOOL_SPRITES = new WidgetSprites(
+			new ResourceLocation(Reference.MOD_ID, "widget/tool"), new ResourceLocation(Reference.MOD_ID, "widget/tool_highlighted")
+	);
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
 
@@ -60,6 +72,8 @@ public class ArmorStandScreen extends Screen {
 	//Cache the tooltip, so we don't have to create a new one every tick
 	private final Tooltip yPositionTooltip = Tooltip.create(Component.translatable("armorposer.gui.tooltip.y_position"));
 	private final Tooltip yPositionTooltipDisabled = Tooltip.create(Component.translatable("armorposer.gui.tooltip.y_position.disabled").withStyle(ChatFormatting.RED));
+
+	private final int whiteColor = 16777215;
 
 	public ArmorStandScreen(ArmorStand entityArmorStand) {
 		super(Component.translatable("armorposer.gui.title"));
@@ -173,7 +187,9 @@ public class ArmorStandScreen extends Screen {
 		}).bounds(offsetX + 88, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.save"))).build());
 
 		offsetX = this.width - 20;
-		ImageButton mirrorPose = this.addRenderableWidget(new ImageButton(offsetX - (22 * 6) - 30, offsetY, 20, 20, MIRROR_POSE_SPRITES, (button) -> {
+		int buttonsLeft = 9;
+		int buttonOffset = -4;
+		ImageButton mirrorPose = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, MIRROR_POSE_SPRITES, (button) -> {
 			//Mirror head
 			float[] head = new float[]{poseTextFields[0].getFloat(), poseTextFields[1].getFloat(), poseTextFields[2].getFloat()};
 			poseTextFields[0].setValue(String.valueOf(head[0]));
@@ -209,10 +225,12 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[15].setValue(String.valueOf(leftArm[0]));
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
+			this.textFieldUpdated();
 		}));
 		mirrorPose.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror")));
+		buttonsLeft--;
 
-		ImageButton mirrorLegs = this.addRenderableWidget(new ImageButton(offsetX - (22 * 5) - 30, offsetY, 20, 20, MIRROR_LEGS_SPRITES, (button) -> {
+		ImageButton mirrorLegs = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, MIRROR_LEGS_SPRITES, (button) -> {
 			//Mirror Legs
 			float[] leftLeg = new float[]{poseTextFields[6].getFloat(), poseTextFields[7].getFloat(), poseTextFields[8].getFloat()};
 			float[] rightLeg = new float[]{poseTextFields[9].getFloat(), poseTextFields[10].getFloat(), poseTextFields[11].getFloat()};
@@ -224,10 +242,12 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[9].setValue(String.valueOf(leftLeg[0]));
 			poseTextFields[10].setValue(String.valueOf(leftLeg[1] != 0 ? -leftLeg[1] : 0));
 			poseTextFields[11].setValue(String.valueOf(leftLeg[2] != 0 ? -leftLeg[2] : 0));
+			this.textFieldUpdated();
 		}));
 		mirrorLegs.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs")));
+		buttonsLeft--;
 
-		ImageButton mirrorArms = this.addRenderableWidget(new ImageButton(offsetX - (22 * 4) - 30, offsetY, 20, 20, MIRROR_ARMS_SPRITES, (button) -> {
+		ImageButton mirrorArms = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, MIRROR_ARMS_SPRITES, (button) -> {
 			//Mirror Arms
 			float[] leftArm = new float[]{poseTextFields[12].getFloat(), poseTextFields[13].getFloat(), poseTextFields[14].getFloat()};
 			float[] rightArm = new float[]{poseTextFields[15].getFloat(), poseTextFields[16].getFloat(), poseTextFields[17].getFloat()};
@@ -239,24 +259,142 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[15].setValue(String.valueOf(leftArm[0]));
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
+			this.textFieldUpdated();
 		}));
 		mirrorArms.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms")));
+		buttonsLeft--;
 
-		ImageButton swapToHead = this.addRenderableWidget(new ImageButton(offsetX - (22 * 3) - 30, offsetY, 20, 20, SWAP_TO_HEAD_SPRITES, (button) -> {
+		ImageButton swapToHead = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, SWAP_TO_HEAD_SPRITES, (button) -> {
 			//Swap item in main hand with head
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_WITH_HEAD);
 
 		}));
 		swapToHead.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head")));
 
-		ImageButton swapHands = this.addRenderableWidget(new ImageButton(offsetX - (22 * 2) - 30, offsetY, 20, 20, MIRROR_HANDS_SPRITES, (button) -> {
+		buttonsLeft--;
+
+		ImageButton swapHands = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, MIRROR_HANDS_SPRITES, (button) -> {
 			//Swap item in main and offhand
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_HANDS);
-
 		}));
 		swapHands.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands")));
+		buttonsLeft--;
 
-		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22) - 30, offsetY, (button) -> {
+		ImageButton blockButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, BLOCK_SPRITES, (button) -> {
+			try {
+				Vec3 pos = this.entityArmorStand.position();
+				//Get the x decimals after the comma
+				double x = pos.x - (int) pos.x;
+				//Get the y decimals after the comma
+				double y = pos.y - (int) pos.y;
+				//Get the z decimals after the comma
+				double z = pos.z - (int) pos.z;
+
+				//Get the amount subtracted of x to get .0725
+				double xDiff = 1.0725D - x;
+				//Get the amount subtracted of y to get .345
+				double yDiff = -0.655D - y;
+				//Get the amount subtracted of z to get .852
+				double zDiff = 0.852D - z;
+
+				CompoundTag tag = TagParser.parseTag(Reference.alignedBlockPose);
+				this.readFieldsFromNBT(tag);
+				this.toggleButtons[0].setValue(true); //Set invisible
+				this.toggleButtons[2].setValue(true); //Set no gravity
+				this.toggleButtons[3].setValue(true); //Set show arms
+				this.rotationTextField.setValue("0"); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+				this.textFieldUpdated();
+			} catch (CommandSyntaxException e) {
+				//Nope
+			}
+
+		}));
+		blockButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.block")));
+		buttonsLeft--;
+
+		ImageButton itemButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, ITEM_SPRITES, (button) -> {
+			if (hasShiftDown()) { //If shift is held the item will be upright
+				try {
+					Vec3 pos = this.entityArmorStand.position();
+					//Get the x decimals after the comma
+					double x = pos.x - (int) pos.x;
+					//Get the y decimals after the comma
+					double y = pos.y - (int) pos.y;
+					//Get the z decimals after the comma
+					double z = pos.z - (int) pos.z;
+
+					//Get the amount subtracted of x to get .86
+					double xDiff = 0.86D - x;
+					//Get the amount subtracted of y to get .59
+					double yDiff = -1.41D - y;
+					//Get the amount subtracted of z to get .9375
+					double zDiff = -0.0625D - z;
+
+					CompoundTag tag = TagParser.parseTag(Reference.alignedUprightItemPose);
+					this.readFieldsFromNBT(tag);
+					this.toggleButtons[0].setValue(true); //Set invisible
+					this.toggleButtons[2].setValue(true); //Set no gravity
+					this.toggleButtons[3].setValue(true); //Set show arms
+					this.rotationTextField.setValue("0"); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+					this.textFieldUpdated();
+				} catch (CommandSyntaxException e) {
+					//Nope
+				}
+			} else {
+				try {
+					Vec3 pos = this.entityArmorStand.position();
+					//Get the x decimals after the comma
+					double x = pos.x - (int) pos.x;
+					//Get the y decimals after the comma
+					double y = pos.y - (int) pos.y;
+					//Get the z decimals after the comma
+					double z = pos.z - (int) pos.z;
+
+					//Get the amount subtracted of x to get .886
+					double xDiff = 0.886D - x;
+					//Get the amount subtracted of y to get .22
+					double yDiff = -0.78D - y;
+					//Get the amount subtracted of z to get .205
+					double zDiff = 0.205D - z;
+
+					CompoundTag tag = TagParser.parseTag(Reference.flatItemPose);
+					this.readFieldsFromNBT(tag);
+					this.toggleButtons[0].setValue(true); //Set invisible
+					this.toggleButtons[2].setValue(true); //Set no gravity
+					this.toggleButtons[3].setValue(true); //Set show arms
+					this.rotationTextField.setValue("0"); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+					this.textFieldUpdated();
+				} catch (CommandSyntaxException e) {
+					//Nope
+				}
+			}
+		}));
+		itemButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.item").append("\n").append(Component.translatable("armorposer.gui.tooltip.item2").withStyle(ChatFormatting.GRAY))));
+		buttonsLeft--;
+
+		ImageButton toolButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, TOOL_SPRITES, (button) -> {
+			String itemPose = Reference.defaultPoseMap.get("item");
+			try {
+				CompoundTag tag = TagParser.parseTag(itemPose);
+				this.readFieldsFromNBT(tag);
+				this.updateEntity(tag);
+			} catch (CommandSyntaxException e) {
+				//Nope
+			}
+		}));
+		toolButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.tool")));
+		buttonsLeft--;
+
+		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			this.lockButton.setLocked(!this.lockButton.isLocked());
 		}));
 		this.lockButton.setLocked(this.armorStandData.getBooleanValue(6));
@@ -266,7 +404,7 @@ public class ArmorStandScreen extends Screen {
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
 			this.updateEntity(this.writeFieldsToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}).bounds(offsetX - ((2 * 96) + 2), offsetY + 22, 96, 20).build());
+		}).bounds(offsetX - ((2 * 96) + 2), offsetY + 22, 97, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
 			this.poseTextFields[18].setValue("0");
 			this.poseTextFields[19].setValue("0");
@@ -274,7 +412,7 @@ public class ArmorStandScreen extends Screen {
 			this.textFieldUpdated();
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}).bounds(offsetX - 96, offsetY + 22, 96, 20).build());
+		}).bounds(offsetX - 95, offsetY + 22, 97, 20).build());
 	}
 
 	@Override
@@ -282,7 +420,7 @@ public class ArmorStandScreen extends Screen {
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
-		guiGraphics.drawCenteredString(this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 10, 0xFFFFFF);
+		guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) / 2, 10, whiteColor, true);
 
 		// Draw textboxes
 		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -296,22 +434,33 @@ public class ArmorStandScreen extends Screen {
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), x, y, 0xA0A0A0, false);
+			guiGraphics.drawString(this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), x, y, whiteColor, true);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		guiGraphics.drawString(this.font, "X", offsetX + 10, 7, 0xA0A0A0, false);
-		guiGraphics.drawString(this.font, "Y", offsetX + 45, 7, 0xA0A0A0, false);
-		guiGraphics.drawString(this.font, "Z", offsetX + 80, 7, 0xA0A0A0, false);
+		guiGraphics.drawString(this.font, "X", offsetX + 10, 7, whiteColor, true);
+		guiGraphics.drawString(this.font, "Y", offsetX + 45, 7, whiteColor, true);
+		guiGraphics.drawString(this.font, "Z", offsetX + 80, 7, whiteColor, true);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			String translatedLabel = I18n.get("armorposer.gui.label." + this.sliderLabels[i]);
 			int x = offsetX - this.font.width(translatedLabel) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			guiGraphics.drawString(this.font, translatedLabel, x, y, 0xA0A0A0, false);
+			guiGraphics.drawString(this.font, translatedLabel, x, y, whiteColor, true);
 		}
+
+		PoseStack poseStack = guiGraphics.pose();
+		poseStack.pushPose();
+		poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+		guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll"), 21, -width + 10, 11184810, true);
+		poseStack.popPose();
+	}
+
+	@Override
+	public void renderBackground(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
+		//Nope
 	}
 
 	@Override
@@ -410,10 +559,10 @@ public class ArmorStandScreen extends Screen {
 			} else {
 				for (NumberFieldBox textField : this.poseTextFields) {
 					if (textField.keyPressed(keyCode, scanCode, modifiers)) {
+						this.textFieldUpdated();
 						return true;
 					}
 				}
-				this.textFieldUpdated();
 			}
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
@@ -421,10 +570,7 @@ public class ArmorStandScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		boolean clicked = super.mouseClicked(mouseX, mouseY, button);
-		this.textFieldUpdated();
-
-		return clicked;
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	protected void textFieldUpdated() {

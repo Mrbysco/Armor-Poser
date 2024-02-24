@@ -26,6 +26,7 @@
     "armorposer.gui.label.left_arm": "Left Arm",
     "armorposer.gui.label.right_arm": "Right Arm",
     "armorposer.gui.label.position": "Position",
+    "armorposer.gui.label.scroll": "Click and scroll",
 
     "armorposer.gui.label.copy": "Copy",
     "armorposer.gui.label.paste": "Paste",
@@ -58,6 +59,10 @@
     "armorposer.gui.tooltip.mirror_arms": "Mirror Arms",
     "armorposer.gui.tooltip.swap_head": "Swap main hand and head",
     "armorposer.gui.tooltip.swap_hands": "Swap main and off hand",
+    "armorposer.gui.tooltip.block": "Align held block so it appears on the surface",
+    "armorposer.gui.tooltip.item": "Align held item so it appears flat on the surface",
+    "armorposer.gui.tooltip.item2": "Holding shift aligns the item so it appears upright on the surface",
+    "armorposer.gui.tooltip.tool": "Align held tool so it appears flat on the surface",
     "armorposer.gui.tooltip.lock": "Lock Interaction",
 
     "armorposer.gui.pose.attention": "Attention",
@@ -86,6 +91,8 @@
     "armorposer.gui.pose.random": "Random",
 
     "armorposer.gui.save_pose.title": "Save pose",
+    "armorposer.gui.delete_poose.title": "Delete pose",
+    "armorposer.gui.delete_poose.message": "Are you sure you want to remove this pose?",
 
     "armorposer.config.enableConfigGui": "Enable GUI",
     "armorposer.config.enableConfigGui.tooltip": "Show the Armor Stand configuration GUI on shift right click",

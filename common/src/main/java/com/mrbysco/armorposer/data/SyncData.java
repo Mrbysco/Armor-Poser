@@ -32,7 +32,7 @@ public record SyncData(UUID entityUUID, CompoundTag tag) {
 		double x = tagList.getDouble(0);
 		double y = tagList.getDouble(1);
 		double z = tagList.getDouble(2);
-		armorStand.setPos(armorStand.getX() + x,
+		armorStand.setPosRaw(armorStand.getX() + x,
 				armorStand.getY() + y,
 				armorStand.getZ() + z);
 	}

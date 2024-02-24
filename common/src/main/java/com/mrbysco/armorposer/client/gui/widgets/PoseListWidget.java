@@ -114,8 +114,12 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 			Font font = this.parent.getScreenFont();
 			renderScrollingString(guiGraphics, font, Component.literal(getName()), left + 36, top + 10, left + width - 18, top + 20, 0xFFFFFF);
 
+			renderPose(guiGraphics, left + 16, top + 28, 15);
+		}
+
+		public void renderPose(GuiGraphics guiGraphics, int xPos, int yPos, int size) {
 			if (cachedEntity != null) {
-				InventoryScreen.renderEntityInInventory(guiGraphics, left + 16, top + 28, 15,
+				InventoryScreen.renderEntityInInventory(guiGraphics, xPos, yPos, size,
 						ARMOR_STAND_TRANSLATION, ARMOR_STAND_ANGLE, (Quaternionf) null, this.cachedEntity);
 			}
 		}
