@@ -43,9 +43,9 @@ public class DeletePoseScreen extends Screen {
 		this.renderBackground(guiGraphics, mouseX, mouseY, partialTicks);
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
-		this.entry.renderPose(guiGraphics, this.width / 2, this.height / 2 - 50, 50);
+		this.entry.renderPose(guiGraphics, this.width / 2 - 5, this.height / 2 - 10, 30);
 
 		guiGraphics.drawCenteredString(this.font, this.title, this.width / 2, 20, 16777215);
-		guiGraphics.drawCenteredString(this.font, this.warning, this.width / 2, 50, 11141120);
+		guiGraphics.drawCenteredString(this.font, this.warning, this.width / 2, 40, 11141120);
 	}
 }
