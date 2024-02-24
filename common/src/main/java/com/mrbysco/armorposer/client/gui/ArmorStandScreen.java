@@ -27,6 +27,7 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.phys.Vec3;
 
@@ -283,29 +284,50 @@ public class ArmorStandScreen extends Screen {
 		ImageButton blockButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, BLOCK_SPRITES, (button) -> {
 			try {
 				Vec3 pos = this.entityArmorStand.position();
-				//Get the x decimals after the comma
-				double x = pos.x - (int) pos.x;
-				//Get the y decimals after the comma
-				double y = pos.y - (int) pos.y;
-				//Get the z decimals after the comma
-				double z = pos.z - (int) pos.z;
 
 				//Get the amount subtracted of x to get .0725
-				double xDiff = 1.0725D - x;
+				double xDiff = getDesiredOffset(pos.x, 1.0725D);
 				//Get the amount subtracted of y to get .345
-				double yDiff = -0.655D - y;
+				double yDiff = getDesiredOffset(pos.y, -0.655D);
 				//Get the amount subtracted of z to get .852
-				double zDiff = 0.852D - z;
+				double zDiff = getDesiredOffset(pos.z, 0.852D);
+
+				Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+				int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+				System.out.println(closestDegree);
+				switch (closestDegree) {
+					case 90: {
+						//Rotate the desired position to have the correct values
+						double newX = offset.z - 0.7D;
+						double newZ = -offset.x + 1.18D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -180: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.x;
+						double newZ = -offset.z;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -90: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.z + 0.7D;
+						double newZ = offset.x - 1.18D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+				}
 
 				CompoundTag tag = TagParser.parseTag(Reference.alignedBlockPose);
 				this.readFieldsFromNBT(tag);
 				this.toggleButtons[0].setValue(true); //Set invisible
 				this.toggleButtons[2].setValue(true); //Set no gravity
 				this.toggleButtons[3].setValue(true); //Set show arms
-				this.rotationTextField.setValue("0"); //Set rotation
-				this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
-				this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
-				this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+				this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
 				this.textFieldUpdated();
 			} catch (CommandSyntaxException e) {
 				//Nope
@@ -319,29 +341,49 @@ public class ArmorStandScreen extends Screen {
 			if (hasShiftDown()) { //If shift is held the item will be upright
 				try {
 					Vec3 pos = this.entityArmorStand.position();
-					//Get the x decimals after the comma
-					double x = pos.x - (int) pos.x;
-					//Get the y decimals after the comma
-					double y = pos.y - (int) pos.y;
-					//Get the z decimals after the comma
-					double z = pos.z - (int) pos.z;
 
 					//Get the amount subtracted of x to get .86
-					double xDiff = 0.86D - x;
+					double xDiff = getDesiredOffset(pos.x, 0.86D);
 					//Get the amount subtracted of y to get .59
-					double yDiff = -1.41D - y;
+					double yDiff = getDesiredOffset(pos.y, -1.41D);
 					//Get the amount subtracted of z to get .9375
-					double zDiff = -0.0625D - z;
+					double zDiff = getDesiredOffset(pos.z, -0.0625D);
+
+					Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+					int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+					switch (closestDegree) {
+						case 90: {
+							//Rotate the desired position to have the correct values
+							double newX = offset.z + 1.12D;
+							double newZ = -offset.x + 0.74D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -180: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.x;
+							double newZ = -offset.z;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -90: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.z - 1.12D;
+							double newZ = offset.x - 0.74D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+					}
 
 					CompoundTag tag = TagParser.parseTag(Reference.alignedUprightItemPose);
 					this.readFieldsFromNBT(tag);
 					this.toggleButtons[0].setValue(true); //Set invisible
 					this.toggleButtons[2].setValue(true); //Set no gravity
 					this.toggleButtons[3].setValue(true); //Set show arms
-					this.rotationTextField.setValue("0"); //Set rotation
-					this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
-					this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
-					this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+					this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
 					this.textFieldUpdated();
 				} catch (CommandSyntaxException e) {
 					//Nope
@@ -349,29 +391,49 @@ public class ArmorStandScreen extends Screen {
 			} else {
 				try {
 					Vec3 pos = this.entityArmorStand.position();
-					//Get the x decimals after the comma
-					double x = pos.x - (int) pos.x;
-					//Get the y decimals after the comma
-					double y = pos.y - (int) pos.y;
-					//Get the z decimals after the comma
-					double z = pos.z - (int) pos.z;
 
 					//Get the amount subtracted of x to get .886
-					double xDiff = 0.886D - x;
+					double xDiff = getDesiredOffset(pos.x, 0.886D);
 					//Get the amount subtracted of y to get .22
-					double yDiff = -0.78D - y;
+					double yDiff = getDesiredOffset(pos.y, -0.78D);
 					//Get the amount subtracted of z to get .205
-					double zDiff = 0.205D - z;
+					double zDiff = getDesiredOffset(pos.z, 0.205D);
+
+					Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+					int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+					switch (closestDegree) {
+						case 90: {
+							//Rotate the desired position to have the correct values
+							double newX = offset.z + 0.59D;
+							double newZ = -offset.x + 0.78D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -180: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.x;
+							double newZ = -offset.z;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -90: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.z - 0.59D;
+							double newZ = offset.x - 0.78D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+					}
 
 					CompoundTag tag = TagParser.parseTag(Reference.alignedFlatItemPose);
 					this.readFieldsFromNBT(tag);
 					this.toggleButtons[0].setValue(true); //Set invisible
 					this.toggleButtons[2].setValue(true); //Set no gravity
 					this.toggleButtons[3].setValue(true); //Set show arms
-					this.rotationTextField.setValue("0"); //Set rotation
-					this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
-					this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
-					this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+					this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
 					this.textFieldUpdated();
 				} catch (CommandSyntaxException e) {
 					//Nope
@@ -384,29 +446,49 @@ public class ArmorStandScreen extends Screen {
 		ImageButton toolButton = this.addRenderableWidget(new ImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, 20, 20, TOOL_SPRITES, (button) -> {
 			try {
 				Vec3 pos = this.entityArmorStand.position();
-				//Get the x decimals after the comma
-				double x = pos.x - (int) pos.x;
-				//Get the y decimals after the comma
-				double y = pos.y - (int) pos.y;
-				//Get the z decimals after the comma
-				double z = pos.z - (int) pos.z;
 
-				//Get the amount subtracted of x to get .886
-				double xDiff = 0.33D - x;
+				//Get the amount subtracted of x to get .33
+				double xDiff = getDesiredOffset(pos.x, 0.33D);
 				//Get the amount subtracted of y to get .22
-				double yDiff = -1.285D - y;
-				//Get the amount subtracted of z to get .205
-				double zDiff = 0.059999D - z;
+				double yDiff = getDesiredOffset(pos.y, -1.285D);
+				//Get the amount subtracted of z to get .059999D
+				double zDiff = getDesiredOffset(pos.z, 0.059999D);
+
+				Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+				int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+				switch (closestDegree) {
+					case 90: {
+						//Rotate the desired position to have the correct values
+						double newX = offset.z + 0.88D;
+						double newZ = -offset.x - 0.34D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -180: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.x;
+						double newZ = -offset.z;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -90: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.z - 0.88D;
+						double newZ = offset.x + 0.34D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+				}
 
 				CompoundTag tag = TagParser.parseTag(Reference.alignedToolPose);
 				this.readFieldsFromNBT(tag);
 				this.toggleButtons[0].setValue(true); //Set invisible
 				this.toggleButtons[2].setValue(true); //Set no gravity
 				this.toggleButtons[3].setValue(true); //Set show arms
-				this.rotationTextField.setValue("0"); //Set rotation
-				this.poseTextFields[18].setValue(String.valueOf(xDiff)); //Set X
-				this.poseTextFields[19].setValue(String.valueOf(yDiff)); //Set Y
-				this.poseTextFields[20].setValue(String.valueOf(zDiff)); //Set Z
+				this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
 				this.textFieldUpdated();
 			} catch (CommandSyntaxException e) {
 				//Nope
@@ -434,6 +516,21 @@ public class ArmorStandScreen extends Screen {
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}).bounds(offsetX - 95, offsetY + 22, 97, 20).build());
+	}
+
+	/**
+	 * Get the desired offset to get the armor stand in the correct position
+	 *
+	 * @param posValue     The current position value
+	 * @param desiredValue The desired position value
+	 * @return The amount subtracted from or added to the current position to get the desired position
+	 */
+	private double getDesiredOffset(double posValue, double desiredValue) {
+		double value = posValue - (int) posValue; //Get the decimal value
+		if (value < 0) { //Make it positive if it's a negative position
+			value = -value;
+		}
+		return desiredValue - value;
 	}
 
 	@Override
