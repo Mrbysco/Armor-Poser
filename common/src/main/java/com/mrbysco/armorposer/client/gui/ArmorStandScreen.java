@@ -499,6 +499,7 @@ public class ArmorStandScreen extends Screen {
 
 		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			this.lockButton.setLocked(!this.lockButton.isLocked());
+			this.textFieldUpdated();
 		}));
 		this.lockButton.setLocked(this.armorStandData.getBooleanValue(6));
 		this.lockButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.lock")));
