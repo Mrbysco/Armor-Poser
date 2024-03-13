@@ -294,7 +294,6 @@ public class ArmorStandScreen extends Screen {
 
 				Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
 				int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
-				System.out.println(closestDegree);
 				switch (closestDegree) {
 					case 90: {
 						//Rotate the desired position to have the correct values
