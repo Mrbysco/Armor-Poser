@@ -570,10 +570,12 @@ public class ArmorStandScreen extends Screen {
 		}
 
 		PoseStack poseStack = guiGraphics.pose();
-		poseStack.pushPose();
-		poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-		guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll"), 21, -width + 10, 11184810, true);
-		poseStack.popPose();
+		if (Services.PLATFORM.allowScrolling()) {
+			poseStack.pushPose();
+			poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+			guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll"), 21, -width + 10, 11184810, true);
+			poseStack.popPose();
+		}
 	}
 
 	@Override
