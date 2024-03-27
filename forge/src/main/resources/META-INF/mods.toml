@@ -26,3 +26,5 @@ type="REQUIRED"
 versionRange="[20.4.70-beta,)"
 ordering="NONE"
 side="BOTH"
+[[mixins]]
+config="armorposer.neoforge.mixins.json"

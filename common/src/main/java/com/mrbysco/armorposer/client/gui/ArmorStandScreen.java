@@ -4,12 +4,14 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.math.Axis;
 import com.mrbysco.armorposer.Reference;
+import com.mrbysco.armorposer.client.GlowHandler;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
 import net.minecraft.ChatFormatting;
+import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -516,6 +518,9 @@ public class ArmorStandScreen extends Screen {
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}).bounds(offsetX - 95, offsetY + 22, 97, 20).build());
+		this.addRenderableWidget(Button.builder(Component.literal("💡"), (button) -> {
+			this.minecraft.setScreen(new ArmorGlowScreen(this));
+		}).bounds(0, 0, 16, 16).build());
 	}
 
 	/**

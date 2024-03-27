@@ -94,6 +94,10 @@
     "armorposer.gui.delete_poose.title": "Delete pose",
     "armorposer.gui.delete_poose.message": "Are you sure you want to remove this pose?",
 
+    "armorposer.gui.armor_list.list": "Armor Stands",
+    "armorposer.gui.armor_list.locate": "Locate",
+    "armorposer.gui.armor_list.modify": "Modify",
+
     "armorposer.config.enableConfigGui": "Enable GUI",
     "armorposer.config.enableConfigGui.tooltip": "Show the Armor Stand configuration GUI on shift right click",
 
