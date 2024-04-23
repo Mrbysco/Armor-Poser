@@ -6,7 +6,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.neoforged.neoforge.network.handling.PlayPayloadContext;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public class ServerPayloadHandler {
 	private static final ServerPayloadHandler INSTANCE = new ServerPayloadHandler();
@@ -15,10 +15,10 @@ public class ServerPayloadHandler {
 		return INSTANCE;
 	}
 
-	public void handleSwapData(final ArmorStandSwapPayload swapData, final PlayPayloadContext context) {
+	public void handleSwapData(final ArmorStandSwapPayload swapData, final IPayloadContext context) {
 		// Do something with the pose, on the main thread
-		context.workHandler().submitAsync(() -> {
-					if (context.level().isPresent() && context.level().get() instanceof ServerLevel serverLevel) {
+		context.enqueueWork(() -> {
+					if (context.player() != null && context.player().level() instanceof ServerLevel serverLevel) {
 						Entity entity = serverLevel.getEntity(swapData.data().entityUUID());
 						if (entity instanceof ArmorStand armorStandEntity) {
 							swapData.data().handleData(armorStandEntity);
@@ -27,15 +27,15 @@ public class ServerPayloadHandler {
 				})
 				.exceptionally(e -> {
 					// Handle exception
-					context.packetHandler().disconnect(Component.translatable("captcha.networking.swap.failed", e.getMessage()));
+					context.disconnect(Component.translatable("armorposer.networking.swap.failed", e.getMessage()));
 					return null;
 				});
 	}
 
-	public void handleSyncData(final ArmorStandSyncPayload syncData, final PlayPayloadContext context) {
+	public void handleSyncData(final ArmorStandSyncPayload syncData, final IPayloadContext context) {
 		// Do something with the pose, on the main thread
-		context.workHandler().submitAsync(() -> {
-					if (context.level().isPresent() && context.level().get() instanceof ServerLevel serverLevel) {
+		context.enqueueWork(() -> {
+					if (context.player() != null && context.player().level() instanceof ServerLevel serverLevel) {
 						Entity entity = serverLevel.getEntity(syncData.data().entityUUID());
 						if (entity instanceof ArmorStand armorStandEntity) {
 							syncData.data().handleData(armorStandEntity);
@@ -44,7 +44,7 @@ public class ServerPayloadHandler {
 				})
 				.exceptionally(e -> {
 					// Handle exception
-					context.packetHandler().disconnect(Component.translatable("captcha.networking.sync.failed", e.getMessage()));
+					context.disconnect(Component.translatable("armorposer.networking.sync.failed", e.getMessage()));
 					return null;
 				});
 	}

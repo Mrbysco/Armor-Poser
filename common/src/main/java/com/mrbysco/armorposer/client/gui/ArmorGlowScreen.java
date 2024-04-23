@@ -24,7 +24,7 @@ public class ArmorGlowScreen extends Screen {
 
 	private ArmorGlowWidget armorListWidget;
 	private ArmorGlowWidget.ListEntry selected = null;
-	private List<ArmorStand> armorStands;
+	private final List<ArmorStand> armorStands;
 	private Button locateButton;
 	private Button modifyButton;
 

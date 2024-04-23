@@ -36,7 +36,7 @@ public class ArmorPosesScreen extends Screen {
 
 	private static final int PADDING = 6;
 
-	private PoseListWidget[] poseListWidget = new PoseListWidget[2];
+	private final PoseListWidget[] poseListWidget = new PoseListWidget[2];
 	private PoseListWidget.ListEntry selected = null;
 	private List<PoseEntry> poses;
 	private final List<PoseEntry> unsortedPoses;

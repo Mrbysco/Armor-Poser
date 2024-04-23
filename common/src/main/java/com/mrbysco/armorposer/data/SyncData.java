@@ -4,6 +4,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 import java.util.UUID;
@@ -35,6 +37,14 @@ public record SyncData(UUID entityUUID, CompoundTag tag) {
 				armorStand.setPosRaw(armorStand.getX() + x,
 						armorStand.getY() + y,
 						armorStand.getZ() + z);
+
+			double scale = tag.getDouble("Scale");
+			if (scale > 0) {
+				AttributeInstance attributeInstance = armorStand.getAttributes().getInstance(Attributes.SCALE);
+				if (attributeInstance != null) {
+					attributeInstance.setBaseValue(scale);
+				}
+			}
 		}
 	}
 }

@@ -1,14 +1,14 @@
 plugins {
     // Required for NeoGradle
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
-    id "net.darkhax.curseforgegradle" version "1.1.17" apply(false)
+    id "net.darkhax.curseforgegradle" version "1.1.18" apply(false)
     id "com.modrinth.minotaur" version "2.+" apply(false)
 }
 
 subprojects {
     apply plugin: 'java'
 
-    java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+    java.toolchain.languageVersion = JavaLanguageVersion.of(21)
     java.withSourcesJar()
 
     jar {
@@ -47,7 +47,7 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.getRelease().set(17)
+        it.options.getRelease().set(21)
     }
 
     processResources {
@@ -61,5 +61,13 @@ subprojects {
     // other mod developers.
     tasks.withType(GenerateModuleMetadata).configureEach {
         enabled = false
+    }
+}
+
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }

@@ -5,15 +5,8 @@ import com.mrbysco.armorposer.client.gui.widgets.PoseListWidget;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.level.Level;
-
-import java.util.function.Function;
 
 public class DeletePoseScreen extends Screen {
 	private final ArmorStandScreen parentScreen;

@@ -3,6 +3,7 @@ package com.mrbysco.armorposer.handlers;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.decoration.ArmorStand;
@@ -11,10 +12,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
-@Mod.EventBusSubscriber(modid = Reference.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
+@EventBusSubscriber(modid = Reference.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class EventHandler {
 	private static boolean cancelRightClick = false;
 
@@ -33,7 +34,7 @@ public class EventHandler {
 
 			if (PoserConfig.COMMON.enableNameTags.get() && !player.isShiftKeyDown()) {
 				ItemStack stack = player.getItemInHand(InteractionHand.MAIN_HAND);
-				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.hasCustomHoverName()) {
+				if (!stack.isEmpty() && stack.getItem() == Items.NAME_TAG && stack.has(DataComponents.CUSTOM_NAME)) {
 					cancelRightClick = true;
 					if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
 						armorstand.setCustomName(stack.getHoverName());

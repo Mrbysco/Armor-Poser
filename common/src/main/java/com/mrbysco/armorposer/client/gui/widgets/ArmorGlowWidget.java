@@ -24,7 +24,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 		this.title = title;
 		this.listWidth = listWidth;
 		this.refreshList();
-		this.setRenderBackground(false);
+//		this.setRenderBackground(false);
 	}
 
 	@Override
@@ -58,7 +58,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 
 	public class ListEntry extends Entry<ListEntry> {
 		private final ArmorGlowScreen parent;
-		private ArmorStand armorStand;
+		private final ArmorStand armorStand;
 
 		ListEntry(ArmorStand armorStand, ArmorGlowScreen parent) {
 			this.armorStand = armorStand;

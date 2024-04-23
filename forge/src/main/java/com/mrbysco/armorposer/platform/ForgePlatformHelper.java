@@ -20,12 +20,12 @@ public class ForgePlatformHelper implements IPlatformHelper {
 		CompoundNBT.merge(compound);
 		armorStand.load(CompoundNBT);
 
-		PacketDistributor.SERVER.noArg().send(new ArmorStandSyncPayload(new SyncData(armorStand.getUUID(), compound)));
+		PacketDistributor.sendToServer(new ArmorStandSyncPayload(new SyncData(armorStand.getUUID(), compound)));
 	}
 
 	@Override
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
-		PacketDistributor.SERVER.noArg().send(new ArmorStandSwapPayload(new SwapData(armorStand.getUUID(), action)));
+		PacketDistributor.sendToServer(new ArmorStandSwapPayload(new SwapData(armorStand.getUUID(), action)));
 	}
 
 	@Override

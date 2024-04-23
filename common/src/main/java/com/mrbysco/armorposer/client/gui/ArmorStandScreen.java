@@ -4,14 +4,13 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.math.Axis;
 import com.mrbysco.armorposer.Reference;
-import com.mrbysco.armorposer.client.GlowHandler;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
+import com.mrbysco.armorposer.client.gui.widgets.SizeSlider;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
 import net.minecraft.ChatFormatting;
-import net.minecraft.Util;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
@@ -67,6 +66,7 @@ public class ArmorStandScreen extends Screen {
 	private NumberFieldBox rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
 	protected final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
+	private SizeSlider sizeSlider;
 	private LockIconButton lockButton;
 	private final boolean allowScrolling;
 
@@ -121,6 +121,12 @@ public class ArmorStandScreen extends Screen {
 		this.rotationTextField.setMaxLength(4);
 		this.addWidget(this.rotationTextField);
 		this.rotationTextField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.rotation")));
+
+		// Size slider
+		this.addRenderableWidget(
+				this.sizeSlider = new SizeSlider(1 + offsetX, offsetY + ((this.toggleButtons.length + 1) * 22), 38,
+						(double) this.entityArmorStand.getScale(), 0.01D, 10.0D, this)
+		);
 
 		// pose textboxes
 		offsetX = this.width - 20 - 100;
@@ -698,6 +704,13 @@ public class ArmorStandScreen extends Screen {
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
+	/**
+	 * Update the size of the armor stand
+	 */
+	public void updateScale() {
+		this.textFieldUpdated();
+	}
+
 	protected void textFieldUpdated() {
 		this.updateEntity(this.writeFieldsToNBT());
 	}
@@ -712,6 +725,7 @@ public class ArmorStandScreen extends Screen {
 		compound.putBoolean("CustomNameVisible", this.toggleButtons[5].getValue());
 		compound.putBoolean("Invulnerable", this.lockButton.isLocked());
 		compound.putInt("DisabledSlots", this.lockButton.isLocked() ? 4144959 : 0);
+		compound.putDouble("Scale", this.sizeSlider.getValue());
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotationTextField.getFloat()));

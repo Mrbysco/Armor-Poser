@@ -33,7 +33,7 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 		this.title = title;
 		this.listWidth = listWidth;
 		this.refreshList(user);
-		this.setRenderBackground(false);
+//		this.setRenderBackground(false);
 	}
 
 	@Override

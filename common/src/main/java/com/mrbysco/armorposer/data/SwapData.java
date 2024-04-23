@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.data;
 
+import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,12 +10,12 @@ import net.minecraft.world.item.ItemStack;
 import java.util.UUID;
 
 public record SwapData(UUID entityUUID, Action action) {
-	public void encode(FriendlyByteBuf buf) {
+	public void write(FriendlyByteBuf buf) {
 		buf.writeUUID(entityUUID);
 		buf.writeEnum(action);
 	}
 
-	public static SwapData decode(final FriendlyByteBuf packetBuffer) {
+	public static SwapData read(final FriendlyByteBuf packetBuffer) {
 		return new SwapData(packetBuffer.readUUID(), packetBuffer.readEnum(Action.class));
 	}
 
@@ -35,8 +36,12 @@ public record SwapData(UUID entityUUID, Action action) {
 		}
 	}
 
+	public static void write(ArmorStandSwapPayload armorStandSwapPayload, FriendlyByteBuf buf) {
+
+	}
+
 	public static enum Action {
 		SWAP_WITH_HEAD,
-		SWAP_HANDS;
+		SWAP_HANDS
 	}
 }
