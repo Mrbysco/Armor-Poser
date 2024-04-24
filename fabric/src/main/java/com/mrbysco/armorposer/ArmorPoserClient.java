@@ -12,7 +12,6 @@ public class ArmorPoserClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		PayloadTypeRegistry.playS2C().register(ArmorStandScreenPayload.ID, ArmorStandScreenPayload.CODEC);
 		ClientPlayNetworking.registerGlobalReceiver(ArmorStandScreenPayload.ID, (payload, context) -> {
 			int entityID = payload.entityID();
 

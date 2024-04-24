@@ -4,6 +4,7 @@ import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
+import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -26,6 +27,7 @@ public class ArmorPoser implements ModInitializer {
 
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
+		PayloadTypeRegistry.playS2C().register(ArmorStandScreenPayload.ID, ArmorStandScreenPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(ArmorStandSyncPayload.ID, ArmorStandSyncPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(ArmorStandSyncPayload.ID, (payload, context) -> {
 			final ServerLevel serverLevel = context.player().serverLevel();
