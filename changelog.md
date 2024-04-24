@@ -1,1 +1,1 @@
-* Add a button that shows a list of nearby armor stands, allowing you select armor stands that are inside walls / hidden
+* Hopefully fix a client disconnect when trying to open the armor stand GUI on a Fabric server
