@@ -1,1 +1,1 @@
-* Hopefully fix a client disconnect when trying to open the armor stand GUI on a Fabric server
+* Fix a crash when clearing the rotation text box
