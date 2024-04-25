@@ -1,1 +1,1 @@
-* Add a button that shows a list of nearby armor stands, allowing you select armor stands that are inside walls / hidden
+* Fix a crash when clearing the rotation text box
