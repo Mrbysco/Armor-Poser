@@ -1,2 +1,1 @@
-* Fix mod menu localization (Fabric) Thanks to [MulesGaming](https://github.com/Mrbysco/Armor-Poser/pull/14)
-* Add es_mx translation Thanks to [CANALETA](https://github.com/Mrbysco/Armor-Poser/pull/11)
+* Fix a crash when clearing the rotation text box
