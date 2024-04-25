@@ -39,7 +39,11 @@ public class NumberFieldBox extends EditBox {
 
 	@Override
 	public void setValue(String value) {
-		super.setValue(String.format(("%." + decimalPoints + "f"), Float.parseFloat(value)));
+		if (value.isEmpty()) {
+			super.setValue("0");
+		} else {
+			super.setValue(String.format(("%." + decimalPoints + "f"), Float.parseFloat(value)));
+		}
 	}
 
 	public float getFloat() {
