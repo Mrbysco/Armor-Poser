@@ -26,14 +26,15 @@ public record SyncData(UUID entityUUID, CompoundTag tag) {
 			entityTagCopy.merge(tag);
 			armorStand.load(entityTagCopy);
 			armorStand.setUUID(entityUUID);
-		}
 
-		ListTag tagList = tag.getList("Move", Tag.TAG_DOUBLE);
-		double x = tagList.getDouble(0);
-		double y = tagList.getDouble(1);
-		double z = tagList.getDouble(2);
-		armorStand.setPos(armorStand.getX() + x,
-				armorStand.getY() + y,
-				armorStand.getZ() + z);
+			ListTag tagList = tag.getList("Move", Tag.TAG_DOUBLE);
+			double x = tagList.getDouble(0);
+			double y = tagList.getDouble(1);
+			double z = tagList.getDouble(2);
+			if (x != 0 || y != 0 || z != 0)
+				armorStand.setPosRaw(armorStand.getX() + x,
+						armorStand.getY() + y,
+						armorStand.getZ() + z);
+		}
 	}
 }

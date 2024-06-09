@@ -1,8 +1,10 @@
 package com.mrbysco.armorposer.client.gui;
 
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.math.Axis;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
-import com.mrbysco.armorposer.client.gui.widgets.PoseButton;
 import com.mrbysco.armorposer.client.gui.widgets.PoseImageButton;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
@@ -24,10 +26,9 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Map;
 
 public class ArmorStandScreen extends Screen {
 	private final ArmorStand entityArmorStand;
@@ -38,17 +39,17 @@ public class ArmorStandScreen extends Screen {
 
 	private NumberFieldBox rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
-	private final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
-	private final PoseButton[] poseButtons = new PoseButton[Reference.defaultPoseMap.size()];
+	protected final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
 	private LockIconButton lockButton;
 	private final boolean allowScrolling;
-	private boolean poseTabVisible = false;
 
 	private Vec3 lastSendOffset = new Vec3(0, 0, 0);
 
 	//Cache the tooltip, so we don't have to create a new one every tick
 	private final Tooltip yPositionTooltip = Tooltip.create(Component.translatable("armorposer.gui.tooltip.y_position"));
 	private final Tooltip yPositionTooltipDisabled = Tooltip.create(Component.translatable("armorposer.gui.tooltip.y_position.disabled").withStyle(ChatFormatting.RED));
+
+	private final int whiteColor = 16777215;
 
 	public ArmorStandScreen(ArmorStand entityArmorStand) {
 		super(GameNarrator.NO_TITLE);
@@ -133,7 +134,7 @@ public class ArmorStandScreen extends Screen {
 		// copy & paste buttons
 		offsetX = 20;
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.poses"), (button) ->
-						this.poseTabVisible = !this.poseTabVisible)
+						this.minecraft.setScreen(new ArmorPosesScreen(this)))
 				.bounds(offsetX, offsetY, 130, 20)
 				.tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.poses"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.copy"), (button) -> {
@@ -142,7 +143,7 @@ public class ArmorStandScreen extends Screen {
 			if (this.minecraft != null) {
 				this.minecraft.keyboardHandler.setClipboard(clipboardData);
 			}
-		}).bounds(offsetX, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.copy"))).build());
+		}).bounds(offsetX, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.copy"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.paste"), (button) -> {
 			try {
 				String clipboardData = null;
@@ -157,10 +158,15 @@ public class ArmorStandScreen extends Screen {
 			} catch (Exception e) {
 				//Nope
 			}
-		}).bounds(offsetX + 66, offsetY + 22, 64, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
+		}).bounds(offsetX + 44, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
+		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.save"), (button) -> {
+			this.minecraft.setScreen(new SavePoseScreen(this));
+		}).bounds(offsetX + 88, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.save"))).build());
 
 		offsetX = this.width - 20;
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 6) - 30, offsetY, (button) -> {
+		int buttonsLeft = 9;
+		int buttonOffset = -4;
+		PoseImageButton mirrorPose = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			//Mirror head
 			float[] head = new float[]{poseTextFields[0].getFloat(), poseTextFields[1].getFloat(), poseTextFields[2].getFloat()};
 			poseTextFields[0].setValue(String.valueOf(head[0]));
@@ -197,8 +203,11 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
 
-		}, 0, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 5) - 30, offsetY, (button) -> {
+		}, 0));
+		mirrorPose.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror")));
+		buttonsLeft--;
+
+		PoseImageButton mirrorLegs = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			//Mirror Legs
 			float[] leftLeg = new float[]{poseTextFields[6].getFloat(), poseTextFields[7].getFloat(), poseTextFields[8].getFloat()};
 			float[] rightLeg = new float[]{poseTextFields[9].getFloat(), poseTextFields[10].getFloat(), poseTextFields[11].getFloat()};
@@ -210,8 +219,11 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[9].setValue(String.valueOf(leftLeg[0]));
 			poseTextFields[10].setValue(String.valueOf(leftLeg[1] != 0 ? -leftLeg[1] : 0));
 			poseTextFields[11].setValue(String.valueOf(leftLeg[2] != 0 ? -leftLeg[2] : 0));
-		}, 1, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 4) - 30, offsetY, (button) -> {
+		}, 1));
+		mirrorLegs.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_legs")));
+		buttonsLeft--;
+
+		PoseImageButton mirrorArms = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			//Mirror Arms
 			float[] leftArm = new float[]{poseTextFields[12].getFloat(), poseTextFields[13].getFloat(), poseTextFields[14].getFloat()};
 			float[] rightArm = new float[]{poseTextFields[15].getFloat(), poseTextFields[16].getFloat(), poseTextFields[17].getFloat()};
@@ -223,18 +235,243 @@ public class ArmorStandScreen extends Screen {
 			poseTextFields[15].setValue(String.valueOf(leftArm[0]));
 			poseTextFields[16].setValue(String.valueOf(leftArm[1] != 0 ? -leftArm[1] : 0));
 			poseTextFields[17].setValue(String.valueOf(leftArm[2] != 0 ? -leftArm[2] : 0));
-		}, 2, Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 3) - 30, offsetY, (button) -> {
+		}, 2));
+		mirrorArms.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.mirror_arms")));
+		buttonsLeft--;
+
+		PoseImageButton swapToHead = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			//Swap item in main hand with head
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_WITH_HEAD);
 
-		}, 3, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head"))));
-		this.addRenderableWidget(new PoseImageButton(offsetX - (22 * 2) - 30, offsetY, (button) -> {
+		}, 3));
+		swapToHead.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_head")));
+		buttonsLeft--;
+
+		PoseImageButton swapHands = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			//Swap item in main and offhand
 			Services.PLATFORM.swapSlots(this.entityArmorStand, SwapData.Action.SWAP_HANDS);
 
-		}, 4, Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands"))));
-		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22) - 30, offsetY, (button) -> {
+		}, 4));
+		swapHands.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.swap_hands")));
+		buttonsLeft--;
+
+		PoseImageButton blockButton = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
+			try {
+				Vec3 pos = this.entityArmorStand.position();
+
+				//Get the amount subtracted of x to get .0725
+				double xDiff = getDesiredOffset(pos.x, 1.0725D);
+				//Get the amount subtracted of y to get .345
+				double yDiff = getDesiredOffset(pos.y, -0.655D);
+				//Get the amount subtracted of z to get .852
+				double zDiff = getDesiredOffset(pos.z, 0.852D);
+
+				Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+				int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+				switch (closestDegree) {
+					case 90: {
+						//Rotate the desired position to have the correct values
+						double newX = offset.z - 0.7D;
+						double newZ = -offset.x + 1.18D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -180: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.x;
+						double newZ = -offset.z;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -90: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.z + 0.7D;
+						double newZ = offset.x - 1.18D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+				}
+
+				CompoundTag tag = TagParser.parseTag(Reference.alignedBlockPose);
+				this.readFieldsFromNBT(tag);
+				this.toggleButtons[0].setValue(true); //Set invisible
+				this.toggleButtons[2].setValue(true); //Set no gravity
+				this.toggleButtons[3].setValue(true); //Set show arms
+				this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
+				this.textFieldUpdated();
+			} catch (CommandSyntaxException e) {
+				//Nope
+			}
+
+		}, 5));
+		blockButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.block")));
+		buttonsLeft--;
+
+		PoseImageButton itemButton = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
+			if (hasShiftDown()) { //If shift is held the item will be upright
+				try {
+					Vec3 pos = this.entityArmorStand.position();
+
+					//Get the amount subtracted of x to get .86
+					double xDiff = getDesiredOffset(pos.x, 0.86D);
+					//Get the amount subtracted of y to get .59
+					double yDiff = getDesiredOffset(pos.y, -1.41D);
+					//Get the amount subtracted of z to get .9375
+					double zDiff = getDesiredOffset(pos.z, -0.0625D);
+
+					Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+					int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+					switch (closestDegree) {
+						case 90: {
+							//Rotate the desired position to have the correct values
+							double newX = offset.z + 1.12D;
+							double newZ = -offset.x + 0.74D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -180: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.x;
+							double newZ = -offset.z;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -90: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.z - 1.12D;
+							double newZ = offset.x - 0.74D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+					}
+
+					CompoundTag tag = TagParser.parseTag(Reference.alignedUprightItemPose);
+					this.readFieldsFromNBT(tag);
+					this.toggleButtons[0].setValue(true); //Set invisible
+					this.toggleButtons[2].setValue(true); //Set no gravity
+					this.toggleButtons[3].setValue(true); //Set show arms
+					this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
+					this.textFieldUpdated();
+				} catch (CommandSyntaxException e) {
+					//Nope
+				}
+			} else {
+				try {
+					Vec3 pos = this.entityArmorStand.position();
+
+					//Get the amount subtracted of x to get .886
+					double xDiff = getDesiredOffset(pos.x, 0.886D);
+					//Get the amount subtracted of y to get .22
+					double yDiff = getDesiredOffset(pos.y, -0.78D);
+					//Get the amount subtracted of z to get .205
+					double zDiff = getDesiredOffset(pos.z, 0.205D);
+
+					Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+					int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+					switch (closestDegree) {
+						case 90: {
+							//Rotate the desired position to have the correct values
+							double newX = offset.z + 0.59D;
+							double newZ = -offset.x + 0.78D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -180: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.x;
+							double newZ = -offset.z;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+						case -90: {
+							//Rotate the desired position to have the correct values
+							double newX = -offset.z - 0.59D;
+							double newZ = offset.x - 0.78D;
+							offset = new Vec3(newX, offset.y, newZ);
+							break;
+						}
+					}
+
+					CompoundTag tag = TagParser.parseTag(Reference.alignedFlatItemPose);
+					this.readFieldsFromNBT(tag);
+					this.toggleButtons[0].setValue(true); //Set invisible
+					this.toggleButtons[2].setValue(true); //Set no gravity
+					this.toggleButtons[3].setValue(true); //Set show arms
+					this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+					this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+					this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+					this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
+					this.textFieldUpdated();
+				} catch (CommandSyntaxException e) {
+					//Nope
+				}
+			}
+
+		}, 6));
+		itemButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.item").append("\n").append(Component.translatable("armorposer.gui.tooltip.item2").withStyle(ChatFormatting.GRAY))));
+		buttonsLeft--;
+		PoseImageButton toolButton = this.addRenderableWidget(new PoseImageButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
+			try {
+				Vec3 pos = this.entityArmorStand.position();
+
+				//Get the amount subtracted of x to get .33
+				double xDiff = getDesiredOffset(pos.x, 0.33D);
+				//Get the amount subtracted of y to get .22
+				double yDiff = getDesiredOffset(pos.y, -1.285D);
+				//Get the amount subtracted of z to get .059999D
+				double zDiff = getDesiredOffset(pos.z, 0.059999D);
+
+				Vec3 offset = new Vec3(xDiff, yDiff, zDiff);
+				int closestDegree = Mth.roundToward((int) this.rotationTextField.getFloat(), 90);
+				switch (closestDegree) {
+					case 90: {
+						//Rotate the desired position to have the correct values
+						double newX = offset.z + 0.88D;
+						double newZ = -offset.x - 0.34D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -180: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.x;
+						double newZ = -offset.z;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+					case -90: {
+						//Rotate the desired position to have the correct values
+						double newX = -offset.z - 0.88D;
+						double newZ = offset.x + 0.34D;
+						offset = new Vec3(newX, offset.y, newZ);
+						break;
+					}
+				}
+
+				CompoundTag tag = TagParser.parseTag(Reference.alignedToolPose);
+				this.readFieldsFromNBT(tag);
+				this.toggleButtons[0].setValue(true); //Set invisible
+				this.toggleButtons[2].setValue(true); //Set no gravity
+				this.toggleButtons[3].setValue(true); //Set show arms
+				this.rotationTextField.setValue(String.valueOf(closestDegree)); //Set rotation
+				this.poseTextFields[18].setValue(String.valueOf(offset.x)); //Set X
+				this.poseTextFields[19].setValue(String.valueOf(offset.y)); //Set Y
+				this.poseTextFields[20].setValue(String.valueOf(offset.z)); //Set Z
+				this.textFieldUpdated();
+			} catch (CommandSyntaxException e) {
+				//Nope
+			}
+
+		}, 7));
+		toolButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.tool")));
+		buttonsLeft--;
+
+		this.addRenderableWidget(this.lockButton = new LockIconButton(offsetX - (22 * buttonsLeft) - buttonOffset, offsetY, (button) -> {
 			this.lockButton.setLocked(!this.lockButton.isLocked());
 		}));
 		this.lockButton.setLocked(this.armorStandData.getBooleanValue(6));
@@ -242,9 +479,9 @@ public class ArmorStandScreen extends Screen {
 
 		// done & cancel buttons
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.done"), (button) -> {
-			this.updateEntity(this.writeFieldsToNBT());
+			this.textFieldUpdated();
 			this.minecraft.setScreen((Screen) null);
-		}).bounds(offsetX - ((2 * 96) + 2), offsetY + 22, 96, 20).build());
+		}).bounds(offsetX - ((2 * 96) + 2), offsetY + 22, 97, 20).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("gui.cancel"), (button) -> {
 			this.poseTextFields[18].setValue("0");
 			this.poseTextFields[19].setValue("0");
@@ -252,59 +489,30 @@ public class ArmorStandScreen extends Screen {
 			this.textFieldUpdated();
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
-		}).bounds(offsetX - 96, offsetY + 22, 96, 20).build());
+		}).bounds(offsetX - 95, offsetY + 22, 97, 20).build());
+		this.addRenderableWidget(Button.builder(Component.literal("💡"), (button) -> {
+			this.minecraft.setScreen(new ArmorGlowScreen(this));
+		}).bounds(0, 0, 16, 16).build());
+	}
 
-
-		//Setup pose buttons
-		int centerX = this.width / 2;
-		int exclusionLeft = centerX - 60;
-		int exclusionRight = centerX + 80;
-		offsetX = 10;
-		offsetY = 10;
-
-		int id = 0;
-		for (Map.Entry<String, String> entry : Reference.defaultPoseMap.entrySet()) {
-			String poseID = entry.getKey();
-			String tag = entry.getValue();
-
-			final int buttonEnd = offsetX + 40;
-			if (buttonEnd >= exclusionLeft && buttonEnd <= exclusionRight) {
-				//Move the button until it's no longer in the exclusion zone
-				offsetX = exclusionRight;
-			}
-
-			this.addRenderableWidget(this.poseButtons[id] = new PoseButton.Builder(poseID, tag, (button) -> {
-				PoseButton poseButton = ((PoseButton) button);
-				if (poseButton.getPoseID().equals("random")) {
-					//Randomize all fields but the last 3 (as those are position) but don't make the rotations too crazy
-					for (int i = 0; i < this.poseTextFields.length - 3; i++) {
-						//generate a random number between -35 and 35
-						float randomRotation = (float) (Math.random() * 70 - 35);
-						this.poseTextFields[i].setValue(String.valueOf((int) randomRotation));
-					}
-				} else {
-					this.readFieldsFromNBT(poseButton.getTag());
-				}
-				this.updateEntity(poseButton.getTag());
-			}).pos(offsetX, offsetY).build());
-			//Disable visibility of the buttons at first
-			this.poseButtons[id].visible = this.poseTabVisible;
-
-			// Adjust the offsetX for the next button
-			offsetX += 40 + 4;
-			id++;
-
-			// Move to the next row if necessary
-			if (offsetX + 40 > this.width) {
-				offsetX = 10; // Reset the X position
-				offsetY += 40 + 4; // Move to the next row
-			}
+	/**
+	 * Get the desired offset to get the armor stand in the correct position
+	 *
+	 * @param posValue     The current position value
+	 * @param desiredValue The desired position value
+	 * @return The amount subtracted from or added to the current position to get the desired position
+	 */
+	private double getDesiredOffset(double posValue, double desiredValue) {
+		double value = posValue - (int) posValue; //Get the decimal value
+		if (value < 0) { //Make it positive if it's a negative position
+			value = -value;
 		}
+		return desiredValue - value;
 	}
 
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
-		this.renderBackground(guiGraphics);
+		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		// Draw gui title
 		guiGraphics.drawCenteredString(this.font, Component.translatable("armorposer.gui.title"), this.width / 2, 10, 0xFFFFFF);
@@ -321,27 +529,30 @@ public class ArmorStandScreen extends Screen {
 		for (int i = 0; i < this.buttonLabels.length; i++) {
 			int x = offsetX;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			if (!poseTabVisible)
-				guiGraphics.drawString(this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), x, y, 0xA0A0A0, false);
+			guiGraphics.drawString(this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), x, y, whiteColor, true);
 		}
 
 		// right column labels
 		offsetX = this.width - 20 - 100;
 		// x, y, z
-		if (!poseTabVisible) {
-			guiGraphics.drawString(this.font, "X", offsetX + 10, 7, 0xA0A0A0, false);
-			guiGraphics.drawString(this.font, "Y", offsetX + 45, 7, 0xA0A0A0, false);
-			guiGraphics.drawString(this.font, "Z", offsetX + 80, 7, 0xA0A0A0, false);
-		}
+		guiGraphics.drawString(this.font, "X", offsetX + 10, 7, whiteColor, true);
+		guiGraphics.drawString(this.font, "Y", offsetX + 45, 7, whiteColor, true);
+		guiGraphics.drawString(this.font, "Z", offsetX + 80, 7, whiteColor, true);
 		// pose textboxes
 		for (int i = 0; i < this.sliderLabels.length; i++) {
 			String translatedLabel = I18n.get("armorposer.gui.label." + this.sliderLabels[i]);
 			int x = offsetX - this.font.width(translatedLabel) - 10;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			if (!poseTabVisible) guiGraphics.drawString(this.font, translatedLabel, x, y, 0xA0A0A0, false);
+			guiGraphics.drawString(this.font, translatedLabel, x, y, whiteColor, true);
 		}
 
-		super.render(guiGraphics, mouseX, mouseY, partialTicks);
+		PoseStack poseStack = guiGraphics.pose();
+		if (Services.PLATFORM.allowScrolling()) {
+			poseStack.pushPose();
+			poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
+			guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll"), 21, -width + 10, 11184810, true);
+			poseStack.popPose();
+		}
 	}
 
 	@Override
@@ -362,34 +573,6 @@ public class ArmorStandScreen extends Screen {
 			yPositionField.setFocused(false);
 			//Adjust tooltip to show it's disabled
 			yPositionField.setTooltip(yPositionTooltipDisabled);
-		}
-
-		if (poseTabVisible) {
-			for (PoseButton poseButton : this.poseButtons) {
-				poseButton.visible = true;
-			}
-
-			//Show the rest of the fields
-			rotationTextField.visible = false;
-			for (ToggleButton toggleButton : toggleButtons) {
-				toggleButton.visible = false;
-			}
-			for (NumberFieldBox textField : poseTextFields) {
-				textField.visible = false;
-			}
-		} else {
-			for (PoseButton poseButton : this.poseButtons) {
-				poseButton.visible = false;
-			}
-
-			//Show the rest of the fields
-			rotationTextField.visible = true;
-			for (ToggleButton toggleButton : toggleButtons) {
-				toggleButton.visible = true;
-			}
-			for (NumberFieldBox textField : poseTextFields) {
-				textField.visible = true;
-			}
 		}
 	}
 
@@ -471,10 +654,10 @@ public class ArmorStandScreen extends Screen {
 			} else {
 				for (NumberFieldBox textField : this.poseTextFields) {
 					if (textField.keyPressed(keyCode, scanCode, modifiers)) {
+						this.textFieldUpdated();
 						return true;
 					}
 				}
-				this.textFieldUpdated();
 			}
 		}
 		return super.keyPressed(keyCode, scanCode, modifiers);
@@ -482,17 +665,14 @@ public class ArmorStandScreen extends Screen {
 
 	@Override
 	public boolean mouseClicked(double mouseX, double mouseY, int button) {
-		boolean clicked = super.mouseClicked(mouseX, mouseY, button);
-		this.textFieldUpdated();
-
-		return clicked;
+		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
 	protected void textFieldUpdated() {
 		this.updateEntity(this.writeFieldsToNBT());
 	}
 
-	private CompoundTag writeFieldsToNBT() {
+	protected CompoundTag writeFieldsToNBT() {
 		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("Invisible", this.toggleButtons[0].getValue());
 		compound.putBoolean("NoBasePlate", this.toggleButtons[1].getValue());
@@ -563,7 +743,7 @@ public class ArmorStandScreen extends Screen {
 		return compound;
 	}
 
-	private void readFieldsFromNBT(CompoundTag compound) {
+	protected void readFieldsFromNBT(CompoundTag compound) {
 		CompoundTag armorStandTag = this.armorStandData.writeToNBT();
 		armorStandTag.merge(compound);
 		this.armorStandData.readFromNBT(armorStandTag);

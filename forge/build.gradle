@@ -2,12 +2,19 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.minecraftforge.gradle'
+    id 'org.spongepowered.mixin'
     id 'com.matthewprenger.cursegradle'
     id 'com.modrinth.minotaur'
 }
 
 base {
     archivesName = "${mod_name}-forge-${minecraft_version}"
+}
+
+mixin {
+    add(sourceSets.main, "${mod_id}.refmap.json")
+
+    config("${mod_id}.forge.mixins.json")
 }
 
 minecraft {
@@ -27,6 +34,7 @@ minecraft {
             taskName 'Client'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            jvmArgs("-Xmx4G")
             mods {
                 modClientRun {
                     source sourceSets.main
@@ -41,6 +49,7 @@ minecraft {
             taskName 'Server'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            jvmArgs("-Xmx4G")
             mods {
                 modServerRun {
                     source sourceSets.main
@@ -56,6 +65,7 @@ minecraft {
             taskName 'Data'
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
+            jvmArgs("-Xmx4G")
             mods {
                 modDataRun {
                     source sourceSets.main
@@ -70,6 +80,7 @@ sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
     compileOnly project(":common")
 }
 

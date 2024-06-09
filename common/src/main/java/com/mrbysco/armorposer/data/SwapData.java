@@ -37,6 +37,6 @@ public record SwapData(UUID entityUUID, Action action) {
 
 	public static enum Action {
 		SWAP_WITH_HEAD,
-		SWAP_HANDS;
+		SWAP_HANDS
 	}
 }

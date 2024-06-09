@@ -3,6 +3,14 @@
 
     "armorposer.gui.title": "Armor Stand",
 
+    "armorposer.gui.poses.title": "Armor Stand Poses",
+    "armorposer.gui.poses.default": "Default Poses",
+    "armorposer.gui.poses.user": "User Poses",
+    "armorposer.gui.poses.selection.apply": "Apply",
+    "armorposer.gui.poses.search": "Search",
+    "armorposer.gui.poses.search.a_to_z": "A-Z",
+    "armorposer.gui.poses.search.z_to_a": "Z-A",
+
     "armorposer.gui.label.invisible": "Invisible",
     "armorposer.gui.label.no_base_plate": "Sans base",
     "armorposer.gui.label.no_gravity": "Sans gravité",
@@ -18,9 +26,11 @@
     "armorposer.gui.label.left_arm": "Bras gauche",
     "armorposer.gui.label.right_arm": "Bras droit",
     "armorposer.gui.label.position": "Position",
+    "armorposer.gui.label.scroll": "Click and scroll",
 
     "armorposer.gui.label.copy": "Copier",
     "armorposer.gui.label.paste": "Coller",
+    "armorposer.gui.label.save": "Save",
     "armorposer.gui.label.poses": "Poses",
 
     "armorposer.gui.tooltip.invisible": "Toggle invisibility",
@@ -41,6 +51,7 @@
 
     "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
     "armorposer.gui.tooltip.paste": "Paste the pose from the clipboard",
+    "armorposer.gui.tooltip.save": "Save the current pose to the user poses",
     "armorposer.gui.tooltip.poses": "Check built-in poses",
 
     "armorposer.gui.tooltip.mirror": "Mirror pose",
@@ -48,6 +59,10 @@
     "armorposer.gui.tooltip.mirror_arms": "Mirror Arms",
     "armorposer.gui.tooltip.swap_head": "Swap main hand and head",
     "armorposer.gui.tooltip.swap_hands": "Swap main and off hand",
+    "armorposer.gui.tooltip.block": "Align held block, so it appears on the surface",
+    "armorposer.gui.tooltip.item": "Align held item, so it appears flat on the surface",
+    "armorposer.gui.tooltip.item2": "Holding shift aligns the item so it appears upright on the surface",
+    "armorposer.gui.tooltip.tool": "Align held tool, so it appears flat on the surface",
     "armorposer.gui.tooltip.lock": "Lock Interaction",
 
     "armorposer.gui.pose.attention": "Attention",
@@ -75,6 +90,9 @@
     "armorposer.gui.pose.item": "Item",
     "armorposer.gui.pose.random": "Random",
 
+    "armorposer.gui.save_pose.title": "Save pose",
+    "armorposer.gui.delete_poose.title": "Delete pose",
+    "armorposer.gui.delete_poose.message": "Are you sure you want to remove this pose?",
 
     "armorposer.config.enableConfigGui": "Activer l'interface",
     "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",
@@ -92,5 +110,9 @@
     "text.autoconfig.armorposer.option.general": "Général",
     "text.autoconfig.armorposer.option.general.enableConfigGui": "Activer l'interface",
     "text.autoconfig.armorposer.option.general.enableNameTags": "Activer les balises de nom",
-    "text.autoconfig.armorposer.option.general.allowScrolling": "Autoriser le défilement"
+    "text.autoconfig.armorposer.option.general.allowScrolling": "Autoriser le défilement",
+
+    "armorposer.networking.screen.failed": "Armor poser networking screen packet failed",
+    "armorposer.networking.swap.failed": "Armor poser networking swap packet failed",
+    "armorposer.networking.sync.failed": "Armor poser networking sync packet failed"
 }
