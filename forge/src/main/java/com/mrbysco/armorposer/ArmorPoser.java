@@ -6,7 +6,6 @@ import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.packets.handler.ClientPayloadHandler;
 import com.mrbysco.armorposer.packets.handler.ServerPayloadHandler;
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -17,7 +16,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 @Mod(Reference.MOD_ID)
 public class ArmorPoser {
 
-	public ArmorPoser(IEventBus eventBus, Dist dist, ModContainer container) {
+	public ArmorPoser(IEventBus eventBus, ModContainer container) {
 		container.registerConfig(Type.COMMON, PoserConfig.commonSpec);
 		eventBus.register(PoserConfig.class);
 

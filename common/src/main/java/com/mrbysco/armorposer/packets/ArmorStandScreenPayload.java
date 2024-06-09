@@ -9,7 +9,7 @@ public record ArmorStandScreenPayload(int entityID) implements CustomPacketPaylo
 	public static final StreamCodec<FriendlyByteBuf, ArmorStandScreenPayload> CODEC = CustomPacketPayload.codec(
 			ArmorStandScreenPayload::write,
 			ArmorStandScreenPayload::new);
-	public static final Type<ArmorStandScreenPayload> ID = CustomPacketPayload.createType(Reference.SCREEN_PACKET_ID.toString());
+	public static final Type<ArmorStandScreenPayload> ID = new Type<>(Reference.SCREEN_PACKET_ID);
 
 	public ArmorStandScreenPayload(final FriendlyByteBuf packetBuffer) {
 		this(packetBuffer.readInt());

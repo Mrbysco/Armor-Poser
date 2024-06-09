@@ -34,28 +34,28 @@ import net.minecraft.world.phys.Vec3;
 
 public class ArmorStandScreen extends Screen {
 	private static final WidgetSprites MIRROR_POSE_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/mirror_pose"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_pose_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_pose"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_pose_highlighted")
 	);
 	private static final WidgetSprites MIRROR_LEGS_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/mirror_legs"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_legs_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_legs"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_legs_highlighted")
 	);
 	private static final WidgetSprites MIRROR_ARMS_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/mirror_arms"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_arms_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_arms"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_arms_highlighted")
 	);
 	private static final WidgetSprites SWAP_TO_HEAD_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/swap_to_head"), new ResourceLocation(Reference.MOD_ID, "widget/swap_to_head_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/swap_to_head"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/swap_to_head_highlighted")
 	);
 	private static final WidgetSprites MIRROR_HANDS_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands"), new ResourceLocation(Reference.MOD_ID, "widget/mirror_hands_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_hands"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_hands_highlighted")
 	);
 	private static final WidgetSprites BLOCK_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/block"), new ResourceLocation(Reference.MOD_ID, "widget/block_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/block"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/block_highlighted")
 	);
 	private static final WidgetSprites ITEM_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/item"), new ResourceLocation(Reference.MOD_ID, "widget/item_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/item"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/item_highlighted")
 	);
 	private static final WidgetSprites TOOL_SPRITES = new WidgetSprites(
-			new ResourceLocation(Reference.MOD_ID, "widget/tool"), new ResourceLocation(Reference.MOD_ID, "widget/tool_highlighted")
+			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/tool"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/tool_highlighted")
 	);
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;

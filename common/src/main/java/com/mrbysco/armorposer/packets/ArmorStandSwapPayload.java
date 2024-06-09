@@ -11,7 +11,7 @@ public record ArmorStandSwapPayload(SwapData data) implements CustomPacketPayloa
 	public static final StreamCodec<FriendlyByteBuf, ArmorStandSwapPayload> CODEC = CustomPacketPayload.codec(
 			ArmorStandSwapPayload::write,
 			ArmorStandSwapPayload::new);
-	public static final Type<ArmorStandSwapPayload> ID = CustomPacketPayload.createType(Reference.SWAP_PACKET_ID.toString());
+	public static final Type<ArmorStandSwapPayload> ID = new Type<>(Reference.SWAP_PACKET_ID);
 
 	public ArmorStandSwapPayload(final FriendlyByteBuf packetBuffer) {
 		this(SwapData.read(packetBuffer));

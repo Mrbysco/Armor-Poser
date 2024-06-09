@@ -11,7 +11,7 @@ public record ArmorStandSyncPayload(SyncData data) implements CustomPacketPayloa
 	public static final StreamCodec<FriendlyByteBuf, ArmorStandSyncPayload> CODEC = CustomPacketPayload.codec(
 			ArmorStandSyncPayload::write,
 			ArmorStandSyncPayload::new);
-	public static final Type<ArmorStandSyncPayload> ID = CustomPacketPayload.createType(Reference.SYNC_PACKET_ID.toString());
+	public static final Type<ArmorStandSyncPayload> ID = new Type<>(Reference.SYNC_PACKET_ID);
 
 	public ArmorStandSyncPayload(final FriendlyByteBuf packetBuffer) {
 		this(SyncData.decode(packetBuffer));

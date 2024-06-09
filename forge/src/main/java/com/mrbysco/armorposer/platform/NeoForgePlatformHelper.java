@@ -13,7 +13,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.nio.file.Path;
 
-public class ForgePlatformHelper implements IPlatformHelper {
+public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public void updateEntity(ArmorStand armorStand, CompoundTag compound) {
 		CompoundTag CompoundNBT = armorStand.saveWithoutId(new CompoundTag()).copy();
