@@ -1,1 +1,1 @@
-* Initial update to 1.21
+* Generate a new fabric build with Cloth Config
