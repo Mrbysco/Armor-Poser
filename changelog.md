@@ -1,1 +1,1 @@
-* Fix a crash when clearing the rotation text box
+* Initial update to 1.21
