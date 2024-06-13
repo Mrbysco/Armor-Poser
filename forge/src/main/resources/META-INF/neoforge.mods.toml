@@ -1,5 +1,5 @@
 modLoader="javafml"
-loaderVersion="[3,)"
+loaderVersion="[4,)"
 issueTrackerURL="https://github.com/Mrbysco/armor-poser/issues"
 license="MIT"
 
@@ -23,7 +23,7 @@ side="BOTH"
 [[dependencies.armorposer]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[21.0.0-alpha,)"
+versionRange="[21.0.0-beta,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]
