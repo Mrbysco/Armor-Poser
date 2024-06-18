@@ -27,7 +27,7 @@ public class FabricPlatformHelper implements IPlatformHelper {
 
 	@Override
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
-		SwapData data = new SwapData(armorStand.getUUID(), SwapData.Action.SWAP_WITH_HEAD);
+		SwapData data = new SwapData(armorStand.getUUID(), action);
 		ClientPlayNetworking.send(new ArmorStandSwapPayload(data));
 	}
 
