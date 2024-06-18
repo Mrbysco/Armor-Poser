@@ -1,1 +1,1 @@
-* Generate a new fabric build with Cloth Config
+* Fix `Swap main and off hand` button swapping with head instead (fabric)
