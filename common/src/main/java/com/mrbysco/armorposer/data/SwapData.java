@@ -1,6 +1,5 @@
 package com.mrbysco.armorposer.data;
 
-import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -34,10 +33,6 @@ public record SwapData(UUID entityUUID, Action action) {
 			default:
 				throw new IllegalArgumentException("Invalid Pose action");
 		}
-	}
-
-	public static void write(ArmorStandSwapPayload armorStandSwapPayload, FriendlyByteBuf buf) {
-
 	}
 
 	public static enum Action {
