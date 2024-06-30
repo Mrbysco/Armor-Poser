@@ -23,7 +23,7 @@ side="BOTH"
 [[dependencies.armorposer]]
 modId="neoforge"
 type="REQUIRED"
-versionRange="[21.0.6-beta,)"
+versionRange="[21.0.31-beta,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]
