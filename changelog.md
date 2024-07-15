@@ -1,1 +1,1 @@
-* Fix `Swap main and off hand` button swapping with head instead (fabric)
+* Add `ru_ru` lang file Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
