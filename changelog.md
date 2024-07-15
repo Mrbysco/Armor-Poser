@@ -1,1 +1,1 @@
-* Fix a crash when clearing the rotation text box
+* Add `ru_ru` lang file Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
