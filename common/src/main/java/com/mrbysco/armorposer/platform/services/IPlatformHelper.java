@@ -5,6 +5,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public interface IPlatformHelper {
 	/**
@@ -27,4 +28,16 @@ public interface IPlatformHelper {
 	 * @return The user preset folder
 	 */
 	Path getUserPresetFolder();
+
+	/**
+	 * Check if the resize is restricted to OPs
+	 * @return If the resize is restricted to OPs
+	 */
+	boolean isResizeRestrictedToOPS();
+
+	/**
+	 * Gets a list of players that are allowed to resize the Armor Stand while restrictResizeToOP is enabled
+	 * @return The resize whitelist
+	 */
+	List<? extends String> getResizeWhitelist();
 }

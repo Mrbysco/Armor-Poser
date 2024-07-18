@@ -13,6 +13,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
@@ -40,5 +41,17 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public Path getUserPresetFolder() {
 		return FabricLoader.getInstance().getConfigDir();
+	}
+
+	@Override
+	public boolean isResizeRestrictedToOPS() {
+		PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
+		return config.general.restrictResizeToOP;
+	}
+
+	@Override
+	public List<? extends String> getResizeWhitelist() {
+		PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
+		return config.general.resizeWhitelist;
 	}
 }

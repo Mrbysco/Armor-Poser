@@ -1,10 +1,12 @@
 package com.mrbysco.armorposer;
 
 import com.mojang.logging.LogUtils;
+import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.poses.UserPoseHandler;
 import com.mrbysco.armorposer.util.PoseData;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.player.Player;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
@@ -70,4 +72,10 @@ public class Reference {
 	public static final String alignedUprightItemPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:1b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[-90.0f,0.0f,0.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
 	public static final String alignedFlatItemPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:1b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[0.0f,0.0f,0.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
 	public static final String alignedToolPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:0b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[-10.0f,0.0f,-90.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
+
+	public static boolean canResize(Player player) {
+		return !Services.PLATFORM.isResizeRestrictedToOPS()
+				|| player != null && (player.hasPermissions(4) ||
+				Services.PLATFORM.getResizeWhitelist().contains(player.getGameProfile().getName()));
+	}
 }

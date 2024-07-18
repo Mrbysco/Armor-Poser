@@ -36,7 +36,7 @@ public class ArmorPoser implements ModInitializer {
 			context.player().server.execute(() -> {
 				Entity entity = serverLevel.getEntity(syncData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
-					syncData.handleData(armorStandEntity);
+					syncData.handleData(armorStandEntity, context.player());
 				}
 			});
 		});

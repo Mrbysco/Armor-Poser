@@ -7,6 +7,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.event.config.ModConfigEvent;
 import org.apache.commons.lang3.tuple.Pair;
 
+import java.util.List;
+
 
 public class PoserConfig {
 
@@ -14,6 +16,8 @@ public class PoserConfig {
 		public final BooleanValue enableConfigGui;
 		public final BooleanValue enableNameTags;
 		public final BooleanValue allowScrolling;
+		public final BooleanValue restrictResizeToOP;
+		public final ModConfigSpec.ConfigValue<List<? extends String>> resizeWhitelist;
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("General settings")
@@ -33,6 +37,16 @@ public class PoserConfig {
 					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
 					.translation("armorposer.config.allowScrolling.tooltip")
 					.define("allowScrolling", true);
+
+			restrictResizeToOP = builder
+					.comment("Restrict the ability to resize the Armor Stand to server operators")
+					.translation("armorposer.config.restrictResizeToOP.tooltip")
+					.define("restrictResizeToOP", false);
+
+			resizeWhitelist = builder
+					.comment("List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled")
+					.translation("armorposer.config.resizeWhitelist.tooltip")
+					.defineListAllowEmpty("resizeWhitelist", List.of(), o -> o instanceof String);
 
 			builder.pop();
 		}

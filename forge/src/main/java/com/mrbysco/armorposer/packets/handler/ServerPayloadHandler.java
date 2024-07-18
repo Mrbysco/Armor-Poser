@@ -38,7 +38,7 @@ public class ServerPayloadHandler {
 					if (context.player() != null && context.player().level() instanceof ServerLevel serverLevel) {
 						Entity entity = serverLevel.getEntity(syncData.data().entityUUID());
 						if (entity instanceof ArmorStand armorStandEntity) {
-							syncData.data().handleData(armorStandEntity);
+							syncData.data().handleData(armorStandEntity, context.player());
 						}
 					}
 				})

@@ -12,6 +12,7 @@ import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
 
 import java.nio.file.Path;
+import java.util.List;
 
 public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
@@ -36,5 +37,15 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public Path getUserPresetFolder() {
 		return FMLPaths.CONFIGDIR.get();
+	}
+
+	@Override
+	public boolean isResizeRestrictedToOPS() {
+		return PoserConfig.COMMON.restrictResizeToOP.get();
+	}
+
+	@Override
+	public List<? extends String> getResizeWhitelist() {
+		return PoserConfig.COMMON.resizeWhitelist.get();
 	}
 }

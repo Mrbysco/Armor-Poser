@@ -118,5 +118,12 @@
 
     "armorposer.networking.screen.failed": "Ошибка пакета сетевого экрана Стойки для брони",
     "armorposer.networking.swap.failed": "Сбой пакета подкачки сети Стойки для брони",
-    "armorposer.networking.sync.failed": "Не удалось выполнить пакет синхронизации сети Стойки для брони"
+    "armorposer.networking.sync.failed": "Не удалось выполнить пакет синхронизации сети Стойки для брони",
+    "armorposer.config.restrictResizeToOP": "Restrict Resize To OP",
+    "armorposer.config.restrictResizeToOP.tooltip": "Restrict the ability to resize the Armor Stand to server operators",
+    "armorposer.config.resizeWhitelist": "Resize Whitelist",
+    "armorposer.config.resizeWhitelist.tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
+    "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Restrict Resize To OP",
+    "text.autoconfig.armorposer.option.general.resizeWhitelist": "Resize Whitelist",
+    "armorposer.gui.tooltip.size.disabled": "Size is restricted to server operators"
 }

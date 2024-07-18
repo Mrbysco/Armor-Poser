@@ -107,14 +107,24 @@
     "armorposer.config.allowScrolling": "Allow Scrolling",
     "armorposer.config.allowScrolling.tooltip": "Allow scrolling to increase / decrease an angle value in the posing screen",
 
+    "armorposer.config.restrictResizeToOP": "Restrict Resize To OP",
+    "armorposer.config.restrictResizeToOP.tooltip": "Restrict the ability to resize the Armor Stand to server operators",
+
+    "armorposer.config.resizeWhitelist": "Resize Whitelist",
+    "armorposer.config.resizeWhitelist.tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
+
     "armorposer.key.openArmorStandGui": "Open GUI",
     "armorposer.key.categories.general": "Armor Stand Configurator",
+
+    "armorposer.gui.tooltip.size.disabled": "Size is restricted to server operators",
 
     "text.autoconfig.armorposer.title": "Armor Poser",
     "text.autoconfig.armorposer.option.general": "General",
     "text.autoconfig.armorposer.option.general.enableConfigGui": "Enable Config Gui",
     "text.autoconfig.armorposer.option.general.enableNameTags": "Enable Name Tags",
     "text.autoconfig.armorposer.option.general.allowScrolling": "Allow Scrolling",
+    "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Restrict Resize To OP",
+    "text.autoconfig.armorposer.option.general.resizeWhitelist": "Resize Whitelist",
 
     "armorposer.networking.screen.failed": "Armor poser networking screen packet failed",
     "armorposer.networking.swap.failed": "Armor poser networking swap packet failed",

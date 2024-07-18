@@ -6,6 +6,8 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry.Gui.CollapsibleObject;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
+import java.util.List;
+
 @Config(name = Reference.MOD_ID)
 public class PoserConfig implements ConfigData {
 	@CollapsibleObject
@@ -18,5 +20,9 @@ public class PoserConfig implements ConfigData {
 		public boolean enableNameTags = true;
 		@Comment("Allow scrolling to add / decrease an angle value in the posing screen")
 		public boolean allowScrolling = true;
+		@Comment("Restrict the ability to resize the Armor Stand to server operators")
+		public boolean restrictResizeToOP = false;
+		@Comment("List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled")
+		public List<String> resizeWhitelist = List.of();
 	}
 }

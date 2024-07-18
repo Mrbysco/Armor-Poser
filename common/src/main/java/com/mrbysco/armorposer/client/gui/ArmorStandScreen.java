@@ -127,6 +127,10 @@ public class ArmorStandScreen extends Screen {
 				this.sizeSlider = new SizeSlider(1 + offsetX, offsetY + ((this.toggleButtons.length + 1) * 22), 38,
 						(double) this.entityArmorStand.getScale(), 0.01D, 10.0D, this)
 		);
+		if (!Reference.canResize(minecraft.player)) {
+			this.sizeSlider.active = false;
+			this.sizeSlider.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.size.disabled").withStyle(ChatFormatting.RED)));
+		}
 
 		// pose textboxes
 		offsetX = this.width - 20 - 100;
