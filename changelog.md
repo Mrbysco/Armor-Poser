@@ -1,1 +1,2 @@
-* Add `ru_ru` lang file Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
+* Add config option `restrictResizeToOP` to restrict resizing to server operators only
+* Add config option `resizeWhitelist` to allow specific players to bypass the OP check (if `restrictResizeToOP` is enabled)
