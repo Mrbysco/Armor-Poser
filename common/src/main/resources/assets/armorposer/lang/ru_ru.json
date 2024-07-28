@@ -26,7 +26,7 @@
     "armorposer.gui.label.left_arm": "Левая рука",
     "armorposer.gui.label.right_arm": "Правая рука",
     "armorposer.gui.label.position": "Позиция",
-    "armorposer.gui.label.scroll": "Нажать для вращения",
+    "armorposer.gui.label.scroll": "Нажмите и прокрутите",
 
     "armorposer.gui.label.copy": "Копировать",
     "armorposer.gui.label.paste": "Вставить",
@@ -46,7 +46,7 @@
     "armorposer.gui.tooltip.z_rotation": "Изменить вращение по Z",
     "armorposer.gui.tooltip.x_position": "Изменить позицию по X",
     "armorposer.gui.tooltip.y_position": "Изменить позицию по Y",
-    "armorposer.gui.tooltip.y_position.disabled": "Отключить гравитацию, чтоы изменить позицию по Y",
+    "armorposer.gui.tooltip.y_position.disabled": "Отключите гравитацию, чтобы изменить позицию по Y",
     "armorposer.gui.tooltip.z_position": "Изменить позицию по Z",
 
     "armorposer.gui.tooltip.copy": "Скопировать текущую позу в Буфер",
@@ -85,7 +85,7 @@
     "armorposer.gui.pose.formal": "Формальный",
     "armorposer.gui.pose.sad": "Грустный",
     "armorposer.gui.pose.joyous": "Радостный",
-    "armorposer.gui.pose.stargazing": "Наблюдать на звёзды",
+    "armorposer.gui.pose.stargazing": "Наблюдать за звёздами",
     "armorposer.gui.pose.block": "Защита",
     "armorposer.gui.pose.item": "Предмет",
     "armorposer.gui.pose.random": "Случайная",
@@ -99,7 +99,7 @@
     "armorposer.gui.armor_list.modify": "Изменить",
 
     "armorposer.configuration.title": "Стойка для брони",
-    "armorposer.config.general": "Общий",
+    "armorposer.config.general": "Общие",
 
     "armorposer.config.enableConfigGui": "Включить графический интерфейс",
     "armorposer.config.enableConfigGui.tooltip": "Показывать графический интерфейс конфигурации Стойки для брони при нажатии ПКМ",
@@ -108,25 +108,28 @@
     "armorposer.config.enableNameTags.tooltip": "Разрешить переименование Стойки для брони с использованием тегов имен",
 
     "armorposer.config.allowScrolling": "Разрешить прокрутку",
-    "armorposer.config.allowScrolling.tooltip": "Разрешить прокрутку для увеличения/уменьшения значения угла на экране позирования.",
+    "armorposer.config.allowScrolling.tooltip": "Разрешить прокрутку для увеличения / уменьшения значения угла на экране позирования.",
+
+    "armorposer.config.restrictResizeToOP": "Изменять размеры могут только Операторы Сервера",
+    "armorposer.config.restrictResizeToOP.tooltip": "Возможность менять размеры Стойки для брони будет только у Операторов Сервера",
+
+    "armorposer.config.resizeWhitelist": "Одобренные игроки",
+    "armorposer.config.resizeWhitelist.tooltip": "Список игроков, которым разрешено изменять размер Стойки для брони, когда включено ограничение",
 
     "armorposer.key.openArmorStandGui": "Открыть графический интерфейс",
     "armorposer.key.categories.general": "Настройки Стойки для брони",
 
+    "armorposer.gui.tooltip.size.disabled": "Размер ограничен операторами сервера",
+
     "text.autoconfig.armorposer.title": "Стойка для брони",
-    "text.autoconfig.armorposer.option.general": "Общий",
+    "text.autoconfig.armorposer.option.general": "Общие",
     "text.autoconfig.armorposer.option.general.enableConfigGui": "Включить настройки графического интерфейса",
     "text.autoconfig.armorposer.option.general.enableNameTags": "Включить теги имен",
     "text.autoconfig.armorposer.option.general.allowScrolling": "Разрешить прокрутку",
+    "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Изменять размеры могут только Операторы Сервера",
+    "text.autoconfig.armorposer.option.general.resizeWhitelist": "Одобренные игроки",
 
     "armorposer.networking.screen.failed": "Ошибка пакета сетевого экрана Стойки для брони",
     "armorposer.networking.swap.failed": "Сбой пакета подкачки сети Стойки для брони",
-    "armorposer.networking.sync.failed": "Не удалось выполнить пакет синхронизации сети Стойки для брони",
-    "armorposer.config.restrictResizeToOP": "Restrict Resize To OP",
-    "armorposer.config.restrictResizeToOP.tooltip": "Restrict the ability to resize the Armor Stand to server operators",
-    "armorposer.config.resizeWhitelist": "Resize Whitelist",
-    "armorposer.config.resizeWhitelist.tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
-    "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Restrict Resize To OP",
-    "text.autoconfig.armorposer.option.general.resizeWhitelist": "Resize Whitelist",
-    "armorposer.gui.tooltip.size.disabled": "Size is restricted to server operators"
+    "armorposer.networking.sync.failed": "Не удалось выполнить пакет синхронизации сети Стойки для брони"
 }
