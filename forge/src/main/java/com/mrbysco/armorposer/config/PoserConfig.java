@@ -21,32 +21,33 @@ public class PoserConfig {
 
 		Common(ModConfigSpec.Builder builder) {
 			builder.comment("General settings")
+					.translation("armorposer.config.general")
 					.push("General");
 
 			enableConfigGui = builder
 					.comment("Show the Armor Stand configuration GUI on shift right click")
-					.translation("armorposer.config.enableConfigGui.tooltip")
+					.translation("armorposer.config.enableConfigGui")
 					.define("enableConfigGui", true);
 
 			enableNameTags = builder
 					.comment("Allow Armor Stand to be renamed using name tags")
-					.translation("armorposer.config.enableNameTags.tooltip")
+					.translation("armorposer.config.enableNameTags")
 					.define("enableNameTags", true);
 
 			allowScrolling = builder
 					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
-					.translation("armorposer.config.allowScrolling.tooltip")
+					.translation("armorposer.config.allowScrolling")
 					.define("allowScrolling", true);
 
 			restrictResizeToOP = builder
 					.comment("Restrict the ability to resize the Armor Stand to server operators")
-					.translation("armorposer.config.restrictResizeToOP.tooltip")
+					.translation("armorposer.config.restrictResizeToOP")
 					.define("restrictResizeToOP", false);
 
 			resizeWhitelist = builder
 					.comment("List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled")
-					.translation("armorposer.config.resizeWhitelist.tooltip")
-					.defineListAllowEmpty("resizeWhitelist", List.of(), o -> o instanceof String);
+					.translation("armorposer.config.resizeWhitelist")
+					.defineListAllowEmpty("resizeWhitelist", List.of(), () -> "", o -> o instanceof String);
 
 			builder.pop();
 		}

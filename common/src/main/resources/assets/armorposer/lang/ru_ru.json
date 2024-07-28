@@ -98,6 +98,9 @@
     "armorposer.gui.armor_list.locate": "Найти",
     "armorposer.gui.armor_list.modify": "Изменить",
 
+    "armorposer.configuration.title": "Стойка для брони",
+    "armorposer.config.general": "Общий",
+
     "armorposer.config.enableConfigGui": "Включить графический интерфейс",
     "armorposer.config.enableConfigGui.tooltip": "Показывать графический интерфейс конфигурации Стойки для брони при нажатии ПКМ",
 

@@ -94,6 +94,9 @@
     "armorposer.gui.delete_poose.title": "Delete pose",
     "armorposer.gui.delete_poose.message": "Are you sure you want to remove this pose?",
 
+    "armorposer.configuration.title": "Armor Poser",
+    "armorposer.config.general": "Général",
+
     "armorposer.config.enableConfigGui": "Activer l'interface",
     "armorposer.config.enableConfigGui.tooltip": "Afficher l'interface de configuration du porte-armure avec un shift clic-droit",
 

@@ -98,6 +98,9 @@
     "armorposer.gui.armor_list.locate": "Locate",
     "armorposer.gui.armor_list.modify": "Modify",
 
+    "armorposer.configuration.title": "Armor Poser",
+    "armorposer.config.general": "General",
+
     "armorposer.config.enableConfigGui": "Enable GUI",
     "armorposer.config.enableConfigGui.tooltip": "Show the Armor Stand configuration GUI on shift right click",
 
