@@ -1,2 +1,2 @@
-* Enable in-game config (NeoForge)
-* Update pack_format number in the `pack.mcmeta` 
+* Allow the config tooltips in ModMenu to be translatable
+* Update ru_ru translation
