@@ -1,2 +1,2 @@
-* Add config option `restrictResizeToOP` to restrict resizing to server operators only
-* Add config option `resizeWhitelist` to allow specific players to bypass the OP check (if `restrictResizeToOP` is enabled)
+* Enable in-game config (NeoForge)
+* Update pack_format number in the `pack.mcmeta` 
