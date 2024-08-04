@@ -1,2 +1,1 @@
-* Allow the config tooltips in ModMenu to be translatable
-* Update ru_ru translation
+* Fix default rotations getting lost upon opening the Armor Poser screen
