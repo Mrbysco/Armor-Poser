@@ -10,6 +10,7 @@ import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.platform.Services;
 import com.mrbysco.armorposer.util.ArmorStandData;
+import com.mrbysco.armorposer.util.ArmorUtil;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
@@ -83,7 +84,11 @@ public class ArmorStandScreen extends Screen {
 		this.entityArmorStand = entityArmorStand;
 
 		this.armorStandData = new ArmorStandData();
-		this.armorStandData.readFromNBT(entityArmorStand.saveWithoutId(new CompoundTag()));
+		CompoundTag tag = entityArmorStand.saveWithoutId(new CompoundTag());
+		if (!tag.contains("Pose") || tag.getCompound("Pose").isEmpty()) {
+			tag.put("Pose", ArmorUtil.writeAllPoses(entityArmorStand));
+		}
+		this.armorStandData.readFromNBT(tag);
 
 		this.allowScrolling = Services.PLATFORM.allowScrolling();
 	}
