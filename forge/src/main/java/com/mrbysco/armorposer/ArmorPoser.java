@@ -31,7 +31,7 @@ public class ArmorPoser {
 	}
 
 	private void setupPackets(final RegisterPayloadHandlersEvent event) {
-		final PayloadRegistrar registrar = event.registrar(Reference.MOD_ID);
+		final PayloadRegistrar registrar = event.registrar(Reference.MOD_ID).optional();
 		registrar.playToClient(ArmorStandScreenPayload.ID, ArmorStandScreenPayload.CODEC, ClientPayloadHandler.getInstance()::handleScreenData);
 		registrar.playToServer(ArmorStandSwapPayload.ID, ArmorStandSwapPayload.CODEC, ServerPayloadHandler.getInstance()::handleSwapData);
 		registrar.playToServer(ArmorStandSyncPayload.ID, ArmorStandSyncPayload.CODEC, ServerPayloadHandler.getInstance()::handleSyncData);
