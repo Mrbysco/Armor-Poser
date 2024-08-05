@@ -1,1 +1,1 @@
-* Fix default rotations getting lost upon opening the Armor Poser screen
+* Update ru_ru translation Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
