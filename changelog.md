@@ -1,1 +1,1 @@
-* Update ru_ru translation Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
+* Internal changes to networking on NeoForge
