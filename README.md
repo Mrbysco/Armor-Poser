@@ -10,7 +10,7 @@ This mod is a continuation of ["Armor Stand Configurator"](https://www.curseforg
 
 ## License ##
 * Armor Poser is licensed under the MIT License
-    - © 2021 Mrbysco
+    - © 2024 Mrbysco
     - [![License](https://img.shields.io/badge/License-MIT-red.svg?style=flat)](http://opensource.org/licenses/MIT)
 
 
