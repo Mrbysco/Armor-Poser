@@ -32,7 +32,7 @@
   "armorposer.gui.label.right_leg": "Pierna derecha",
   "armorposer.gui.label.rotation": "Rotación",
   "armorposer.gui.label.save": "Save",
-  "armorposer.gui.label.scroll": "Click and scroll",
+  "armorposer.gui.label.scroll": "Click and scroll v%s",
   "armorposer.gui.label.show_arms": "Mostrar brazos",
   "armorposer.gui.label.small": "Pequeño",
   "armorposer.gui.pose.arabesque": "Ballet",
@@ -112,5 +112,8 @@
   "text.autoconfig.armorposer.option.general.resizeWhitelist.@Tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Restrict Resize To OP",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP.@Tooltip": "Restrict the ability to resize the Armor Stand to server operators",
-  "text.autoconfig.armorposer.title": "Armor Poser"
+  "text.autoconfig.armorposer.title": "Armor Poser",
+  "armorposer.gui.label.scale": "Scale",
+  "armorposer.gui.tooltip.scale": "Change scale",
+  "text.autoconfig.armorposer.option.general.enableConfigGui.@Tooltip": "Show the Armor Stand configuration GUI on shift right click"
 }

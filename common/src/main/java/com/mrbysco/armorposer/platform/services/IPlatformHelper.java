@@ -40,4 +40,10 @@ public interface IPlatformHelper {
 	 * @return The resize whitelist
 	 */
 	List<? extends String> getResizeWhitelist();
+
+	/**
+	 * Get the mod version
+	 * @return The mod version
+	 */
+	String getModVersion();
 }

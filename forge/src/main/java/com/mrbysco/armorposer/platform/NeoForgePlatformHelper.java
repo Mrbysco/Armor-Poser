@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.platform;
 
+import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
@@ -8,6 +9,7 @@ import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.neoforged.fml.ModList;
 import net.neoforged.fml.loading.FMLPaths;
 import net.neoforged.neoforge.network.PacketDistributor;
 
@@ -47,5 +49,10 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public List<? extends String> getResizeWhitelist() {
 		return PoserConfig.COMMON.resizeWhitelist.get();
+	}
+
+	@Override
+	public String getModVersion() {
+		return ModList.get().getModFileById(Reference.MOD_ID).versionString();
 	}
 }

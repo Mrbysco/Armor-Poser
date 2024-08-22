@@ -63,6 +63,7 @@ public class ArmorStandScreen extends Screen {
 
 	private final String[] buttonLabels = new String[]{"invisible", "no_base_plate", "no_gravity", "show_arms", "small", "name_visible", "rotation", "scale"};
 	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm", "position"};
+	private final String version;
 
 	private NumberFieldBox rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
@@ -91,6 +92,7 @@ public class ArmorStandScreen extends Screen {
 		this.armorStandData.readFromNBT(tag);
 
 		this.allowScrolling = Services.PLATFORM.allowScrolling();
+		this.version = Services.PLATFORM.getModVersion();
 	}
 
 	@Override
@@ -596,7 +598,7 @@ public class ArmorStandScreen extends Screen {
 		if (Services.PLATFORM.allowScrolling()) {
 			poseStack.pushPose();
 			poseStack.mulPose(Axis.ZP.rotationDegrees(90.0F));
-			guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll"), 21, -width + 10, 11184810, true);
+			guiGraphics.drawString(this.font, Component.translatable("armorposer.gui.label.scroll", version), 21, -width + 10, 11184810, true);
 			poseStack.popPose();
 		}
 	}

@@ -32,7 +32,7 @@
   "armorposer.gui.label.right_leg": "Правая нога",
   "armorposer.gui.label.rotation": "Вращать",
   "armorposer.gui.label.save": "Сохранить",
-  "armorposer.gui.label.scroll": "Нажми и прокрути",
+  "armorposer.gui.label.scroll": "Нажми и прокрути v%s",
   "armorposer.gui.label.show_arms": "Показать руки",
   "armorposer.gui.label.small": "Ребёнок",
   "armorposer.gui.pose.arabesque": "Арабеска",
@@ -113,5 +113,7 @@
   "text.autoconfig.armorposer.option.general.resizeWhitelist.@Tooltip": "Список игроков, которым разрешено изменять размер Стойки для брони, когда включено ограничение изменения размера для операторов сервера",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Изменять размеры могут только Операторы Сервера",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP.@Tooltip": "Ограничить возможность изменения размера Стойки для брони только для операторов сервера",
-  "text.autoconfig.armorposer.title": "Стойка для брони"
+  "text.autoconfig.armorposer.title": "Стойка для брони",
+  "armorposer.gui.label.scale": "Scale",
+  "armorposer.gui.tooltip.scale": "Change scale"
 }

@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.platform;
 
+import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
@@ -53,5 +54,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public List<? extends String> getResizeWhitelist() {
 		PoserConfig config = AutoConfig.getConfigHolder(PoserConfig.class).getConfig();
 		return config.general.resizeWhitelist;
+	}
+
+	@Override
+	public String getModVersion() {
+		return FabricLoader.getInstance().getModContainer(Reference.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString();
 	}
 }

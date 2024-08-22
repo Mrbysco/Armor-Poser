@@ -33,7 +33,7 @@
   "armorposer.gui.label.rotation": "Rotation",
   "armorposer.gui.label.scale": "Scale",
   "armorposer.gui.label.save": "Save",
-  "armorposer.gui.label.scroll": "Click and scroll",
+  "armorposer.gui.label.scroll": "Click and scroll v%s",
   "armorposer.gui.label.show_arms": "Show Arms",
   "armorposer.gui.label.small": "Small",
   "armorposer.gui.pose.arabesque": "Arabesque",
