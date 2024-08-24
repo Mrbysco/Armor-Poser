@@ -1,2 +1,1 @@
-* Change the scale slider to be an input field instead (To allow for preciser values)
-* Display the mod version on the right of the gui
+* Update ru_ru translation Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
