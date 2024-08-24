@@ -114,6 +114,6 @@
   "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Изменять размеры могут только Операторы Сервера",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP.@Tooltip": "Ограничить возможность изменения размера Стойки для брони только для операторов сервера",
   "text.autoconfig.armorposer.title": "Стойка для брони",
-  "armorposer.gui.label.scale": "Scale",
-  "armorposer.gui.tooltip.scale": "Change scale"
+  "armorposer.gui.label.scale": "Размер",
+  "armorposer.gui.tooltip.scale": "Изменить размер"
 }
