@@ -1,0 +1,66 @@
+plugins {
+    id 'com.gradleup.shadow' version '8.3.0'
+    id 'java'
+    id 'io.github.patrick.remapper' version "1.4.2"
+}
+
+group = 'com.mrbysco.armorposer'
+version = project.version
+
+base {
+    archivesName = "${mod_name}-spigot-${minecraft_version}"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven {
+        name = "spigotmc-repo"
+        url = "https://hub.spigotmc.org/nexus/content/repositories/snapshots/"
+    }
+    maven {
+        name = "sonatype"
+        url = "https://oss.sonatype.org/content/groups/public/"
+    }
+}
+
+dependencies {
+    compileOnly("org.spigotmc:spigot:${spigot_version}:remapped-mojang")
+    implementation project(":common")
+}
+
+def targetJavaVersion = 17
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release.set(targetJavaVersion)
+    }
+}
+
+tasks.remap {
+    version.set(minecraft_version)
+    inputTask.set(shadowJar)
+    archiveClassifier.set("remapped")
+    dependsOn(shadowJar)
+}
+
+tasks.shadowJar.dependsOn(build)
+
+processResources {
+    def props = [version: version]
+    inputs.properties props
+    filteringCharset 'UTF-8'
+    filesMatching('plugin.yml') {
+        expand props
+    }
+}

@@ -21,3 +21,4 @@ rootProject.name = 'ArmorPoser'
 include("common")
 include("fabric")
 include("forge")
+include("spigot")

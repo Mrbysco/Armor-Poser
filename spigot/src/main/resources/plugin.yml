@@ -1,0 +1,4 @@
+name: ArmorPoser
+version: '1.20.0-2.2.1'
+main: com.mrbysco.armorposer.ArmorPoser
+api-version: '1.20'
