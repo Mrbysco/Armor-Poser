@@ -820,12 +820,72 @@ public class ArmorStandScreen extends Screen {
 		armorStandTag.merge(compound);
 		this.armorStandData.readFromNBT(armorStandTag);
 
-		this.rotationTextField.setValue(String.valueOf((int) armorStandData.rotation));
-		for (int i = 0; i < this.poseTextFields.length; i++) {
-			this.poseTextFields[i].setValue(String.valueOf((int) armorStandData.pose[i]));
+		// Set toggle buttons
+		this.toggleButtons[0].setValue(compound.getBoolean("Invisible"));
+		this.toggleButtons[1].setValue(compound.getBoolean("NoBasePlate"));
+		this.toggleButtons[2].setValue(compound.getBoolean("NoGravity"));
+		this.toggleButtons[3].setValue(compound.getBoolean("ShowArms"));
+		this.toggleButtons[4].setValue(compound.getBoolean("Small"));
+		this.toggleButtons[5].setValue(compound.getBoolean("CustomNameVisible"));
+
+		// Set lock button
+		this.lockButton.setLocked(compound.getBoolean("Invulnerable"));
+
+		// Set size field
+		this.sizeField.setValue(String.valueOf(compound.getDouble("Scale")));
+
+		// Set rotation text field
+		ListTag rotationTag = compound.getList("Rotation", 5); // 5 is the type for float
+		if (!rotationTag.isEmpty()) {
+			this.rotationTextField.setValue(String.valueOf(rotationTag.getFloat(0)));
+		}
+
+		// Set pose text fields
+		CompoundTag poseTag = compound.getCompound("Pose");
+
+		ListTag poseHeadTag = poseTag.getList("Head", 5);
+		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.getFloat(0)));
+		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.getFloat(1)));
+		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.getFloat(2)));
+
+		ListTag poseBodyTag = poseTag.getList("Body", 5);
+		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.getFloat(0)));
+		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.getFloat(1)));
+		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.getFloat(2)));
+
+		ListTag poseLeftLegTag = poseTag.getList("LeftLeg", 5);
+		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.getFloat(0)));
+		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.getFloat(1)));
+		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.getFloat(2)));
+
+		ListTag poseRightLegTag = poseTag.getList("RightLeg", 5);
+		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.getFloat(0)));
+		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.getFloat(1)));
+		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.getFloat(2)));
+
+		ListTag poseLeftArmTag = poseTag.getList("LeftArm", 5);
+		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.getFloat(0)));
+		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.getFloat(1)));
+		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.getFloat(2)));
+
+		ListTag poseRightArmTag = poseTag.getList("RightArm", 5);
+		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.getFloat(0)));
+		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.getFloat(1)));
+		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.getFloat(2)));
+
+		// Set position offsets
+		ListTag positionOffset = compound.getList("Move", 6); // 6 is the type for double
+		if (!positionOffset.isEmpty()) {
+			this.poseTextFields[18].setValue(String.valueOf(positionOffset.getDouble(0) + this.lastSendOffset.x));
+			this.poseTextFields[19].setValue(String.valueOf(positionOffset.getDouble(1) + this.lastSendOffset.y));
+			this.poseTextFields[20].setValue(String.valueOf(positionOffset.getDouble(2) + this.lastSendOffset.z));
+			this.lastSendOffset = new Vec3(
+					positionOffset.getDouble(0) + this.lastSendOffset.x,
+					positionOffset.getDouble(1) + this.lastSendOffset.y,
+					positionOffset.getDouble(2) + this.lastSendOffset.z
+			);
 		}
 	}
-
 
 	public static void openScreen(ArmorStand armorStandEntity) {
 		Minecraft.getInstance().setScreen(new ArmorStandScreen(armorStandEntity));
