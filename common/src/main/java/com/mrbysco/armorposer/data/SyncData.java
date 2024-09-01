@@ -32,13 +32,13 @@ public record SyncData(UUID entityUUID, CompoundTag tag) {
 			armorStand.setUUID(entityUUID);
 
 			ListTag tagList = tag.getList("Move", Tag.TAG_DOUBLE);
-			double x = tagList.getDouble(0);
-			double y = tagList.getDouble(1);
-			double z = tagList.getDouble(2);
-			if (x != 0 || y != 0 || z != 0)
-				armorStand.setPosRaw(armorStand.getX() + x,
-						armorStand.getY() + y,
-						armorStand.getZ() + z);
+			double xOffset = tagList.getDouble(0);
+			double yOffset = tagList.getDouble(1);
+			double zOffset = tagList.getDouble(2);
+			if (xOffset != 0 || yOffset != 0 || zOffset != 0)
+				armorStand.setPosRaw(armorStand.getX() + xOffset,
+						armorStand.getY() + yOffset,
+						armorStand.getZ() + zOffset);
 
 			if (Reference.canResize(player)) {
 				double scale = tag.getDouble("Scale");
