@@ -1,1 +1,1 @@
-* Update ru_ru translation Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
+* Change how the paste button reads the clipboard so that pressing done doesn't undo the paste
