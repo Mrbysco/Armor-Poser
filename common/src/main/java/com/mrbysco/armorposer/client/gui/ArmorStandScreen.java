@@ -68,7 +68,7 @@ public class ArmorStandScreen extends Screen {
 	private NumberFieldBox rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
 	protected final NumberFieldBox[] poseTextFields = new NumberFieldBox[3 * 7];
-	private SizeField sizeSlider;
+	private SizeField sizeField;
 	private LockIconButton lockButton;
 	private final boolean allowScrolling;
 
@@ -130,15 +130,15 @@ public class ArmorStandScreen extends Screen {
 		this.rotationTextField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.rotation")));
 
 		// Size slider
-		this.sizeSlider = new SizeField(this.font, 1 + offsetX, offsetY + ((this.toggleButtons.length + 1) * 22), 38, 17, Component.translatable("armorposer.gui.label.scale"));
+		this.sizeField = new SizeField(this.font, 1 + offsetX, offsetY + ((this.toggleButtons.length + 1) * 22), 38, 17, Component.translatable("armorposer.gui.label.scale"));
 //						(double) this.entityArmorStand.getScale(), 0.01D, 10.0D, this)
-		this.sizeSlider.setValue(String.valueOf((double) this.entityArmorStand.getScale()));
-		this.sizeSlider.setMaxLength(4);
-		this.addWidget(this.sizeSlider);
-		this.sizeSlider.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.scale")));
+		this.sizeField.setValue(String.valueOf((double) this.entityArmorStand.getScale()));
+		this.sizeField.setMaxLength(4);
+		this.addWidget(this.sizeField);
+		this.sizeField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.scale")));
 		if (minecraft != null && !Reference.canResize(minecraft.player)) {
-			this.sizeSlider.active = false;
-			this.sizeSlider.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.size.disabled").withStyle(ChatFormatting.RED)));
+			this.sizeField.active = false;
+			this.sizeField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.size.disabled").withStyle(ChatFormatting.RED)));
 		}
 
 		// pose textboxes
@@ -198,7 +198,7 @@ public class ArmorStandScreen extends Screen {
 				if (clipboardData != null) {
 					CompoundTag compound = TagParser.parseTag(clipboardData);
 					this.readFieldsFromNBT(compound);
-					this.updateEntity(compound);
+					this.textFieldUpdated();
 				}
 			} catch (Exception e) {
 				//Nope
@@ -568,7 +568,7 @@ public class ArmorStandScreen extends Screen {
 		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
 		for (EditBox textField : this.poseTextFields)
 			textField.render(guiGraphics, mouseX, mouseY, partialTicks);
-		this.sizeSlider.render(guiGraphics, mouseX, mouseY, partialTicks);
+		this.sizeField.render(guiGraphics, mouseX, mouseY, partialTicks);
 
 		int offsetY = 20;
 
@@ -648,12 +648,12 @@ public class ArmorStandScreen extends Screen {
 				this.textFieldUpdated();
 				return true;
 			}
-			if (sizeSlider.canConsumeInput()) {
-				float nextValue = (float)(sizeSlider.getFloat() + (double)(multiplier * sizeSlider.scrollMultiplier));
-				nextValue = Math.clamp(nextValue, sizeSlider.minValue, sizeSlider.maxValue);
-				sizeSlider.setValue(String.valueOf(nextValue));
-				sizeSlider.setCursorPosition(0);
-				sizeSlider.setHighlightPos(0);
+			if (sizeField.canConsumeInput()) {
+				float nextValue = (float)(sizeField.getFloat() + (double)(multiplier * sizeField.scrollMultiplier));
+				nextValue = Math.clamp(nextValue, sizeField.minValue, sizeField.maxValue);
+				sizeField.setValue(String.valueOf(nextValue));
+				sizeField.setCursorPosition(0);
+				sizeField.setHighlightPos(0);
 				this.textFieldUpdated();
 				return true;
 			}
@@ -677,12 +677,12 @@ public class ArmorStandScreen extends Screen {
 				this.textFieldUpdated();
 				return true;
 			}
-			if (sizeSlider.canConsumeInput()) {
-				float previousValue = (float)(sizeSlider.getFloat() - (double)(multiplier * sizeSlider.scrollMultiplier));
-				previousValue = Math.clamp(previousValue, sizeSlider.minValue, sizeSlider.maxValue);
-				sizeSlider.setValue(String.valueOf(previousValue));
-				sizeSlider.setCursorPosition(0);
-				sizeSlider.setHighlightPos(0);
+			if (sizeField.canConsumeInput()) {
+				float previousValue = (float)(sizeField.getFloat() - (double)(multiplier * sizeField.scrollMultiplier));
+				previousValue = Math.clamp(previousValue, sizeField.minValue, sizeField.maxValue);
+				sizeField.setValue(String.valueOf(previousValue));
+				sizeField.setCursorPosition(0);
+				sizeField.setHighlightPos(0);
 				this.textFieldUpdated();
 				return true;
 			}
@@ -719,7 +719,7 @@ public class ArmorStandScreen extends Screen {
 			if (this.rotationTextField.keyPressed(keyCode, scanCode, modifiers)) {
 				this.textFieldUpdated();
 				return true;
-			} else if (this.sizeSlider.keyPressed(keyCode, scanCode, modifiers)) {
+			} else if (this.sizeField.keyPressed(keyCode, scanCode, modifiers)) {
 				this.textFieldUpdated();
 				return true;
 			} else {
@@ -739,13 +739,6 @@ public class ArmorStandScreen extends Screen {
 		return super.mouseClicked(mouseX, mouseY, button);
 	}
 
-	/**
-	 * Update the size of the armor stand
-	 */
-	public void updateScale() {
-		this.textFieldUpdated();
-	}
-
 	protected void textFieldUpdated() {
 		this.updateEntity(this.writeFieldsToNBT());
 	}
@@ -760,7 +753,7 @@ public class ArmorStandScreen extends Screen {
 		compound.putBoolean("CustomNameVisible", this.toggleButtons[5].getValue());
 		compound.putBoolean("Invulnerable", this.lockButton.isLocked());
 		compound.putInt("DisabledSlots", this.lockButton.isLocked() ? 4144959 : 0);
-		compound.putDouble("Scale", this.sizeSlider.getFloat());
+		compound.putDouble("Scale", this.sizeField.getFloat());
 
 		ListTag rotationTag = new ListTag();
 		rotationTag.add(FloatTag.valueOf(this.rotationTextField.getFloat()));
