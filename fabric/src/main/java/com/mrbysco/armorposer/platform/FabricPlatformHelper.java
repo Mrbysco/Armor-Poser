@@ -8,8 +8,10 @@ import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import me.shedaniel.autoconfig.AutoConfig;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
@@ -59,5 +61,10 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public String getModVersion() {
 		return FabricLoader.getInstance().getModContainer(Reference.MOD_ID).orElseThrow().getMetadata().getVersion().getFriendlyString();
+	}
+
+	@Override
+	public KeyMapping registerKeyMapping(KeyMapping mapping) {
+		return KeyBindingHelper.registerKeyBinding(mapping);
 	}
 }
