@@ -1,1 +1,1 @@
-* Change how the paste button reads the clipboard so that pressing done doesn't undo the paste
+* Fix being unable to manually enter decimals (.) into the scale field
