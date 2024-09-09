@@ -60,6 +60,9 @@ public class SizeField extends EditBox {
 	}
 
 	protected boolean isNumeric(String value) {
-		return NumberUtils.isParsable(value);
+		if (value.equals("."))
+			return true;
+		else
+			return NumberUtils.isParsable(value);
 	}
 }
