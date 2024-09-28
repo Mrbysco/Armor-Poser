@@ -82,7 +82,7 @@ public class ArmorStandScreen extends Screen {
 			int width = 40;
 			int height = 20;
 
-			this.addRenderableWidget(this.toggleButtons[1] = new ToggleButton(x, y, width, height, this.armorStandData.getBooleanValue(i), (button) -> {
+			this.addRenderableWidget(this.toggleButtons[i] = new ToggleButton(x, y, width, height, this.armorStandData.getBooleanValue(i), (button) -> {
 				ToggleButton toggleButton = ((ToggleButton) button);
 				toggleButton.setValue(!toggleButton.getValue());
 				this.textFieldUpdated();
@@ -483,7 +483,7 @@ public class ArmorStandScreen extends Screen {
 			this.updateEntity(this.armorStandData.writeToNBT());
 			this.minecraft.setScreen((Screen) null);
 		}));
-		this.addRenderableWidget(new Button(0, 0, 16, 16, new TextComponent("💡"), (button) -> {
+		this.addRenderableWidget(new Button(0, 0, 20, 20, new TextComponent("☀"), (button) -> {
 			this.minecraft.setScreen(new ArmorGlowScreen(this));
 		}));
 	}
@@ -520,9 +520,8 @@ public class ArmorStandScreen extends Screen {
 		// left column labels
 		int offsetX = 20;
 		for (int i = 0; i < this.buttonLabels.length; i++) {
-			int x = offsetX;
 			int y = offsetY + (i * 22) + (10 - (this.font.lineHeight / 2));
-			drawString(poseStack, this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), x, y, whiteColor);
+			drawString(poseStack, this.font, I18n.get("armorposer.gui.label." + this.buttonLabels[i]), offsetX, y, whiteColor);
 		}
 
 		// right column labels
