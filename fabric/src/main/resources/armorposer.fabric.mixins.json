@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8.4",
+  "package": "com.mrbysco.armorposer.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "ArmorStandMixin"
+  ],
+  "client": [
+    "MinecraftMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
+  
