@@ -20,7 +20,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 	private final Component title;
 
 	public ArmorGlowWidget(ArmorGlowScreen parent, Component title, int listWidth, int top, int bottom) {
-		super(parent.getScreenMinecraft(), listWidth, parent.height, top, bottom, parent.getScreenFont().lineHeight * 2 + 8);
+		super(parent.getScreenMinecraft(), listWidth, parent.height, top, bottom, parent.getScreenFont().lineHeight * 2 + 14);
 		this.parent = parent;
 		this.title = title;
 		this.listWidth = listWidth;
@@ -113,7 +113,8 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 		public void render(PoseStack guiGraphics, int entryIdx, int top, int left, int entryWidth, int entryHeight,
 		                   int mouseX, int mouseY, boolean hovered, float partialTicks) {
 			Font font = this.parent.getScreenFont();
-			renderScrollingString(guiGraphics, font, getPositionComponent(), left + 36, top + 10, left + width - 18, top + 20, 0xFFFFFF);
+			renderScrollingString(guiGraphics, font, getPositionComponent(),
+					left + 36, top + 10, left + width - 18, top + 20, 0xFFFFFF);
 
 			renderPose(guiGraphics, left + 16, top + 28, 15);
 		}
