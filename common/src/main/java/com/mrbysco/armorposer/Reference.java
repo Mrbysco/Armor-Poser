@@ -74,8 +74,12 @@ public class Reference {
 	public static final String alignedToolPose = "{CustomNameVisible:0b,DisabledSlots:0,Invisible:0b,Invulnerable:0b,Move:[0.0d,0.0d,0.0d],NoBasePlate:0b,NoGravity:1b,Pose:{Body:[0.0f,0.0f,0.0f],Head:[0.0f,0.0f,0.0f],LeftArm:[0.0f,0.0f,0.0f],LeftLeg:[0.0f,0.0f,0.0f],RightArm:[-10.0f,0.0f,-90.0f],RightLeg:[0.0f,0.0f,0.0f]},Rotation:[0.0f],ShowArms:1b,Small:0b}";
 
 	public static boolean canResize(Player player) {
-		return !Services.PLATFORM.isResizeRestrictedToOPS()
-				|| player != null && (player.hasPermissions(4) ||
-				Services.PLATFORM.getResizeWhitelist().contains(player.getGameProfile().getName()));
+		if (Services.PLATFORM.isResizeRestrictedToOPS() && player != null) {
+			if (Services.PLATFORM.getResizeWhitelist().contains(player.getGameProfile().getName())){
+				return true;
+			}
+			return player.hasPermissions(4);
+		}
+		return true;
 	}
 }
