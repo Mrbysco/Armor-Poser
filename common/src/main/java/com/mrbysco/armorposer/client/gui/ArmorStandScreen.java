@@ -136,6 +136,7 @@ public class ArmorStandScreen extends Screen {
 		this.addWidget(this.sizeField);
 		this.sizeField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.scale")));
 		if (minecraft != null && !Reference.canResize(minecraft.player)) {
+			this.sizeField.setEditable(false);
 			this.sizeField.active = false;
 			this.sizeField.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.size.disabled").withStyle(ChatFormatting.RED)));
 		}
