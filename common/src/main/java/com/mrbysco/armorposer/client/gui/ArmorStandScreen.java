@@ -131,7 +131,6 @@ public class ArmorStandScreen extends Screen {
 
 		// Size slider
 		this.sizeField = new SizeField(this.font, 1 + offsetX, offsetY + ((this.toggleButtons.length + 1) * 22), 38, 17, Component.translatable("armorposer.gui.label.scale"));
-//						(double) this.entityArmorStand.getScale(), 0.01D, 10.0D, this)
 		this.sizeField.setValue(String.valueOf((double) this.entityArmorStand.getScale()));
 		this.sizeField.setMaxLength(4);
 		this.addWidget(this.sizeField);
