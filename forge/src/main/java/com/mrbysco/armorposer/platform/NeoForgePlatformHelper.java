@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.platform;
 
+import com.mrbysco.armorposer.ArmorPoser;
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
@@ -7,6 +8,7 @@ import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.neoforged.fml.ModList;
@@ -54,5 +56,11 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public String getModVersion() {
 		return ModList.get().getModFileById(Reference.MOD_ID).versionString();
+	}
+
+	@Override
+	public KeyMapping registerKeyMapping(KeyMapping mapping) {
+		ArmorPoser.KEY_MAPPINGS.add(mapping);
+		return mapping;
 	}
 }

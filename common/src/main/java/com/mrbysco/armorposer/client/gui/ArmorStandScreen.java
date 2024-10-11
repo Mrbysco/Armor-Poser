@@ -33,7 +33,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.phys.Vec3;
 
-public class ArmorStandScreen extends Screen {
+public class ArmorStandScreen extends MoveableScreen {
 	private static final WidgetSprites MIRROR_POSE_SPRITES = new WidgetSprites(
 			ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_pose"), ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "widget/mirror_pose_highlighted")
 	);
