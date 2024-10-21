@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ArmorGlowScreen extends Screen {
+public class ArmorGlowScreen extends MoveableScreen {
 	private static final int PADDING = 6;
 
 	private ArmorGlowWidget armorListWidget;

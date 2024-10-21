@@ -21,7 +21,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class ArmorPosesScreen extends Screen {
+public class ArmorPosesScreen extends MoveableScreen {
 	private enum SortType {
 		NORMAL,
 		A_TO_Z,

@@ -8,7 +8,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-public class DeletePoseScreen extends Screen {
+public class DeletePoseScreen extends MoveableScreen {
 	private final ArmorStandScreen parentScreen;
 	private Button deleteButton;
 	private final PoseListWidget.ListEntry entry;
