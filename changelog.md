@@ -1,1 +1,1 @@
-* Add `ru_ru` lang file Courtesy of [JustOldSchool](https://github.com/Mrbysco/Armor-Poser/issues/20)
+* Allow vanilla clients connecting to a server with Armor Poser
