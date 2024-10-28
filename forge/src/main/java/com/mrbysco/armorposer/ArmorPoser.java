@@ -21,8 +21,8 @@ public class ArmorPoser {
 	public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
 			new ResourceLocation(Reference.MOD_ID, "main"),
 			() -> PROTOCOL_VERSION,
-			PROTOCOL_VERSION::equals,
-			PROTOCOL_VERSION::equals
+			(protocol) -> PROTOCOL_VERSION.equals(protocol) || NetworkRegistry.ACCEPTVANILLA.equals(protocol), // Accept vanilla clients
+			(protocol) -> PROTOCOL_VERSION.equals(protocol) || NetworkRegistry.ACCEPTVANILLA.equals(protocol)
 	);
 
 	public ArmorPoser() {
