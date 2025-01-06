@@ -84,6 +84,8 @@
   "armorposer.gui.tooltip.poses": "Проверить предустановленные позы",
   "armorposer.gui.tooltip.rotation": "Изменить поворот",
   "armorposer.gui.tooltip.save": "Сохранить текущую позу в пользовательские позы",
+  "armorposer.gui.tooltip.base_plate": "Toggle base plate",
+  "armorposer.gui.tooltip.gravity": "Toggle gravity",
   "armorposer.gui.tooltip.show_arms": "Переключить видимость рук",
   "armorposer.gui.tooltip.size.disabled": "Размер ограничен для операторов сервера",
   "armorposer.gui.tooltip.small": "Переключить размер",

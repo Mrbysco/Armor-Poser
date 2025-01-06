@@ -86,6 +86,8 @@
   "armorposer.gui.tooltip.rotation": "Alterar rotação",
   "armorposer.gui.tooltip.scale": "Alterar escala",
   "armorposer.gui.tooltip.save": "Salvar a pose atual nas poses do usuário",
+  "armorposer.gui.tooltip.base_plate": "Toggle base plate",
+  "armorposer.gui.tooltip.gravity": "Toggle gravity",
   "armorposer.gui.tooltip.show_arms": "Alternar braços",
   "armorposer.gui.tooltip.size.disabled": "O tamanho é restrito aos operadores de servidores",
   "armorposer.gui.tooltip.small": "Alternar tamanho",
