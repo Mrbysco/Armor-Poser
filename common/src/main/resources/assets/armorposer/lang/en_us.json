@@ -10,6 +10,8 @@
   "armorposer.config.resizeWhitelist.tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
   "armorposer.config.restrictResizeToOP": "Restrict Resize To OP",
   "armorposer.config.restrictResizeToOP.tooltip": "Restrict the ability to resize the Armor Stand to server operators",
+  "armorposer.config.enableAnimation": "Enable Animation",
+  "armorposer.config.enableAnimation.tooltip": "Restrict the ability to resize the Armor Stand to server operators",
   "armorposer.configuration.title": "Armor Poser",
   "armorposer.gui.armor_list.list": "Armor Stands",
   "armorposer.gui.armor_list.locate": "Locate",
@@ -120,5 +122,7 @@
   "text.autoconfig.armorposer.option.general.resizeWhitelist.@Tooltip": "List of players that are allowed to resize the Armor Stand when restrictResizeToOP is enabled",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP": "Restrict Resize To OP",
   "text.autoconfig.armorposer.option.general.restrictResizeToOP.@Tooltip": "Restrict the ability to resize the Armor Stand to server operators",
+  "text.autoconfig.armorposer.option.general.enableAnimation": "Enable Animation",
+  "text.autoconfig.armorposer.option.general.enableAnimation.@Tooltip": "Restrict the ability to resize the Armor Stand to server operators",
   "text.autoconfig.armorposer.title": "Armor Poser"
 }

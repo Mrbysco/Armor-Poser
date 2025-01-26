@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.packets.handler;
 
+import com.mrbysco.armorposer.packets.ArmorStandCopyToBookPayload;
 import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
@@ -63,6 +64,20 @@ public class ServerPayloadHandler {
 				.exceptionally(e -> {
 					// Handle exception
 					context.disconnect(Component.translatable("armorposer.networking.rename.failed", e.getMessage()));
+					return null;
+				});
+	}
+
+	public void handleCopyToBook(final ArmorStandCopyToBookPayload copyData, final IPayloadContext context) {
+		// Do something with the pose, on the main thread
+		context.enqueueWork(() -> {
+					if (context.player() != null && context.player().level() instanceof ServerLevel serverLevel) {
+						copyData.data().handleData(context.player());
+					}
+				})
+				.exceptionally(e -> {
+					// Handle exception
+					context.disconnect(Component.translatable("armorposer.networking.copy_to_book.failed", e.getMessage()));
 					return null;
 				});
 	}

@@ -2,9 +2,11 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.BookCopyData;
 import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
+import com.mrbysco.armorposer.packets.ArmorStandCopyToBookPayload;
 import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
@@ -36,6 +38,11 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public void renameArmorStand(ArmorStand armorStand, String newName) {
 		PacketDistributor.sendToServer(new ArmorStandRenamePayload(new RenameData(armorStand.getUUID(), newName)));
+	}
+
+	@Override
+	public void copyArmorStandPose(ArmorStand armorStand, CompoundTag compound) {
+		PacketDistributor.sendToServer(new ArmorStandCopyToBookPayload(new BookCopyData(armorStand.getUUID(), compound)));
 	}
 
 	@Override

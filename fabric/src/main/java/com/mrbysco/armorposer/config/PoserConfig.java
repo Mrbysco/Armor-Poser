@@ -24,6 +24,8 @@ public class PoserConfig implements ConfigData {
 		@ConfigEntry.Gui.Tooltip
 		@Comment("Allow scrolling to add / decrease an angle value in the posing screen")
 		public boolean allowScrolling = true;
+		@Comment("Enable Armor Poser's animation system for the Armor Stand")
+		public boolean enableAnimation = false;
 		@ConfigEntry.Gui.Tooltip
 		@Comment("Restrict the ability to resize the Armor Stand to server operators")
 		public boolean restrictResizeToOP = false;

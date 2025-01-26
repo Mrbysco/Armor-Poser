@@ -1,12 +1,14 @@
 package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.Reference;
+import com.mrbysco.armorposer.animation.AnimationHandler;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
 @EventBusSubscriber(modid = Reference.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
 public class EventHandler {
@@ -27,8 +30,8 @@ public class EventHandler {
 			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
 					((ServerPlayer) player).connection.send(new ArmorStandScreenPayload(armorstand.getId()));
+					event.setCanceled(true);
 				}
-				event.setCanceled(true);
 				return;
 			}
 
@@ -51,6 +54,14 @@ public class EventHandler {
 		if (cancelRightClick) {
 			cancelRightClick = false;
 			event.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onFrameUpdate(EntityTickEvent.Pre event) {
+		if (!Reference.animationEnabled) return;
+		if (event.getEntity() instanceof ItemFrame frame) {
+			AnimationHandler.onFrameUpdate(frame);
 		}
 	}
 }

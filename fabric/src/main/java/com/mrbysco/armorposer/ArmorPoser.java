@@ -1,10 +1,12 @@
 package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.BookCopyData;
 import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
+import com.mrbysco.armorposer.packets.ArmorStandCopyToBookPayload;
 import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
@@ -13,10 +15,12 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
@@ -26,6 +30,18 @@ public class ArmorPoser implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		config = AutoConfig.register(PoserConfig.class, Toml4jConfigSerializer::new);
+		config.registerLoadListener((holder, config) -> {
+			Reference.setAnimationEnabled(config.general.enableAnimation);
+			return InteractionResult.PASS;
+		});
+		config.registerSaveListener((holder, config) -> {
+			Reference.setAnimationEnabled(config.general.enableAnimation);
+			return InteractionResult.PASS;
+		});
+
+		ServerLifecycleEvents.SERVER_STARTING.register((server) -> {
+			Reference.setAnimationEnabled(config.get().general.enableAnimation);
+		});
 
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
@@ -65,6 +81,13 @@ public class ArmorPoser implements ModInitializer {
 				if (entity instanceof ArmorStand armorStandEntity) {
 					renameData.handleData(armorStandEntity, context.player());
 				}
+			});
+		});
+		PayloadTypeRegistry.playC2S().register(ArmorStandCopyToBookPayload.ID, ArmorStandCopyToBookPayload.CODEC);
+		ServerPlayNetworking.registerGlobalReceiver(ArmorStandCopyToBookPayload.ID, (payload, context) -> {
+			BookCopyData bookData = payload.data();
+			context.player().server.execute(() -> {
+				bookData.handleData(context.player());
 			});
 		});
 	}

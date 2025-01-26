@@ -1,6 +1,8 @@
 package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.ArmorPoser;
+import com.mrbysco.armorposer.Reference;
+import com.mrbysco.armorposer.animation.AnimationHandler;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
@@ -10,6 +12,7 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
+import net.minecraft.world.entity.decoration.ItemFrame;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -51,4 +54,10 @@ public class EventHandler {
 		return InteractionResult.PASS;
 	}
 
+	public static void onFrameUpdate(Entity entity) {
+		if (!Reference.animationEnabled) return;
+		if (entity instanceof ItemFrame frame) {
+			AnimationHandler.onFrameUpdate(frame);
+		}
+	}
 }
