@@ -28,6 +28,8 @@ public record SyncData(UUID entityUUID, CompoundTag tag) {
 		CompoundTag entityTagCopy = entityTag.copy();
 
 		if (!tag.isEmpty()) {
+			tag.remove("HandItems");
+			tag.remove("ArmorItems");
 			entityTagCopy.merge(tag);
 			armorStand.load(entityTagCopy);
 			armorStand.setUUID(entityUUID);
