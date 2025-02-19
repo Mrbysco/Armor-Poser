@@ -1,1 +1,1 @@
-* Fix being unable to manually enter decimals (.) into the scale field
+* Backport critical issue fix
