@@ -10,23 +10,32 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.entity.player.Player;
 
+import java.util.List;
 import java.util.UUID;
 
 public record SyncData(UUID entityUUID, CompoundTag tag) {
-	public void encode(FriendlyByteBuf buf) {
-		buf.writeUUID(entityUUID);
-		buf.writeNbt(tag);
-	}
 
-	public static SyncData decode(final FriendlyByteBuf packetBuffer) {
-		return new SyncData(packetBuffer.readUUID(), packetBuffer.readNbt());
-	}
+	public static final StreamCodec<FriendlyByteBuf, SyncData> STREAM_CODEC = StreamCodec.composite(
+			UUIDUtil.STREAM_CODEC,
+			SyncData::entityUUID,
+			ByteBufCodecs.COMPOUND_TAG,
+			SyncData::tag,
+			SyncData::new);
+	private static final List<String> allowedKeys = List.of(
+			"Invisible", "NoBasePlate", "NoGravity", "ShowArms", "Small", "CustomNameVisible", "Invulnerable",
+			"Pose", "DisabledSlots", "Pose", "Scale", "Move", "Rotation"
+	);
 
 	public void handleData(ArmorStand armorStand, Player player) {
 		CompoundTag entityTag = armorStand.saveWithoutId(new CompoundTag());
 		CompoundTag entityTagCopy = entityTag.copy();
 
 		if (!tag.isEmpty()) {
+			List<String> keysToRemove = tag.getAllKeys().stream()
+					.filter(key -> !allowedKeys.contains(key))
+					.toList();
+			keysToRemove.forEach(tag::remove);
+
 			entityTagCopy.merge(tag);
 			armorStand.load(entityTagCopy);
 			armorStand.setUUID(entityUUID);
