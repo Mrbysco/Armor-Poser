@@ -14,11 +14,11 @@ public record ArmorStandSyncPayload(SyncData data) implements CustomPacketPayloa
 	public static final Type<ArmorStandSyncPayload> ID = new Type<>(Reference.SYNC_PACKET_ID);
 
 	public ArmorStandSyncPayload(final FriendlyByteBuf packetBuffer) {
-		this(SyncData.decode(packetBuffer));
+		this(SyncData.STREAM_CODEC.decode(packetBuffer));
 	}
 
 	public void write(FriendlyByteBuf buf) {
-		data.encode(buf);
+		SyncData.STREAM_CODEC.encode(buf, data());
 	}
 
 	@Override
