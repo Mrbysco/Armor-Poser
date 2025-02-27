@@ -1,6 +1,7 @@
 package com.mrbysco.armorposer.platform.services;
 
 import com.mrbysco.armorposer.data.SwapData;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
@@ -46,4 +47,15 @@ public interface IPlatformHelper {
 	 * @return The mod version
 	 */
 	String getModVersion();
+
+	/**
+	 * Register a keyboard binding
+	 * @return bound KeyMapping
+	 */
+	KeyMapping registerKeyMapping(KeyMapping mapping);
+
+	/**
+	 * Executed when a moveable screen is opened or closed
+	 */
+	void onMoveableScreen(boolean close);
 }

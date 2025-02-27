@@ -9,7 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 
-public class SavePoseScreen extends Screen {
+public class SavePoseScreen extends MoveableScreen {
 	private final ArmorStandScreen parentScreen;
 	private Button saveButton;
 	private EditBox nameField;

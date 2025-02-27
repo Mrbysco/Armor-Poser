@@ -1,5 +1,7 @@
 package com.mrbysco.armorposer;
 
+import com.mrbysco.armorposer.client.ClientHandler;
+import com.mrbysco.armorposer.client.KeybindHandler;
 import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
@@ -27,6 +29,9 @@ public class ArmorPoser {
 
 		if (dist.isClient()) {
 			container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
+
+			KeybindHandler.loadClass();
+			eventBus.addListener(ClientHandler::setupKeyMappings);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.mrbysco.armorposer;
 
+import com.mrbysco.armorposer.client.KeybindHandler;
+import com.mrbysco.armorposer.client.gui.MoveableScreen;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -8,9 +10,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 
 public class ArmorPoserClient implements ClientModInitializer {
+	static {
+		KeybindHandler.loadClass();
+	}
 
 	@Override
 	public void onInitializeClient() {
+
 		ClientPlayNetworking.registerGlobalReceiver(ArmorStandScreenPayload.ID, (payload, context) -> {
 			int entityID = payload.entityID();
 
