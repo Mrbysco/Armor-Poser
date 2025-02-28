@@ -1,6 +1,7 @@
 package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.packets.ArmorStandCopyToBookPayload;
 import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
@@ -37,5 +38,6 @@ public class ArmorPoser {
 		registrar.playToServer(ArmorStandSwapPayload.ID, ArmorStandSwapPayload.CODEC, ServerPayloadHandler.getInstance()::handleSwapData);
 		registrar.playToServer(ArmorStandSyncPayload.ID, ArmorStandSyncPayload.CODEC, ServerPayloadHandler.getInstance()::handleSyncData);
 		registrar.playToServer(ArmorStandRenamePayload.ID, ArmorStandRenamePayload.CODEC, ServerPayloadHandler.getInstance()::handleRenameData);
+		registrar.playToServer(ArmorStandCopyToBookPayload.ID, ArmorStandCopyToBookPayload.CODEC, ServerPayloadHandler.getInstance()::handleCopyToBook);
 	}
 }

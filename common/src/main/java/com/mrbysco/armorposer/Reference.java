@@ -19,11 +19,13 @@ public class Reference {
 	public static final String MOD_NAME = "Armor Poser";
 	public static final Logger LOGGER = LogUtils.getLogger();
 
+	public static final int ANIMATION_SEARCH_RADIUS = 32;
 
 	public static final ResourceLocation SYNC_PACKET_ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "sync_packet");
 	public static final ResourceLocation SWAP_PACKET_ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "swap_packet");
 	public static final ResourceLocation RENAME_PACKET_ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "rename_packet");
 	public static final ResourceLocation SCREEN_PACKET_ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "screen_packet");
+	public static final ResourceLocation COPY_TO_BOOK_PACKET_ID = ResourceLocation.fromNamespaceAndPath(Reference.MOD_ID, "copy_to_book");
 
 	public static final Map<String, String> defaultPoseMap = initializePoseMap();
 
@@ -82,5 +84,10 @@ public class Reference {
 			return player.hasPermissions(4);
 		}
 		return true;
+	}
+
+	public static boolean animationEnabled = false;
+	public static void setAnimationEnabled(boolean value) {
+		animationEnabled = value;
 	}
 }

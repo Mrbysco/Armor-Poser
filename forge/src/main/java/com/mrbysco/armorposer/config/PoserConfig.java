@@ -16,6 +16,7 @@ public class PoserConfig {
 		public final BooleanValue enableConfigGui;
 		public final BooleanValue enableNameTags;
 		public final BooleanValue allowScrolling;
+		public final BooleanValue enableAnimation;
 		public final BooleanValue restrictResizeToOP;
 		public final ModConfigSpec.ConfigValue<List<? extends String>> resizeWhitelist;
 
@@ -38,6 +39,11 @@ public class PoserConfig {
 					.comment("Allow scrolling to increase / decrease an angle value in the posing screen")
 					.translation("armorposer.config.allowScrolling")
 					.define("allowScrolling", true);
+
+			enableAnimation = builder
+					.comment("Enable Armor Poser's animation system for the Armor Stand")
+					.translation("armorposer.config.enableAnimation")
+					.define("enableAnimation", false);
 
 			restrictResizeToOP = builder
 					.comment("Restrict the ability to resize the Armor Stand to server operators")
@@ -66,6 +72,11 @@ public class PoserConfig {
 	@SubscribeEvent
 	public static void onLoad(final ModConfigEvent.Loading configEvent) {
 		Reference.LOGGER.debug("Loaded {}'s config file {}", Reference.MOD_ID, configEvent.getConfig().getFileName());
+	}
+
+	@SubscribeEvent
+	public static void onConfigEvent(final ModConfigEvent configEvent) {
+		Reference.setAnimationEnabled(PoserConfig.COMMON.enableAnimation.get());
 	}
 
 	@SubscribeEvent

@@ -2,9 +2,11 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.data.BookCopyData;
 import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
+import com.mrbysco.armorposer.packets.ArmorStandCopyToBookPayload;
 import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
@@ -39,6 +41,12 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public void renameArmorStand(ArmorStand armorStand, String newName) {
 		RenameData data = new RenameData(armorStand.getUUID(), newName);
 		ClientPlayNetworking.send(new ArmorStandRenamePayload(data));
+	}
+
+	@Override
+	public void copyArmorStandPose(ArmorStand armorStand, CompoundTag compound) {
+		BookCopyData data = new BookCopyData(armorStand.getUUID(), compound);
+		ClientPlayNetworking.send(new ArmorStandCopyToBookPayload(data));
 	}
 
 	@Override

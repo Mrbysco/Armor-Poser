@@ -24,6 +24,11 @@ public interface IPlatformHelper {
 	void renameArmorStand(ArmorStand armorStand, String newName);
 
 	/**
+	 * Copy Armor Stand pose to book
+	 */
+	void copyArmorStandPose(ArmorStand armorStand, CompoundTag compound);
+
+	/**
 	 * Allow scrolling to increase/decrease the angle of text fields
 	 */
 	boolean allowScrolling();

@@ -217,9 +217,13 @@ public class ArmorStandScreen extends Screen {
 				.tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.poses"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.copy"), (button) -> {
 			CompoundTag compound = this.writeFieldsToNBT();
-			String clipboardData = compound.toString();
-			if (this.minecraft != null) {
-				this.minecraft.keyboardHandler.setClipboard(clipboardData);
+			if (hasShiftDown()) {
+				Services.PLATFORM.copyArmorStandPose(this.entityArmorStand, compound);
+			} else {
+				String clipboardData = compound.toString();
+				if (this.minecraft != null) {
+					this.minecraft.keyboardHandler.setClipboard(clipboardData);
+				}
 			}
 		}).bounds(offsetX, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.copy"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.paste"), (button) -> {
