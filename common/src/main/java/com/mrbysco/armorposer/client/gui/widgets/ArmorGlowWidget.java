@@ -71,7 +71,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 			this.parent = parent;
 			this.scale = armorStand.getScale();
 			this.showPlate = armorStand.showBasePlate();
-			this.locked = ((ArmorStandAccessor)armorStand).armorposer$getDisabledSlots() > 0;
+			this.locked = armorStand.isInvulnerable();
 		}
 
 		@Override

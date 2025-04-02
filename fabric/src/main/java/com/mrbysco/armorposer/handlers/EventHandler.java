@@ -2,6 +2,7 @@ package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.ArmorPoser;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.component.DataComponents;
@@ -23,6 +24,7 @@ public class EventHandler {
 			PoserConfig config = ArmorPoser.config.get();
 			if (config.general.enableConfigGui && player.isShiftKeyDown()) {
 				if (hand == InteractionHand.MAIN_HAND && !player.level().isClientSide) {
+					ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandLockedPayload(armorstand.getId(), armorstand.isInvulnerable()));
 					ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandScreenPayload(armorstand.getId()));
 				}
 				return InteractionResult.SUCCESS;
