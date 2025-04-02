@@ -1,1 +1,1 @@
-* Fix critical issue
+* Fix lock state showing incorrectly (Thank you Sekwah for the PR)
