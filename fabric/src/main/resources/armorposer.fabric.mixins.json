@@ -5,8 +5,7 @@
   "refmap": "armorposer.refmap.json",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "ArmorStandMixin",
-    "ArmorStandAccessor"
+    "ArmorStandMixin"
   ],
   "client": [
     "MinecraftMixin"

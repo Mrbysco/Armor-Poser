@@ -1,7 +1,6 @@
 package com.mrbysco.armorposer.client.gui.widgets;
 
 import com.mrbysco.armorposer.client.gui.ArmorGlowScreen;
-import com.mrbysco.armorposer.mixin.ArmorStandAccessor;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
