@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer;
 
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -21,6 +22,19 @@ public class ArmorPoserClient implements ClientModInitializer {
 			}
 			if (entity instanceof ArmorStand armorStandEntity) {
 				com.mrbysco.armorposer.client.gui.ArmorStandScreen.openScreen(armorStandEntity);
+			}
+		});
+
+		ClientPlayNetworking.registerGlobalReceiver(ArmorStandLockedPayload.ID, (payload, context) -> {
+			int entityID = payload.entityID();
+
+			Minecraft mc = Minecraft.getInstance();
+			Entity entity = null;
+			if (mc.level != null) {
+				entity = mc.level.getEntity(entityID);
+			}
+			if (entity instanceof ArmorStand armorStandEntity) {
+				armorStandEntity.setInvulnerable(payload.isLocked());
 			}
 		});
 	}

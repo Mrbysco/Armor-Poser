@@ -4,6 +4,7 @@ import com.mrbysco.armorposer.config.PoserConfig;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
@@ -12,6 +13,7 @@ import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.Toml4jConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.networking.v1.EntityTrackingEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.server.level.ServerLevel;
@@ -28,6 +30,7 @@ public class ArmorPoser implements ModInitializer {
 		UseItemCallback.EVENT.register((player, world, hand) -> EventHandler.onPlayerRightClickItem(player, hand));
 
 		PayloadTypeRegistry.playS2C().register(ArmorStandScreenPayload.ID, ArmorStandScreenPayload.CODEC);
+		PayloadTypeRegistry.playS2C().register(ArmorStandLockedPayload.ID, ArmorStandLockedPayload.CODEC);
 		PayloadTypeRegistry.playC2S().register(ArmorStandSyncPayload.ID, ArmorStandSyncPayload.CODEC);
 		ServerPlayNetworking.registerGlobalReceiver(ArmorStandSyncPayload.ID, (payload, context) -> {
 			final ServerLevel serverLevel = context.player().serverLevel();
@@ -53,5 +56,9 @@ public class ArmorPoser implements ModInitializer {
 				}
 			});
 		});
+
+		EntityTrackingEvents.START_TRACKING.register(((entity, player) -> {
+			ServerPlayNetworking.send(player, new ArmorStandLockedPayload(entity.getId(), entity.isInvulnerable()));
+		}));
 	}
 }

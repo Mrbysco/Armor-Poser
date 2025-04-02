@@ -2,6 +2,7 @@ package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = Reference.MOD_ID, bus = EventBusSubscriber.Bus.GAME)
@@ -26,6 +28,7 @@ public class EventHandler {
 			final Level level = event.getLevel();
 			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && !level.isClientSide) {
+					((ServerPlayer) player).connection.send(new ArmorStandLockedPayload(armorstand.getId(), armorstand.isInvulnerable()));
 					((ServerPlayer) player).connection.send(new ArmorStandScreenPayload(armorstand.getId()));
 				}
 				event.setCanceled(true);
@@ -51,6 +54,13 @@ public class EventHandler {
 		if (cancelRightClick) {
 			cancelRightClick = false;
 			event.setCanceled(true);
+		}
+	}
+
+	@SubscribeEvent
+	public static void playerTracking(PlayerEvent.StartTracking event) {
+		if(event.getEntity() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof ArmorStand armorStand) {
+			serverPlayer.connection.send(new ArmorStandLockedPayload(armorStand.getId(), armorStand.isInvulnerable()));
 		}
 	}
 }
