@@ -1,7 +1,11 @@
 package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.packets.*;
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
+import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
+import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
+import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.packets.handler.ClientPayloadHandler;
 import com.mrbysco.armorposer.packets.handler.ServerPayloadHandler;
 import net.neoforged.api.distmarker.Dist;
