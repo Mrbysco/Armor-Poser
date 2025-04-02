@@ -1,5 +1,6 @@
 package com.mrbysco.armorposer.packets.handler;
 
+import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
@@ -31,5 +32,18 @@ public class ClientPayloadHandler {
 					context.disconnect(Component.translatable("armorposer.networking.screen.failed", e.getMessage()));
 					return null;
 				});
+	}
+
+	public void handleLockedData(ArmorStandLockedPayload armorStandLockedPayload, IPayloadContext context) {
+		context.enqueueWork(() -> {
+			Minecraft mc = Minecraft.getInstance();
+			Entity entity = null;
+			if (mc.level != null) {
+				entity = mc.level.getEntity(armorStandLockedPayload.entityID());
+			}
+			if(entity instanceof ArmorStand armorStandEntity) {
+				armorStandEntity.setInvulnerable(armorStandLockedPayload.isLocked());
+			}
+		});
 	}
 }
