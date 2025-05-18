@@ -1,1 +1,1 @@
-* Backport critical issue fix
+* Backport fix for lock state showing incorrectly (Thank you Sekwah for the PR)
