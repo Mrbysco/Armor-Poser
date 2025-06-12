@@ -14,6 +14,10 @@
   "armorposer.gui.armor_list.list": "Suportes de Armadura",
   "armorposer.gui.armor_list.locate": "Localizar",
   "armorposer.gui.armor_list.modify": "Modificar",
+<<<<<<< Updated upstream
+=======
+  "armorposer.gui.armor_list.stats": "Escala %s",
+>>>>>>> Stashed changes
   "armorposer.gui.delete_poose.message": "Tem certeza de que deseja remover essa pose?",
   "armorposer.gui.delete_poose.title": "Delete pose",
   "armorposer.gui.label.body": "Corpo",
@@ -23,8 +27,13 @@
   "armorposer.gui.label.left_arm": "Braço Esquerdo",
   "armorposer.gui.label.left_leg": "Perna Esquerda",
   "armorposer.gui.label.name_visible": "Nome Visível",
+<<<<<<< Updated upstream
   "armorposer.gui.label.no_base_plate": "Sem Placa de Base",
   "armorposer.gui.label.no_gravity": "Sem gravidade",
+=======
+  "armorposer.gui.label.base_plate": "Sem Placa de Base",
+  "armorposer.gui.label.gravity": "Sem gravidade",
+>>>>>>> Stashed changes
   "armorposer.gui.label.paste": "Colar",
   "armorposer.gui.label.poses": "Poses",
   "armorposer.gui.label.position": "Posição",
@@ -36,6 +45,10 @@
   "armorposer.gui.label.scroll": "Clicar e rolar v%s",
   "armorposer.gui.label.show_arms": "Mostrar Braços",
   "armorposer.gui.label.small": "Pequeno",
+<<<<<<< Updated upstream
+=======
+  "armorposer.gui.label.rename": "Renomear",
+>>>>>>> Stashed changes
   "armorposer.gui.pose.arabesque": "Arabesco",
   "armorposer.gui.pose.attention": "Atenção",
   "armorposer.gui.pose.block": "Bloco",
@@ -79,8 +92,13 @@
   "armorposer.gui.tooltip.mirror_arms": "Espelhar braços",
   "armorposer.gui.tooltip.mirror_legs": "Espelhar pernas",
   "armorposer.gui.tooltip.name_visible": "Alternar visibilidade do nome",
+<<<<<<< Updated upstream
   "armorposer.gui.tooltip.no_base_plate": "Alternar placa de base",
   "armorposer.gui.tooltip.no_gravity": "Alternar gravidade",
+=======
+  "armorposer.gui.tooltip.base_plate": "Alternar placa de base",
+  "armorposer.gui.tooltip.gravity": "Alternar gravidade",
+>>>>>>> Stashed changes
   "armorposer.gui.tooltip.paste": "Colar a pose da área de transferência",
   "armorposer.gui.tooltip.poses": "Verificar predefinições de pose",
   "armorposer.gui.tooltip.rotation": "Alterar rotação",
@@ -99,11 +117,20 @@
   "armorposer.gui.tooltip.y_rotation": "Ajustar a rotação Y",
   "armorposer.gui.tooltip.z_position": "Ajustar a posição Z",
   "armorposer.gui.tooltip.z_rotation": "Ajustar a rotação Z",
+<<<<<<< Updated upstream
+=======
+  "armorposer.gui.tooltip.rename": "Renomeie o Suporte de Armadura (Custa 1 nível)",
+  "armorposer.gui.tooltip.rename.disabled": "Não é possível renomear. Requer 1 nível.",
+>>>>>>> Stashed changes
   "armorposer.key.categories.general": "Configurador de Suporte de Armadura",
   "armorposer.key.openArmorStandGui": "Abra GUI",
   "armorposer.networking.screen.failed": "Falha no pacote da tela de rede do Posicionador de Armaduras",
   "armorposer.networking.swap.failed": "Falha no pacote de troca de rede do Posicionador de Armaduras",
   "armorposer.networking.sync.failed": "Falha no pacote de sincronização de rede do Posicionador de Armaduras",
+<<<<<<< Updated upstream
+=======
+  "armorposer.networking.rename.failed": "Falha na renomeação do pacote de rede do Posicionador de Armaduras",
+>>>>>>> Stashed changes
   "text.autoconfig.armorposer.option.general": "General",
   "text.autoconfig.armorposer.option.general.allowScrolling": "Permitir rolagem",
   "text.autoconfig.armorposer.option.general.allowScrolling.@Tooltip": "Permitir a rolagem para adicionar / diminuir um valor de ângulo na tela de poses",
