@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.math.Axis;
 import com.mrbysco.armorposer.Reference;
-import com.mrbysco.armorposer.client.gui.widgets.NameBox;
 import com.mrbysco.armorposer.client.gui.widgets.NumberFieldBox;
 import com.mrbysco.armorposer.client.gui.widgets.SizeField;
 import com.mrbysco.armorposer.client.gui.widgets.ToggleButton;
@@ -23,17 +22,16 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.resources.language.I18n;
-import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.DoubleTag;
+import net.minecraft.nbt.FloatTag;
+import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.decoration.ArmorStand;
-import net.minecraft.world.phys.Vec2;
 import net.minecraft.world.phys.Vec3;
-
-import java.util.Optional;
 
 public class ArmorStandScreen extends Screen {
 	private static final WidgetSprites MIRROR_POSE_SPRITES = new WidgetSprites(
@@ -63,14 +61,9 @@ public class ArmorStandScreen extends Screen {
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
 
-	private final String[] buttonLabels = new String[]{"invisible", "base_plate", "gravity", "show_arms", "small", "name_visible", "rotation", "scale"};
+	private final String[] buttonLabels = new String[]{"invisible", "no_base_plate", "no_gravity", "show_arms", "small", "name_visible", "rotation", "scale"};
 	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm", "position"};
 	private final String version;
-
-	private NameBox nameField;
-	private String oldName;
-	private String changedName;
-	private Button renameButton;
 
 	private NumberFieldBox rotationTextField;
 	private final ToggleButton[] toggleButtons = new ToggleButton[6];
@@ -90,14 +83,11 @@ public class ArmorStandScreen extends Screen {
 	public ArmorStandScreen(ArmorStand entityArmorStand) {
 		super(Component.translatable("armorposer.gui.title"));
 		this.entityArmorStand = entityArmorStand;
-		this.oldName = entityArmorStand.hasCustomName() ? entityArmorStand.getName().getString() : this.getTitle().getString();
 
 		this.armorStandData = new ArmorStandData();
 		CompoundTag tag = entityArmorStand.saveWithoutId(new CompoundTag());
-
-		if (tag.getCompoundOrEmpty("Pose").isEmpty()) {
-			CompoundTag poseTag = ArmorUtil.writeAllPoses(entityArmorStand);
-			tag.put("Pose", poseTag);
+		if (!tag.contains("Pose") || tag.getCompound("Pose").isEmpty()) {
+			tag.put("Pose", ArmorUtil.writeAllPoses(entityArmorStand));
 		}
 		this.armorStandData.readFromNBT(tag);
 
@@ -113,32 +103,6 @@ public class ArmorStandScreen extends Screen {
 	@Override
 	public void init() {
 		super.init();
-
-		this.nameField = new NameBox(this.font, this.width / 2 - this.font.width(this.oldName) / 2, 10, 100, 20, Component.translatable("armorposer.gui.label.name"));
-		this.nameField.setValue(this.oldName);
-		this.nameField.setTextColor(whiteColor);
-		this.nameField.setTextColorUneditable(whiteColor);
-		this.nameField.setBordered(false);
-		this.nameField.setMaxLength(50);
-		this.nameField.setTextShadow(true);
-		this.nameField.setFocused(false);
-		this.nameField.setResponder((text) -> {
-			this.changedName = text;
-			this.updateRenameButton();
-		});
-		this.addWidget(this.nameField);
-		this.addRenderableWidget(this.renameButton = Button.builder(Component.translatable("armorposer.gui.label.rename"), (button) -> {
-					if (this.hasLevels() && !this.oldName.equals(this.changedName)) {
-						this.entityArmorStand.setCustomName(Component.literal(this.changedName));
-						Services.PLATFORM.renameArmorStand(this.entityArmorStand, this.changedName);
-						this.oldName = this.changedName;
-						this.updateRenameButton();
-					}
-				})
-				.bounds(this.width / 2, 24, 40, 20)
-				.tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.rename"))).build());
-		this.renameButton.visible = false;
-		this.renameButton.active = false;
 
 		int offsetX = 110;
 		int offsetY = 20;
@@ -232,9 +196,7 @@ public class ArmorStandScreen extends Screen {
 					clipboardData = this.minecraft.keyboardHandler.getClipboard();
 				}
 				if (clipboardData != null) {
-					CompoundTag compound = TagParser.parseCompoundFully(clipboardData);
-					compound.putBoolean("NoBasePlate", !compound.getBooleanOr("NoBasePlate", false));
-					compound.putBoolean("NoGravity", !compound.getBooleanOr("NoGravity", false));
+					CompoundTag compound = TagParser.parseTag(clipboardData);
 					this.readFieldsFromNBT(compound);
 					this.textFieldUpdated();
 				}
@@ -377,7 +339,7 @@ public class ArmorStandScreen extends Screen {
 					}
 				}
 
-				CompoundTag tag = TagParser.parseCompoundFully(Reference.alignedBlockPose);
+				CompoundTag tag = TagParser.parseTag(Reference.alignedBlockPose);
 				this.readFieldsFromNBT(tag);
 				this.toggleButtons[0].setValue(true); //Set invisible
 				this.toggleButtons[2].setValue(true); //Set no gravity
@@ -433,7 +395,7 @@ public class ArmorStandScreen extends Screen {
 						}
 					}
 
-					CompoundTag tag = TagParser.parseCompoundFully(Reference.alignedUprightItemPose); 
+					CompoundTag tag = TagParser.parseTag(Reference.alignedUprightItemPose);
 					this.readFieldsFromNBT(tag);
 					this.toggleButtons[0].setValue(true); //Set invisible
 					this.toggleButtons[2].setValue(true); //Set no gravity
@@ -483,7 +445,7 @@ public class ArmorStandScreen extends Screen {
 						}
 					}
 
-					CompoundTag tag = TagParser.parseCompoundFully(Reference.alignedFlatItemPose); 
+					CompoundTag tag = TagParser.parseTag(Reference.alignedFlatItemPose);
 					this.readFieldsFromNBT(tag);
 					this.toggleButtons[0].setValue(true); //Set invisible
 					this.toggleButtons[2].setValue(true); //Set no gravity
@@ -538,7 +500,7 @@ public class ArmorStandScreen extends Screen {
 					}
 				}
 
-				CompoundTag tag = TagParser.parseCompoundFully(Reference.alignedToolPose); 
+				CompoundTag tag = TagParser.parseTag(Reference.alignedToolPose);
 				this.readFieldsFromNBT(tag);
 				this.toggleButtons[0].setValue(true); //Set invisible
 				this.toggleButtons[2].setValue(true); //Set no gravity
@@ -580,13 +542,6 @@ public class ArmorStandScreen extends Screen {
 		}).bounds(0, 0, 16, 16).build());
 	}
 
-	@Override
-	public void resize(Minecraft minecraft, int width, int height) {
-		String s = this.nameField.getValue();
-		this.init(minecraft, width, height);
-		this.nameField.setValue(s);
-	}
-
 	/**
 	 * Get the desired offset to get the armor stand in the correct position
 	 *
@@ -602,38 +557,14 @@ public class ArmorStandScreen extends Screen {
 		return desiredValue - value;
 	}
 
-	private boolean hasLevels() {
-		if (this.minecraft == null || this.minecraft.player == null) return false;
-		if (this.minecraft.player.getAbilities().instabuild) return true;
-		return this.minecraft.player.experienceLevel >= 1;
-	}
-
-	private void updateRenameButton() {
-		if (!this.oldName.equals(this.changedName)) {
-			this.renameButton.visible = true;
-			if (this.minecraft != null && this.minecraft.player != null) {
-				if (!this.hasLevels()) {
-					this.renameButton.active = false;
-					this.renameButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.rename.disabled").withStyle(ChatFormatting.RED)));
-				} else {
-					this.renameButton.active = true;
-				}
-			}
-		} else {
-			this.renameButton.visible = false;
-			this.renameButton.active = false;
-			this.renameButton.setTooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.rename")));
-		}
-	}
-
 	@Override
 	public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTicks) {
 		super.render(guiGraphics, mouseX, mouseY, partialTicks);
 
-		// Draw textboxes
-		// Name
-		this.nameField.render(guiGraphics, mouseX, mouseY, partialTicks);
+		// Draw gui title
+		guiGraphics.drawString(this.font, this.title, this.width / 2 - this.font.width(this.title) / 2, 10, whiteColor, true);
 
+		// Draw textboxes
 		this.rotationTextField.render(guiGraphics, mouseX, mouseY, partialTicks);
 		for (EditBox textField : this.poseTextFields)
 			textField.render(guiGraphics, mouseX, mouseY, partialTicks);
@@ -682,11 +613,11 @@ public class ArmorStandScreen extends Screen {
 		super.tick();
 
 		//Disable the Y position field when gravity is enabled (So you can't get it stuck in the ground)
-		boolean gravityEnabled = this.toggleButtons[2].getValue();
+		boolean disabledGravity = this.toggleButtons[2].getValue();
 		NumberFieldBox yPositionField = this.poseTextFields[19];
 
-		yPositionField.setEditable(!gravityEnabled);
-		if (!gravityEnabled) {
+		yPositionField.setEditable(disabledGravity);
+		if (disabledGravity) {
 			yPositionField.setTooltip(yPositionTooltip);
 		} else {
 			yPositionField.setFocused(false);
@@ -707,10 +638,10 @@ public class ArmorStandScreen extends Screen {
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double xScroll, double yScroll) {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
-		if (allowScrolling && yScroll > 0) {
+		if (allowScrolling && (xScroll > 0 || yScroll > 0)) {
 			//Add 1 to the value
 			if (rotationTextField.canConsumeInput()) {
-				int nextValue = (int) (rotationTextField.getFloat() + (1 * multiplier));
+				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(nextValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -718,7 +649,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			if (sizeField.canConsumeInput()) {
-				float nextValue = (float) (sizeField.getFloat() + (double) (multiplier * sizeField.scrollMultiplier));
+				float nextValue = (float)(sizeField.getFloat() + (double)(multiplier * sizeField.scrollMultiplier));
 				nextValue = Math.clamp(nextValue, sizeField.minValue, sizeField.maxValue);
 				sizeField.setValue(String.valueOf(nextValue));
 				sizeField.setCursorPosition(0);
@@ -736,10 +667,10 @@ public class ArmorStandScreen extends Screen {
 					return true;
 				}
 			}
-		} else if (allowScrolling && yScroll < 0) {
+		} else if (allowScrolling && (xScroll < 0 || yScroll < 0)) {
 			//Remove 1 to the value
 			if (rotationTextField.canConsumeInput()) {
-				int previousValue = (int) (rotationTextField.getFloat() - (1 * multiplier));
+				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
 				rotationTextField.setValue(String.valueOf(previousValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -747,7 +678,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			if (sizeField.canConsumeInput()) {
-				float previousValue = (float) (sizeField.getFloat() - (double) (multiplier * sizeField.scrollMultiplier));
+				float previousValue = (float)(sizeField.getFloat() - (double)(multiplier * sizeField.scrollMultiplier));
 				previousValue = Math.clamp(previousValue, sizeField.minValue, sizeField.maxValue);
 				sizeField.setValue(String.valueOf(previousValue));
 				sizeField.setCursorPosition(0);
@@ -785,10 +716,7 @@ public class ArmorStandScreen extends Screen {
 				}
 			}
 		} else {
-			if (this.nameField.keyPressed(keyCode, scanCode, modifiers)) {
-				this.textFieldUpdated();
-				return true;
-			} else if (this.rotationTextField.keyPressed(keyCode, scanCode, modifiers)) {
+			if (this.rotationTextField.keyPressed(keyCode, scanCode, modifiers)) {
 				this.textFieldUpdated();
 				return true;
 			} else if (this.sizeField.keyPressed(keyCode, scanCode, modifiers)) {
@@ -818,8 +746,8 @@ public class ArmorStandScreen extends Screen {
 	protected CompoundTag writeFieldsToNBT() {
 		CompoundTag compound = new CompoundTag();
 		compound.putBoolean("Invisible", this.toggleButtons[0].getValue());
-		compound.putBoolean("NoBasePlate", !this.toggleButtons[1].getValue());
-		compound.putBoolean("NoGravity", !this.toggleButtons[2].getValue());
+		compound.putBoolean("NoBasePlate", this.toggleButtons[1].getValue());
+		compound.putBoolean("NoGravity", this.toggleButtons[2].getValue());
 		compound.putBoolean("ShowArms", this.toggleButtons[3].getValue());
 		compound.putBoolean("Small", this.toggleButtons[4].getValue());
 		compound.putBoolean("CustomNameVisible", this.toggleButtons[5].getValue());
@@ -827,35 +755,60 @@ public class ArmorStandScreen extends Screen {
 		compound.putInt("DisabledSlots", this.lockButton.isLocked() ? 4144959 : 0);
 		compound.putDouble("Scale", this.sizeField.getFloat());
 
-		compound.store("Rotation", Vec2.CODEC, new Vec2(this.rotationTextField.getFloat(), 0.0F)); //Yrot and XRot
+		ListTag rotationTag = new ListTag();
+		rotationTag.add(FloatTag.valueOf(this.rotationTextField.getFloat()));
+		compound.put("Rotation", rotationTag);
 
 		CompoundTag poseTag = new CompoundTag();
 
-		poseTag.store("Head", Rotations.CODEC, new Rotations(
-				this.poseTextFields[0].getFloat(), this.poseTextFields[1].getFloat(), this.poseTextFields[2].getFloat()));
+		ListTag poseHeadTag = new ListTag();
+		poseHeadTag.add(FloatTag.valueOf(this.poseTextFields[0].getFloat()));
+		poseHeadTag.add(FloatTag.valueOf(this.poseTextFields[1].getFloat()));
+		poseHeadTag.add(FloatTag.valueOf(this.poseTextFields[2].getFloat()));
+		poseTag.put("Head", poseHeadTag);
 
-		poseTag.store("Body", Rotations.CODEC, new Rotations(
-				this.poseTextFields[3].getFloat(), this.poseTextFields[4].getFloat(), this.poseTextFields[5].getFloat()));
+		ListTag poseBodyTag = new ListTag();
+		poseBodyTag.add(FloatTag.valueOf(this.poseTextFields[3].getFloat()));
+		poseBodyTag.add(FloatTag.valueOf(this.poseTextFields[4].getFloat()));
+		poseBodyTag.add(FloatTag.valueOf(this.poseTextFields[5].getFloat()));
+		poseTag.put("Body", poseBodyTag);
 
-		poseTag.store("LeftLeg", Rotations.CODEC, new Rotations(
-				this.poseTextFields[6].getFloat(), this.poseTextFields[7].getFloat(), this.poseTextFields[8].getFloat()));
+		ListTag poseLeftLegTag = new ListTag();
+		poseLeftLegTag.add(FloatTag.valueOf(this.poseTextFields[6].getFloat()));
+		poseLeftLegTag.add(FloatTag.valueOf(this.poseTextFields[7].getFloat()));
+		poseLeftLegTag.add(FloatTag.valueOf(this.poseTextFields[8].getFloat()));
+		poseTag.put("LeftLeg", poseLeftLegTag);
 
-		poseTag.store("RightLeg", Rotations.CODEC, new Rotations(
-				this.poseTextFields[9].getFloat(), this.poseTextFields[10].getFloat(), this.poseTextFields[11].getFloat()));
+		ListTag poseRightLegTag = new ListTag();
+		poseRightLegTag.add(FloatTag.valueOf(this.poseTextFields[9].getFloat()));
+		poseRightLegTag.add(FloatTag.valueOf(this.poseTextFields[10].getFloat()));
+		poseRightLegTag.add(FloatTag.valueOf(this.poseTextFields[11].getFloat()));
+		poseTag.put("RightLeg", poseRightLegTag);
 
-		poseTag.store("LeftArm", Rotations.CODEC, new Rotations(
-				this.poseTextFields[12].getFloat(), this.poseTextFields[13].getFloat(), this.poseTextFields[14].getFloat()));
+		ListTag poseLeftArmTag = new ListTag();
+		poseLeftArmTag.add(FloatTag.valueOf(this.poseTextFields[12].getFloat()));
+		poseLeftArmTag.add(FloatTag.valueOf(this.poseTextFields[13].getFloat()));
+		poseLeftArmTag.add(FloatTag.valueOf(this.poseTextFields[14].getFloat()));
+		poseTag.put("LeftArm", poseLeftArmTag);
 
-		poseTag.store("RightArm", Rotations.CODEC, new Rotations(
-				this.poseTextFields[15].getFloat(), this.poseTextFields[16].getFloat(), this.poseTextFields[17].getFloat()));
+		ListTag poseRightArmTag = new ListTag();
+		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[15].getFloat()));
+		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[16].getFloat()));
+		poseRightArmTag.add(FloatTag.valueOf(this.poseTextFields[17].getFloat()));
+		poseTag.put("RightArm", poseRightArmTag);
 
-		float offsetX = this.poseTextFields[18].getFloat();
-		float offsetY = this.poseTextFields[19].getFloat();
-		float offsetZ = this.poseTextFields[20].getFloat();
-		double offsetXDiff = offsetX - this.lastSendOffset.x;
-		double offsetYDiff = offsetY - this.lastSendOffset.y;
-		double offsetZDiff = offsetZ - this.lastSendOffset.z;
-		compound.store("Move", Vec3.CODEC, new Vec3(offsetXDiff, offsetYDiff, offsetZDiff));
+
+		var offsetX = this.poseTextFields[18].getFloat();
+		var offsetY = this.poseTextFields[19].getFloat();
+		var offsetZ = this.poseTextFields[20].getFloat();
+		var offsetXDiff = offsetX - this.lastSendOffset.x;
+		var offsetYDiff = offsetY - this.lastSendOffset.y;
+		var offsetZDiff = offsetZ - this.lastSendOffset.z;
+		ListTag positionOffset = new ListTag();
+		positionOffset.add(DoubleTag.valueOf(offsetXDiff));
+		positionOffset.add(DoubleTag.valueOf(offsetYDiff));
+		positionOffset.add(DoubleTag.valueOf(offsetZDiff));
+		compound.put("Move", positionOffset);
 		this.lastSendOffset = new Vec3(offsetX, offsetY, offsetZ);
 
 		compound.put("Pose", poseTag);
@@ -868,69 +821,68 @@ public class ArmorStandScreen extends Screen {
 		this.armorStandData.readFromNBT(armorStandTag);
 
 		// Set toggle buttons
-		this.toggleButtons[0].setValue(compound.getBooleanOr("Invisible", false));
-		this.toggleButtons[1].setValue(compound.getBooleanOr("NoBasePlate", false));
-		this.toggleButtons[2].setValue(compound.getBooleanOr("NoGravity", false));
-		this.toggleButtons[3].setValue(compound.getBooleanOr("ShowArms", false));
-		this.toggleButtons[4].setValue(compound.getBooleanOr("Small", false));
-		this.toggleButtons[5].setValue(compound.getBooleanOr("CustomNameVisible", false));
+		this.toggleButtons[0].setValue(compound.getBoolean("Invisible"));
+		this.toggleButtons[1].setValue(compound.getBoolean("NoBasePlate"));
+		this.toggleButtons[2].setValue(compound.getBoolean("NoGravity"));
+		this.toggleButtons[3].setValue(compound.getBoolean("ShowArms"));
+		this.toggleButtons[4].setValue(compound.getBoolean("Small"));
+		this.toggleButtons[5].setValue(compound.getBoolean("CustomNameVisible"));
 
 		// Set lock button
-		this.lockButton.setLocked(compound.getBooleanOr("Invulnerable", false));
+		this.lockButton.setLocked(compound.getBoolean("Invulnerable"));
 
 		// Set size field
-		this.sizeField.setValue(String.valueOf(compound.getDoubleOr("Scale", 1.0F)));
+		this.sizeField.setValue(String.valueOf(compound.getDouble("Scale")));
 
 		// Set rotation text field
-		Optional<Vec2> rotation = compound.read("Rotation", Vec2.CODEC);
-		if (rotation.isPresent()) {
-			this.rotationTextField.setValue(String.valueOf(rotation.get().x));
+		ListTag rotationTag = compound.getList("Rotation", 5); // 5 is the type for float
+		if (!rotationTag.isEmpty()) {
+			this.rotationTextField.setValue(String.valueOf(rotationTag.getFloat(0)));
 		}
 
 		// Set pose text fields
-		CompoundTag poseTag = compound.getCompoundOrEmpty("Pose");
+		CompoundTag poseTag = compound.getCompound("Pose");
 
-		Rotations poseHeadTag = poseTag.read("Head", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.x()));
-		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.y()));
-		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.z()));
+		ListTag poseHeadTag = poseTag.getList("Head", 5);
+		this.poseTextFields[0].setValue(String.valueOf(poseHeadTag.getFloat(0)));
+		this.poseTextFields[1].setValue(String.valueOf(poseHeadTag.getFloat(1)));
+		this.poseTextFields[2].setValue(String.valueOf(poseHeadTag.getFloat(2)));
 
-		Rotations poseBodyTag = poseTag.read("Body", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.x()));
-		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.y()));
-		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.z()));
+		ListTag poseBodyTag = poseTag.getList("Body", 5);
+		this.poseTextFields[3].setValue(String.valueOf(poseBodyTag.getFloat(0)));
+		this.poseTextFields[4].setValue(String.valueOf(poseBodyTag.getFloat(1)));
+		this.poseTextFields[5].setValue(String.valueOf(poseBodyTag.getFloat(2)));
 
-		Rotations poseLeftLegTag = poseTag.read("LeftLeg", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.x()));
-		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.y()));
-		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.z()));
+		ListTag poseLeftLegTag = poseTag.getList("LeftLeg", 5);
+		this.poseTextFields[6].setValue(String.valueOf(poseLeftLegTag.getFloat(0)));
+		this.poseTextFields[7].setValue(String.valueOf(poseLeftLegTag.getFloat(1)));
+		this.poseTextFields[8].setValue(String.valueOf(poseLeftLegTag.getFloat(2)));
 
-		Rotations poseRightLegTag = poseTag.read("RightLeg", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.x()));
-		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.y()));
-		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.z()));
+		ListTag poseRightLegTag = poseTag.getList("RightLeg", 5);
+		this.poseTextFields[9].setValue(String.valueOf(poseRightLegTag.getFloat(0)));
+		this.poseTextFields[10].setValue(String.valueOf(poseRightLegTag.getFloat(1)));
+		this.poseTextFields[11].setValue(String.valueOf(poseRightLegTag.getFloat(2)));
 
-		Rotations poseLeftArmTag = poseTag.read("LeftArm", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.x()));
-		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.y()));
-		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.z()));
+		ListTag poseLeftArmTag = poseTag.getList("LeftArm", 5);
+		this.poseTextFields[12].setValue(String.valueOf(poseLeftArmTag.getFloat(0)));
+		this.poseTextFields[13].setValue(String.valueOf(poseLeftArmTag.getFloat(1)));
+		this.poseTextFields[14].setValue(String.valueOf(poseLeftArmTag.getFloat(2)));
 
-		Rotations poseRightArmTag = poseTag.read("RightArm", Rotations.CODEC).orElse(new Rotations(0f, 0f, 0f)); // 5 is the type for float
-		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.x()));
-		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.y()));
-		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.z()));
+		ListTag poseRightArmTag = poseTag.getList("RightArm", 5);
+		this.poseTextFields[15].setValue(String.valueOf(poseRightArmTag.getFloat(0)));
+		this.poseTextFields[16].setValue(String.valueOf(poseRightArmTag.getFloat(1)));
+		this.poseTextFields[17].setValue(String.valueOf(poseRightArmTag.getFloat(2)));
 
 		// Set position offsets
-		Optional<Vec3> optionalOffset = compound.read("Move", Vec3.CODEC);
-		if (optionalOffset.isPresent()) {
-			Vec3 offset = optionalOffset.get();
-			this.poseTextFields[18].setValue(String.valueOf(offset.x() + this.lastSendOffset.x));
-			this.poseTextFields[19].setValue(String.valueOf(offset.y() + this.lastSendOffset.y));
-			this.poseTextFields[20].setValue(String.valueOf(offset.z() + this.lastSendOffset.z));
+		ListTag positionOffset = compound.getList("Move", 6); // 6 is the type for double
+		if (!positionOffset.isEmpty()) {
+			this.poseTextFields[18].setValue(String.valueOf(positionOffset.getDouble(0) + this.lastSendOffset.x));
+			this.poseTextFields[19].setValue(String.valueOf(positionOffset.getDouble(1) + this.lastSendOffset.y));
+			this.poseTextFields[20].setValue(String.valueOf(positionOffset.getDouble(2) + this.lastSendOffset.z));
 			this.lastSendOffset = new Vec3(
-					offset.x() + this.lastSendOffset.x,
-					offset.y() + this.lastSendOffset.y,
-					offset.z() + this.lastSendOffset.z
+					positionOffset.getDouble(0) + this.lastSendOffset.x,
+					positionOffset.getDouble(1) + this.lastSendOffset.y,
+					positionOffset.getDouble(2) + this.lastSendOffset.z
 			);
 		}
 	}

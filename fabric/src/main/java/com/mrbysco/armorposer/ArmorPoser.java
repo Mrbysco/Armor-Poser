@@ -1,12 +1,10 @@
 package com.mrbysco.armorposer;
 
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
 import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
@@ -55,18 +53,6 @@ public class ArmorPoser implements ModInitializer {
 				Entity entity = serverLevel.getEntity(swapData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
 					swapData.handleData(armorStandEntity);
-				}
-			});
-		});
-		PayloadTypeRegistry.playC2S().register(ArmorStandRenamePayload.ID, ArmorStandRenamePayload.CODEC);
-		ServerPlayNetworking.registerGlobalReceiver(ArmorStandRenamePayload.ID, (payload, context) -> {
-			final ServerLevel serverLevel = context.player().serverLevel();
-
-			RenameData renameData = payload.data();
-			context.player().server.execute(() -> {
-				Entity entity = serverLevel.getEntity(renameData.entityUUID());
-				if (entity instanceof ArmorStand armorStandEntity) {
-					renameData.handleData(armorStandEntity, context.player());
 				}
 			});
 		});

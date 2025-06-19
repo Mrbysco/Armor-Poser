@@ -1,13 +1,8 @@
 package com.mrbysco.armorposer.util;
 
-import com.mrbysco.armorposer.Reference;
-import net.minecraft.core.Rotations;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
-import net.minecraft.world.phys.Vec2;
-
-import java.util.Optional;
 
 public class ArmorStandData {
 	public boolean invisible = false;
@@ -26,8 +21,8 @@ public class ArmorStandData {
 	public boolean getBooleanValue(int index) {
 		return switch (index) {
 			case 0 -> this.invisible;
-			case 1 -> !this.noBasePlate;
-			case 2 -> !this.noGravity;
+			case 1 -> this.noBasePlate;
+			case 2 -> this.noGravity;
 			case 3 -> this.showArms;
 			case 4 -> this.small;
 			case 5 -> this.nameVisible;
@@ -38,33 +33,29 @@ public class ArmorStandData {
 
 
 	public void readFromNBT(CompoundTag compound) {
-		this.invisible = compound.getBooleanOr("Invisible", false);
-		this.noBasePlate = compound.getBooleanOr("NoBasePlate", false);
-		this.noGravity = compound.getBooleanOr("NoGravity", false);
-		this.showArms = compound.getBooleanOr("ShowArms", false);
-		this.small = compound.getBooleanOr("Small", false);
-		this.nameVisible = compound.getBooleanOr("CustomNameVisible", false);
-		this.locked = compound.getBooleanOr("Invulnerable", false);
+		this.invisible = compound.getBoolean("Invisible");
+		this.noBasePlate = compound.getBoolean("NoBasePlate");
+		this.noGravity = compound.getBoolean("NoGravity");
+		this.showArms = compound.getBoolean("ShowArms");
+		this.small = compound.getBoolean("Small");
+		this.nameVisible = compound.getBoolean("CustomNameVisible");
+		this.locked = compound.getBoolean("Invulnerable");
 
-		Optional<Vec2> rotation = compound.read("Rotation", Vec2.CODEC);
-		if (rotation.isPresent()) {
-			this.rotation = rotation.get().x;
+		if (compound.contains("Rotation")) {
+			this.rotation = compound.getList("Rotation", CompoundTag.TAG_FLOAT).getFloat(0);
 		}
 		if (compound.contains("Pose")) {
-			CompoundTag poseTag = compound.getCompoundOrEmpty("Pose");
-			if (poseTag.isEmpty()) {
-				Reference.LOGGER.warn("Pose tag is empty, skipping pose data");
-				return;
-			}
+			CompoundTag poseTag = compound.getCompound("Pose");
 
 			String[] keys = new String[]{"Head", "Body", "LeftLeg", "RightLeg", "LeftArm", "RightArm"};
 			for (int i = 0; i < keys.length; i++) {
 				String key = keys[i];
-				if (poseTag.contains(key)) {
-					Rotations rotations = poseTag.read(key, Rotations.CODEC).orElse(new Rotations(0, 0, 0));
-					this.pose[i * 3] = rotations.x();
-					this.pose[(i * 3) + 1] = rotations.y();
-					this.pose[(i * 3) + 2] = rotations.z();
+				if (poseTag != null && poseTag.contains(key)) {
+					ListTag tagList = poseTag.getList(key, CompoundTag.TAG_FLOAT);
+					for (int j = 0; j <= 2; j++) {
+						int k = (i * 3) + j;
+						this.pose[k] = tagList.getFloat(j);
+					}
 				}
 			}
 		}
@@ -81,7 +72,9 @@ public class ArmorStandData {
 		compound.putBoolean("Invulnerable", this.locked);
 		compound.putInt("DisabledSlots", this.locked ? 4144959 : 0);
 
-		compound.store("Rotation", Vec2.CODEC, new Vec2(this.rotation, 0));
+		ListTag rotationTag = new ListTag();
+		rotationTag.add(FloatTag.valueOf(this.rotation));
+		compound.put("Rotation", rotationTag);
 
 		CompoundTag poseTag = new CompoundTag();
 

@@ -14,11 +14,11 @@ public record ArmorStandSwapPayload(SwapData data) implements CustomPacketPayloa
 	public static final Type<ArmorStandSwapPayload> ID = new Type<>(Reference.SWAP_PACKET_ID);
 
 	public ArmorStandSwapPayload(final FriendlyByteBuf packetBuffer) {
-		this(SwapData.STREAM_CODEC.decode(packetBuffer));
+		this(SwapData.read(packetBuffer));
 	}
 
 	public void write(FriendlyByteBuf buf) {
-		SwapData.STREAM_CODEC.encode(buf, data());
+		data.write(buf);
 	}
 
 	@Override

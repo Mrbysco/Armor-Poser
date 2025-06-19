@@ -28,7 +28,7 @@ public class ArmorGlowScreen extends Screen {
 	private Button locateButton;
 	private Button modifyButton;
 
-	public final ArmorStandScreen parentScreen;
+	public ArmorStandScreen parentScreen;
 
 	public ArmorGlowScreen(ArmorStandScreen parent) {
 		super(Component.translatable("armorposer.gui.armor_list.list"));

@@ -19,11 +19,6 @@ public interface IPlatformHelper {
 	void swapSlots(ArmorStand armorStand, SwapData.Action action);
 
 	/**
-	 * Update Armor Stand Name
-	 */
-	void renameArmorStand(ArmorStand armorStand, String newName);
-
-	/**
 	 * Allow scrolling to increase/decrease the angle of text fields
 	 */
 	boolean allowScrolling();

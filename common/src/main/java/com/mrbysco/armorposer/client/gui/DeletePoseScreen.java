@@ -10,6 +10,7 @@ import net.minecraft.network.chat.Component;
 
 public class DeletePoseScreen extends Screen {
 	private final ArmorStandScreen parentScreen;
+	private Button deleteButton;
 	private final PoseListWidget.ListEntry entry;
 	private final Component warning = Component.translatable("armorposer.gui.delete_poose.message");
 
@@ -21,7 +22,7 @@ public class DeletePoseScreen extends Screen {
 
 	@Override
 	protected void init() {
-		this.addRenderableWidget(Button.builder(CommonComponents.GUI_YES, (button) -> {
+		this.addRenderableWidget(this.deleteButton = Button.builder(CommonComponents.GUI_YES, (button) -> {
 			Reference.removePose(entry.rawName());
 			this.minecraft.setScreen(parentScreen);
 		}).bounds(this.width / 2 - 66, this.height / 2 + 3, 60, 20).build());

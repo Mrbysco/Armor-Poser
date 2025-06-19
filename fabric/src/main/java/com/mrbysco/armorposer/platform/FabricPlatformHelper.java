@@ -2,10 +2,8 @@ package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
 import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
 import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
@@ -33,12 +31,6 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
 		SwapData data = new SwapData(armorStand.getUUID(), action);
 		ClientPlayNetworking.send(new ArmorStandSwapPayload(data));
-	}
-
-	@Override
-	public void renameArmorStand(ArmorStand armorStand, String newName) {
-		RenameData data = new RenameData(armorStand.getUUID(), newName);
-		ClientPlayNetworking.send(new ArmorStandRenamePayload(data));
 	}
 
 	@Override

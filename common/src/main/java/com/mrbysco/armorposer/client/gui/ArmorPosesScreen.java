@@ -52,7 +52,7 @@ public class ArmorPosesScreen extends Screen {
 	private boolean sorted = false;
 	private SortType sortType = SortType.NORMAL;
 
-	public final ArmorStandScreen parentScreen;
+	public ArmorStandScreen parentScreen;
 
 	public ArmorPosesScreen(ArmorStandScreen parent) {
 		super(Component.translatable("armorposer.gui.poses.title"));

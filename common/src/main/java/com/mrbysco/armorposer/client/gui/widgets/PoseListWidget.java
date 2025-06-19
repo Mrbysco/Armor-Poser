@@ -10,13 +10,14 @@ import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.EntitySpawnReason;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.decoration.ArmorStand;
 import net.minecraft.world.level.Level;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
+
+import java.util.function.Function;
 
 public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry> {
 	private static final Vector3f ARMOR_STAND_TRANSLATION = new Vector3f();
@@ -36,7 +37,7 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 	}
 
 	@Override
-	protected int scrollBarX() {
+	protected int getScrollbarPosition() {
 		return this.getX() + this.listWidth - 6;
 	}
 
@@ -84,24 +85,23 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 			Level level = mc.hasSingleplayerServer() && mc.getSingleplayerServer() != null ? mc.getSingleplayerServer().getAllLevels().iterator().next() : mc.level;
 			if (level != null) {
 				try {
-					CompoundTag tag = TagParser.parseCompoundFully(entry.pose().data()); 
+					CompoundTag tag = TagParser.parseTag(entry.pose().data());
 
 					CompoundTag nbt = new CompoundTag();
 					nbt.putString("id", "minecraft:armor_stand");
 					if (!tag.isEmpty()) {
 						nbt.merge(tag);
 					}
-					this.cachedEntity = (ArmorStand)EntityType.loadEntityRecursive(nbt, level, EntitySpawnReason.LOAD, entity -> {
-						if (entity instanceof ArmorStand stand) {
-							stand.setNoBasePlate(true);
-							stand.setShowArms(true);
-							stand.yBodyRot = 210.0F;
-							stand.setXRot(25.0F);
-							stand.yHeadRot = stand.getYRot();
-							stand.yHeadRotO = stand.getYRot();
-						}
-						return entity;
-					});
+					ArmorStand armorStand = (ArmorStand) EntityType.loadEntityRecursive(nbt, level, Function.identity());
+					if (armorStand != null) {
+						armorStand.setNoBasePlate(true);
+						armorStand.setShowArms(true);
+						armorStand.yBodyRot = 210.0F;
+						armorStand.setXRot(25.0F);
+						armorStand.yHeadRot = armorStand.getYRot();
+						armorStand.yHeadRotO = armorStand.getYRot();
+						this.cachedEntity = armorStand;
+					}
 				} catch (Exception e) {
 					Reference.LOGGER.error("Unable to parse nbt pose {}", e.getMessage());
 				}

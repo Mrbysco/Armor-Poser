@@ -19,7 +19,7 @@ public record PoseEntry(PoseData pose, boolean userAdded) implements Comparable<
 
 	public CompoundTag getTag() {
 		try {
-			return TagParser.parseCompoundFully(pose().data());
+			return TagParser.parseTag(pose().data());
 		} catch (CommandSyntaxException e) {
 			return null;
 		}

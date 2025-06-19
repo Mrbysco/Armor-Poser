@@ -30,7 +30,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 	}
 
 	@Override
-	protected int scrollBarX() {
+	protected int getScrollbarPosition() {
 		return this.getX() + this.listWidth - 6;
 	}
 
@@ -69,7 +69,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 			this.armorStand = armorStand;
 			this.parent = parent;
 			this.scale = armorStand.getScale();
-			this.showPlate = armorStand.showBasePlate();
+			this.showPlate = !armorStand.isNoBasePlate();
 			this.locked = armorStand.isInvulnerable();
 		}
 
@@ -84,18 +84,14 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 				guiGraphics.renderTooltip(font, component, mouseX, mouseY);
 			}
 
-			renderPose(guiGraphics, left + 16, top + 28, (1.0f / scale) * 15);
+			renderPose(guiGraphics, left + 16, top + 28, 15);
 		}
 
 		public ArmorStand getArmorStand() {
 			return armorStand;
 		}
 
-		public boolean isLocked() {
-			return locked;
-		}
-
-		public void renderPose(GuiGraphics guiGraphics, int xPos, int yPos, float size) {
+		public void renderPose(GuiGraphics guiGraphics, int xPos, int yPos, int size) {
 			if (armorStand != null) {
 				InventoryScreen.renderEntityInInventory(guiGraphics, xPos, yPos, size,
 						ARMOR_STAND_TRANSLATION, ARMOR_STAND_ANGLE, (Quaternionf) null, this.armorStand);

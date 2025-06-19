@@ -1,1 +1,1 @@
-* Fix lock state showing incorrectly (Thank you Sekwah for the PR)
+* Backport fix for lock state showing incorrectly (Thank you Sekwah for the PR)

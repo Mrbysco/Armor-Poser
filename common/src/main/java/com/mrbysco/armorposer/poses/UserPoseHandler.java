@@ -19,7 +19,13 @@ public class UserPoseHandler {
 		if (!PRESET_FOLDER.exists() || !PRESET_FILE.exists()) {
 			PRESET_FOLDER.mkdirs();
 
-			savePoses();
+			UserPoses userPresets = new UserPoses(Reference.userPoses);
+			try (FileWriter writer = new FileWriter(PRESET_FILE)) {
+				GSON.toJson(userPresets, writer);
+				writer.flush();
+			} catch (IOException e) {
+				Reference.LOGGER.error("Failed to user presets {}", e.getMessage());
+			}
 		}
 	}
 
@@ -28,16 +34,12 @@ public class UserPoseHandler {
 			PRESET_FOLDER.mkdirs();
 		}
 
-		savePoses();
-	}
-
-	private static void savePoses() {
 		UserPoses userPresets = new UserPoses(Reference.userPoses);
 		try (FileWriter writer = new FileWriter(PRESET_FILE)) {
 			GSON.toJson(userPresets, writer);
 			writer.flush();
 		} catch (IOException e) {
-			Reference.LOGGER.error("Failed to write user presets {}", e.getMessage());
+			Reference.LOGGER.error("Failed to user presets {}", e.getMessage());
 		}
 	}
 

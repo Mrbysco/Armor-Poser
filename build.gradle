@@ -1,7 +1,7 @@
 plugins {
     // Required for NeoGradle
     id "org.jetbrains.gradle.plugin.idea-ext" version "1.1.7"
-    id "net.darkhax.curseforgegradle" version "1.1.26" apply(false)
+    id "net.darkhax.curseforgegradle" version "1.1.25" apply(false)
     id "com.modrinth.minotaur" version "2.+" apply(false)
 }
 
@@ -52,7 +52,7 @@ subprojects {
     }
 
     processResources {
-        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'neoforge.mods.toml', '*.mixins.json']) {
+        filesMatching(['pack.mcmeta', 'fabric.mod.json', 'mods.toml', '*.mixins.json']) {
             expand project.properties
         }
     }
