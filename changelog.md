@@ -1,1 +1,1 @@
-* Fix lock state showing incorrectly (Thank you Sekwah for the PR)
+* Add/update pt_br and ja_jp translations (Courtesy to seriousfreezing and PExPE3 on github)
