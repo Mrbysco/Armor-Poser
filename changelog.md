@@ -1,4 +1,2 @@
-* Initial update to 1.21.6
-
-### Due to GUI rendering changes in 1.21.6, the following changes were made:
-* In the poses screen and the nearby list only the currently selected pose has it's armor stand preview rendered.
+* Fix pose saving / deletion crashing the game
+* Add/update pt_br and ja_jp translations (Courtesy to seriousfreezing and PExPE3 on github)
