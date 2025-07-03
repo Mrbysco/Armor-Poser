@@ -1,1 +1,1 @@
-* Backport fix for lock state showing incorrectly (Thank you Sekwah for the PR)
+* Update pt_br translation
