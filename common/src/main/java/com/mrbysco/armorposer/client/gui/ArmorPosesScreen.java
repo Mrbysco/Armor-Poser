@@ -37,7 +37,7 @@ public class ArmorPosesScreen extends Screen {
 	private static final int PADDING = 6;
 
 	private final PoseListWidget[] poseListWidget = new PoseListWidget[2];
-	private PoseListWidget.ListEntry selected = null;
+	protected PoseListWidget.ListEntry selected = null;
 	private List<PoseEntry> poses;
 	private final List<PoseEntry> unsortedPoses;
 	private List<PoseEntry> userPoses;
@@ -53,11 +53,12 @@ public class ArmorPosesScreen extends Screen {
 	private SortType sortType = SortType.NORMAL;
 
 	public final ArmorStandScreen parentScreen;
+	private final DeletePoseScreen deletePoseScreen;
 
 	public ArmorPosesScreen(ArmorStandScreen parent) {
 		super(Component.translatable("armorposer.gui.poses.title"));
 		this.parentScreen = parent;
-
+		this.deletePoseScreen = new DeletePoseScreen(this);
 		//Add default poses
 		List<PoseEntry> rawPoses = Reference.defaultPoseMap.entrySet().stream()
 				.map(entry -> new PoseEntry(entry.getKey(), entry.getValue(), false)).collect(Collectors.toList());
@@ -223,7 +224,7 @@ public class ArmorPosesScreen extends Screen {
 	public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
 		if (keyCode == GLFW.GLFW_KEY_DELETE) {
 			if (selected != null && selected.userAdded()) {
-				this.minecraft.setScreen(new DeletePoseScreen(this.parentScreen, selected));
+				this.minecraft.setScreen(this.deletePoseScreen);
 			}
 		}
 		if (this.poseListWidget[0].keyPressed(keyCode, scanCode, modifiers)) {

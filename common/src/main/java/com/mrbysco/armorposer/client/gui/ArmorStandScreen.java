@@ -63,6 +63,7 @@ public class ArmorStandScreen extends Screen {
 	);
 	private final ArmorStand entityArmorStand;
 	private final ArmorStandData armorStandData;
+	private final SavePoseScreen savePoseScreen;
 
 	private final String[] buttonLabels = new String[]{"invisible", "base_plate", "gravity", "show_arms", "small", "name_visible", "rotation", "scale"};
 	private final String[] sliderLabels = new String[]{"head", "body", "left_leg", "right_leg", "left_arm", "right_arm", "position"};
@@ -108,6 +109,7 @@ public class ArmorStandScreen extends Screen {
 
 		this.allowScrolling = Services.PLATFORM.allowScrolling();
 		this.version = Services.PLATFORM.getModVersion();
+		this.savePoseScreen = new SavePoseScreen(this);
 	}
 
 	@Override
@@ -252,7 +254,7 @@ public class ArmorStandScreen extends Screen {
 			}
 		}).bounds(offsetX + 44, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.paste"))).build());
 		this.addRenderableWidget(Button.builder(Component.translatable("armorposer.gui.label.save"), (button) -> {
-			this.minecraft.setScreen(new SavePoseScreen(this));
+			this.minecraft.setScreen(this.savePoseScreen);
 		}).bounds(offsetX + 88, offsetY + 22, 42, 20).tooltip(Tooltip.create(Component.translatable("armorposer.gui.tooltip.save"))).build());
 
 		offsetX = this.width - 20;
