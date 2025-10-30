@@ -71,6 +71,8 @@
   "armorposer.gui.poses.user": "User Poses",
   "armorposer.gui.save_pose.title": "Save pose",
   "armorposer.gui.title": "Armor Stand",
+  "armorposer.gui.tooltip.base_plate": "Toggle base plate",
+  "armorposer.gui.tooltip.gravity": "Toggle gravity",
   "armorposer.gui.tooltip.block": "Align held block, so it appears on the surface",
   "armorposer.gui.tooltip.copy": "Copy the current pose to the clipboard",
   "armorposer.gui.tooltip.invisible": "Toggle invisibility",
