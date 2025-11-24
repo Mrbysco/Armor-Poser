@@ -1,1 +1,1 @@
-* Update pt_br translation
+* Adjust networking to hopefully negate a rare crash
