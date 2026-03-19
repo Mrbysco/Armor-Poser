@@ -32,7 +32,7 @@ public class ArmorStandSyncMessage {
 				final ServerLevel serverLevel = ctx.getSender().serverLevel();
 				Entity entity = serverLevel.getEntity(data.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
-					data.handleData(armorStandEntity);
+					data.handleData(armorStandEntity, ctx.getSender());
 				}
 			}
 		});

@@ -31,7 +31,7 @@ public class ArmorPoser implements ModInitializer {
 			server.execute(() -> {
 				Entity entity = world.getEntity(syncData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
-					syncData.handleData(armorStandEntity);
+					syncData.handleData(armorStandEntity, player);
 				}
 			});
 		});
@@ -45,7 +45,7 @@ public class ArmorPoser implements ModInitializer {
 			server.execute(() -> {
 				Entity entity = world.getEntity(swapData.entityUUID());
 				if (entity instanceof ArmorStand armorStandEntity) {
-					swapData.handleData(armorStandEntity);
+					swapData.handleData(armorStandEntity, player);
 				}
 			});
 		});
