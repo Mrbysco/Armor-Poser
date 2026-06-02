@@ -58,7 +58,9 @@ public class ArmorPoser implements ModInitializer {
 		});
 
 		EntityTrackingEvents.START_TRACKING.register(((entity, player) -> {
-			ServerPlayNetworking.send(player, new ArmorStandLockedPayload(entity.getId(), entity.isInvulnerable()));
+			if (entity instanceof ArmorStand armorStand) {
+				ServerPlayNetworking.send(player, new ArmorStandLockedPayload(armorStand.getId(), armorStand.isInvulnerable()));
+			}
 		}));
 	}
 }
