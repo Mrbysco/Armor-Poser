@@ -1,1 +1,1 @@
-* Adjust networking to hopefully negate a rare crash
+* Adjust scrolling code
