@@ -3,7 +3,7 @@ name: Build and Publish
 on: [push, workflow_dispatch]
 
 env:
-  JDK_VERSION: 25
+  JDK_VERSION: 21
 
 jobs:
   build:
