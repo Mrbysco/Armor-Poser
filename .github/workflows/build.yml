@@ -1,17 +1,20 @@
-name: Build and Maven
+name: Build and Publish
 
 on: [push, workflow_dispatch]
+
+env:
+  JDK_VERSION: 25
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - name: Set up JDK 21
+      - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
-          java-version: 21
+          java-version: ${{ env.JDK_VERSION }}
           cache: 'gradle'
       - name: Make gradlew executable
         run: chmod +x ./gradlew
@@ -19,24 +22,75 @@ jobs:
         run: ./gradlew build
       - uses: actions/upload-artifact@v5
         with:
-          name: NeoForgeArtifact
-          path: ./forge/build/libs/*.jar
-      - uses: actions/upload-artifact@v5
+          name: build-output
+          path: |
+            ./forge/build/libs/*.jar
+            ./fabric/build/libs/*.jar
+
+  publish-maven:
+    needs: build
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[push]') || contains(github.event.head_commit.message, '[build]')
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK ${{ env.JDK_VERSION }}
+        uses: actions/setup-java@v5
         with:
-          name: FabricArtifact
-          path: ./fabric/build/libs/*.jar
+          distribution: 'temurin'
+          java-version: ${{ env.JDK_VERSION }}
+          cache: 'gradle'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - uses: actions/download-artifact@v5
+        with:
+          name: build-output
+          path: ./
       - name: Publish to maven
-        if: contains(github.event.head_commit.message, '[push]') || contains(github.event.head_commit.message, '[build]')
         env:
           SAP_SECRET: ${{ secrets.SAP_SECRET }}
         run: ./gradlew publish
+
+  publish-curseforge:
+    needs: build
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[curseforge]')
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK ${{ env.JDK_VERSION }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JDK_VERSION }}
+          cache: 'gradle'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - uses: actions/download-artifact@v5
+        with:
+          name: build-output
+          path: ./
       - name: Publish To Curseforge
-        if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[curseforge]')
         env:
           CURSEFORGE_KEY: ${{ secrets.CURSEFORGE_KEY }}
         run: ./gradlew curseforge --stacktrace
+
+  publish-modrinth:
+    needs: build
+    runs-on: ubuntu-latest
+    if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[modrinth]')
+    steps:
+      - uses: actions/checkout@v5
+      - name: Set up JDK ${{ env.JDK_VERSION }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: ${{ env.JDK_VERSION }}
+          cache: 'gradle'
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
+      - uses: actions/download-artifact@v5
+        with:
+          name: build-output
       - name: Publish To Modrinth
-        if: contains(github.event.head_commit.message, '[publish]') || contains(github.event.head_commit.message, '[modrinth]')
         env:
           MODRINTH_KEY: ${{ secrets.MODRINTH_KEY }}
         run: ./gradlew modrinth --stacktrace
