@@ -3,7 +3,10 @@ package com.mrbysco.armorposer.client.gui.widgets;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import org.apache.commons.lang3.math.NumberUtils;
+
+import java.util.Locale;
 
 public class NumberFieldBox extends EditBox {
 
@@ -42,12 +45,16 @@ public class NumberFieldBox extends EditBox {
 		if (value.isEmpty()) {
 			super.setValue("0");
 		} else {
-			super.setValue(String.format(("%." + decimalPoints + "f"), Float.parseFloat(value)));
+			super.setValue(String.format(Locale.ROOT, ("%." + decimalPoints + "f"), Float.parseFloat(value)));
 		}
 	}
 
 	public float getFloat() {
 		return NumberUtils.toFloat(super.getValue(), 0.0F);
+	}
+
+	public int getInt() {
+		return Mth.ceil(getFloat());
 	}
 
 	@Override

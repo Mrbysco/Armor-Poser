@@ -638,10 +638,10 @@ public class ArmorStandScreen extends Screen {
 	@Override
 	public boolean mouseScrolled(double mouseX, double mouseY, double xScroll, double yScroll) {
 		var multiplier = Screen.hasShiftDown() ? 10.0f : 1.0f;
-		if (allowScrolling && (xScroll > 0 || yScroll > 0)) {
+		if (allowScrolling && yScroll > 0) {
 			//Add 1 to the value
 			if (rotationTextField.canConsumeInput()) {
-				float nextValue = (rotationTextField.getFloat() + multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
+				int nextValue = (int) (rotationTextField.getFloat() + (1 * multiplier));
 				rotationTextField.setValue(String.valueOf(nextValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -649,7 +649,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			if (sizeField.canConsumeInput()) {
-				float nextValue = (float)(sizeField.getFloat() + (double)(multiplier * sizeField.scrollMultiplier));
+				float nextValue = (float) (sizeField.getFloat() + (double) (multiplier * sizeField.scrollMultiplier));
 				nextValue = Math.clamp(nextValue, sizeField.minValue, sizeField.maxValue);
 				sizeField.setValue(String.valueOf(nextValue));
 				sizeField.setCursorPosition(0);
@@ -667,10 +667,10 @@ public class ArmorStandScreen extends Screen {
 					return true;
 				}
 			}
-		} else if (allowScrolling && (xScroll < 0 || yScroll < 0)) {
+		} else if (allowScrolling && yScroll < 0) {
 			//Remove 1 to the value
 			if (rotationTextField.canConsumeInput()) {
-				float previousValue = (rotationTextField.getFloat() - multiplier * rotationTextField.scrollMultiplier) % rotationTextField.modValue;
+				int previousValue = (int) (rotationTextField.getFloat() - (1 * multiplier));
 				rotationTextField.setValue(String.valueOf(previousValue));
 				rotationTextField.setCursorPosition(0);
 				rotationTextField.setHighlightPos(0);
@@ -678,7 +678,7 @@ public class ArmorStandScreen extends Screen {
 				return true;
 			}
 			if (sizeField.canConsumeInput()) {
-				float previousValue = (float)(sizeField.getFloat() - (double)(multiplier * sizeField.scrollMultiplier));
+				float previousValue = (float) (sizeField.getFloat() - (double) (multiplier * sizeField.scrollMultiplier));
 				previousValue = Math.clamp(previousValue, sizeField.minValue, sizeField.maxValue);
 				sizeField.setValue(String.valueOf(previousValue));
 				sizeField.setCursorPosition(0);
