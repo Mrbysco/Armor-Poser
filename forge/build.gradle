@@ -3,7 +3,7 @@ plugins {
     id 'eclipse'
     id 'idea'
     id 'maven-publish'
-    id "net.neoforged.moddev" version "2.0.143"
+    id "net.neoforged.moddev" version "2.0.146"
     id 'net.darkhax.curseforgegradle'
     id 'com.modrinth.minotaur'
 }
