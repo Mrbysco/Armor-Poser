@@ -1,1 +1,1 @@
-* Fix an issue where clients without the mod would crash connecting to servers with the mod server-side (NeoForge)
+* Update to 26.3
