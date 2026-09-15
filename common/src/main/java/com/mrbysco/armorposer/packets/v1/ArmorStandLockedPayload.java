@@ -1,4 +1,4 @@
-package com.mrbysco.armorposer.packets;
+package com.mrbysco.armorposer.packets.v1;
 
 import com.mrbysco.armorposer.Reference;
 import net.minecraft.network.FriendlyByteBuf;
@@ -13,7 +13,7 @@ public record ArmorStandLockedPayload(int entityID, boolean isLocked) implements
 			ByteBufCodecs.BOOL,
 			ArmorStandLockedPayload::isLocked,
 			ArmorStandLockedPayload::new);
-	public static final Type<ArmorStandLockedPayload> ID = new Type<>(Reference.LOCKED_PACKET_ID);
+	public static final Type<ArmorStandLockedPayload> ID = new Type<>(Reference.LOCKED_PACKET_ID_V1);
 
 	@Override
 	public Type<? extends CustomPacketPayload> type() {

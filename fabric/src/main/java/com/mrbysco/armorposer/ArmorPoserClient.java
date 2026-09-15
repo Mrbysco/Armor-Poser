@@ -3,9 +3,9 @@ package com.mrbysco.armorposer;
 import com.mrbysco.armorposer.client.GroupHelper;
 import com.mrbysco.armorposer.client.debug.DebugHandler;
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
-import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandLockedPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandScreenPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncGroupsPayload;
 import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
@@ -44,7 +44,7 @@ public class ArmorPoserClient implements ClientModInitializer {
 				entity = mc.level.getEntity(entityID);
 			}
 			if (entity instanceof ArmorStand armorStandEntity) {
-				armorStandEntity.setInvulnerable(payload.isLocked());
+				armorStandEntity.setPermanentlyInvulnerable(payload.isLocked());
 			}
 		});
 

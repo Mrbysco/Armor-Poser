@@ -9,7 +9,7 @@ version="${file.jarVersion}"
 displayName="Armor Poser"
 displayURL="https://www.curseforge.com/minecraft/mc-mods/armor-poser"
 authors="Mrbysco, ShyNieke"
-logoFile="icon.png"
+iconFile="icon.png"
 credits="crazysnailboy for the original mod"
 description='''
 A GUI to allow configuration of Armor Stand properties
@@ -17,13 +17,13 @@ A GUI to allow configuration of Armor Stand properties
 [[dependencies.armorposer]]
 modId="minecraft"
 type="required"
-versionRange="[26.2,)"
+versionRange="[26.3,)"
 ordering="NONE"
 side="BOTH"
 [[dependencies.armorposer]]
 modId="neoforge"
 type="required"
-versionRange="[26.2.0.43-beta,)"
+versionRange="[26.3.0.0-beta,)"
 ordering="NONE"
 side="BOTH"
 [[mixins]]

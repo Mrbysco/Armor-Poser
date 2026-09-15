@@ -1,4 +1,4 @@
-package com.mrbysco.armorposer.packets;
+package com.mrbysco.armorposer.packets.v1;
 
 import com.mrbysco.armorposer.Reference;
 import net.minecraft.core.UUIDUtil;
@@ -19,7 +19,7 @@ public record ArmorStandSyncGroupsPayload(Map<UUID, List<String>> groupData) imp
 			ArmorStandSyncGroupsPayload::new
 	);
 
-	public static final Type<ArmorStandSyncGroupsPayload> ID = new Type<>(Reference.SYNC_GROUP_PACKET_ID);
+	public static final Type<ArmorStandSyncGroupsPayload> ID = new Type<>(Reference.SYNC_GROUP_PACKET_ID_V1);
 
 	@Override
 	public Type<? extends CustomPacketPayload> type() {

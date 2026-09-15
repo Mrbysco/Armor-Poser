@@ -6,13 +6,13 @@ import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
 import com.mrbysco.armorposer.handlers.EventHandler;
-import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
-import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncGroupsPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
-import com.mrbysco.armorposer.packets.ArmorStandUpdateGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandLockedPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandRenamePayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandScreenPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandUpdateGroupsPayload;
 import fuzs.forgeconfigapiport.fabric.api.v5.ConfigRegistry;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.player.UseItemCallback;
@@ -86,7 +86,8 @@ public class ArmorPoser implements ModInitializer {
 		});
 
 		EntityTrackingEvents.START_TRACKING.register(((entity, player) -> {
-			ServerPlayNetworking.send(player, new ArmorStandLockedPayload(entity.getId(), entity.isInvulnerable()));
+			if (ServerPlayNetworking.canSend(player, Reference.LOCKED_PACKET_ID_V1))
+				ServerPlayNetworking.send(player, new ArmorStandLockedPayload(entity.getId(), entity.isInvulnerable()));
 		}));
 	}
 }

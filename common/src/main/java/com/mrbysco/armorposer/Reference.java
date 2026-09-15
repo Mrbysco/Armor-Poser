@@ -37,13 +37,13 @@ public class Reference {
 		return Identifier.fromNamespaceAndPath(MOD_ID, path);
 	}
 
-	public static final Identifier SYNC_PACKET_ID = modLoc("sync_packet");
-	public static final Identifier SWAP_PACKET_ID = modLoc("swap_packet");
-	public static final Identifier RENAME_PACKET_ID = modLoc("rename_packet");
-	public static final Identifier SCREEN_PACKET_ID = modLoc("screen_packet");
-	public static final Identifier LOCKED_PACKET_ID = modLoc("locked_packet");
-	public static final Identifier UPDATE_GROUP_PACKET_ID = modLoc("update_group_packet");
-	public static final Identifier SYNC_GROUP_PACKET_ID = modLoc("sync_group_packet");
+	public static final Identifier SYNC_PACKET_ID_V1 = modLoc("sync_packet/v1");
+	public static final Identifier SWAP_PACKET_ID_V1 = modLoc("swap_packet/v1");
+	public static final Identifier RENAME_PACKET_ID_V1 = modLoc("rename_packet/v1");
+	public static final Identifier SCREEN_PACKET_ID_V1 = modLoc("screen_packet/v1");
+	public static final Identifier LOCKED_PACKET_ID_V1 = modLoc("locked_packet/v1");
+	public static final Identifier UPDATE_GROUP_PACKET_ID_V1 = modLoc("update_group_packet/v1");
+	public static final Identifier SYNC_GROUP_PACKET_ID_V1 = modLoc("sync_group_packet/v1");
 
 	public static final Vector3f ARMOR_STAND_TRANSLATION = new Vector3f();
 	public static final Quaternionf ARMOR_STAND_ANGLE = new Quaternionf().rotationXYZ(0.43633232F, 0.0F, (float) Math.PI);

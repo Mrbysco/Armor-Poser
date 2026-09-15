@@ -1,4 +1,4 @@
-package com.mrbysco.armorposer.packets;
+package com.mrbysco.armorposer.packets.v1;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
@@ -21,7 +21,7 @@ public record ArmorStandScreenPayload(int entityID, List<String> disabledFeature
 			ByteBufCodecs.DOUBLE,
 			ArmorStandScreenPayload::maxScale,
 			ArmorStandScreenPayload::new);
-	public static final Type<ArmorStandScreenPayload> ID = new Type<>(Reference.SCREEN_PACKET_ID);
+	public static final Type<ArmorStandScreenPayload> ID = new Type<>(Reference.SCREEN_PACKET_ID_V1);
 
 	public ArmorStandScreenPayload(int entityID, List<String> disabledFeatures) {
 		this(entityID, disabledFeatures, PoserConfig.COMMON.minScale.getAsDouble(), PoserConfig.COMMON.maxScale.getAsDouble());

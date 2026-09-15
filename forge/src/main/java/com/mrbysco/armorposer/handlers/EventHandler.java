@@ -2,9 +2,9 @@ package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
-import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandLockedPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandScreenPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncGroupsPayload;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -30,11 +30,11 @@ public class EventHandler {
 			final Level level = event.getLevel();
 			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
 				if (event.getHand() == InteractionHand.MAIN_HAND && player instanceof ServerPlayer serverPlayer) {
-					if (serverPlayer.connection.hasChannel(ArmorStandLockedPayload.ID))
+					if (serverPlayer.connection.hasChannel(Reference.LOCKED_PACKET_ID_V1))
 						PacketDistributor.sendToPlayer(serverPlayer, new ArmorStandLockedPayload(armorstand.getId(), armorstand.isInvulnerable()));
-					if (serverPlayer.connection.hasChannel(ArmorStandScreenPayload.ID))
+					if (serverPlayer.connection.hasChannel(Reference.SCREEN_PACKET_ID_V1))
 						PacketDistributor.sendToPlayer(serverPlayer, new ArmorStandScreenPayload(armorstand.getId(), Reference.getRestrictedFeatures(player)));
-					if (serverPlayer.connection.hasChannel(ArmorStandSyncGroupsPayload.ID))
+					if (serverPlayer.connection.hasChannel(Reference.SYNC_GROUP_PACKET_ID_V1))
 						PacketDistributor.sendToPlayer(serverPlayer, new ArmorStandSyncGroupsPayload(Reference.getNearbyGroups(player)));
 				}
 				event.setCanceled(true);
@@ -66,7 +66,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public static void playerTracking(PlayerEvent.StartTracking event) {
 		if (event.getEntity() instanceof ServerPlayer serverPlayer && event.getTarget() instanceof ArmorStand armorStand) {
-			if (serverPlayer.connection.hasChannel(ArmorStandLockedPayload.ID))
+			if (serverPlayer.connection.hasChannel(Reference.LOCKED_PACKET_ID_V1))
 				PacketDistributor.sendToPlayer(serverPlayer, new ArmorStandLockedPayload(armorStand.getId(), armorStand.isInvulnerable()));
 		}
 	}

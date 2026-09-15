@@ -5,10 +5,10 @@ import com.mrbysco.armorposer.data.GroupData;
 import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
-import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
-import com.mrbysco.armorposer.packets.ArmorStandUpdateGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandRenamePayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandUpdateGroupsPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.loader.api.FabricLoader;
@@ -39,7 +39,8 @@ public class FabricPlatformHelper implements IPlatformHelper {
 			armorStand.load(TagValueInput.create(ProblemReporter.DISCARDING, armorStand.registryAccess(), outputCompound));
 
 			SyncData data = new SyncData(armorStand.getUUID(), outputCompound);
-			ClientPlayNetworking.send(new ArmorStandSyncPayload(data));
+			if (ClientPlayNetworking.canSend(Reference.SYNC_PACKET_ID_V1))
+				ClientPlayNetworking.send(new ArmorStandSyncPayload(data));
 		}
 	}
 
@@ -53,19 +54,22 @@ public class FabricPlatformHelper implements IPlatformHelper {
 	@Override
 	public void updateEntityGroups(ArmorStand armorStand, List<String> groups) {
 		GroupData data = new GroupData(armorStand.getUUID(), groups);
-		ClientPlayNetworking.send(new ArmorStandUpdateGroupsPayload(data));
+		if (ClientPlayNetworking.canSend(Reference.UPDATE_GROUP_PACKET_ID_V1))
+			ClientPlayNetworking.send(new ArmorStandUpdateGroupsPayload(data));
 	}
 
 	@Override
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
 		SwapData data = new SwapData(armorStand.getUUID(), action);
-		ClientPlayNetworking.send(new ArmorStandSwapPayload(data));
+		if (ClientPlayNetworking.canSend(Reference.SWAP_PACKET_ID_V1))
+			ClientPlayNetworking.send(new ArmorStandSwapPayload(data));
 	}
 
 	@Override
 	public void renameArmorStand(ArmorStand armorStand, String newName) {
 		RenameData data = new RenameData(armorStand.getUUID(), newName);
-		ClientPlayNetworking.send(new ArmorStandRenamePayload(data));
+		if (ClientPlayNetworking.canSend(Reference.RENAME_PACKET_ID_V1))
+			ClientPlayNetworking.send(new ArmorStandRenamePayload(data));
 	}
 
 	@Override

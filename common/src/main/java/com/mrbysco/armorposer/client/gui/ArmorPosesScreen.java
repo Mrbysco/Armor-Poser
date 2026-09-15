@@ -18,7 +18,6 @@ import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.network.chat.Component;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.Collections;
 import java.util.List;
@@ -248,7 +247,7 @@ public class ArmorPosesScreen extends Screen {
 
 	@Override
 	public boolean keyPressed(KeyEvent event) {
-		if (event.key() == GLFW.GLFW_KEY_DELETE) {
+		if (event.key() == 261) {
 			if (selected != null && selected.userAdded()) {
 				this.minecraft.setScreenAndShow(this.deletePoseScreen);
 			}

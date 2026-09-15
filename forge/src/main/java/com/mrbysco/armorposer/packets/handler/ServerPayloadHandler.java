@@ -1,9 +1,9 @@
 package com.mrbysco.armorposer.packets.handler;
 
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
-import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
-import com.mrbysco.armorposer.packets.ArmorStandUpdateGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandRenamePayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandUpdateGroupsPayload;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;

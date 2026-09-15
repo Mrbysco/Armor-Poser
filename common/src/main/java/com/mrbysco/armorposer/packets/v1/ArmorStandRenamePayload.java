@@ -1,4 +1,4 @@
-package com.mrbysco.armorposer.packets;
+package com.mrbysco.armorposer.packets.v1;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.data.RenameData;
@@ -12,7 +12,7 @@ public record ArmorStandRenamePayload(RenameData data) implements CustomPacketPa
 			o -> o.data,
 			ArmorStandRenamePayload::new
 	);
-	public static final Type<ArmorStandRenamePayload> ID = new Type<>(Reference.RENAME_PACKET_ID);
+	public static final Type<ArmorStandRenamePayload> ID = new Type<>(Reference.RENAME_PACKET_ID_V1);
 
 	@Override
 	public Type<? extends CustomPacketPayload> type() {

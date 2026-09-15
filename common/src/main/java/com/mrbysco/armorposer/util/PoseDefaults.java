@@ -39,7 +39,7 @@ public class PoseDefaults {
 					armorStand.setNoGravity(true);
 					break;
 				case "invincible", "invulnerable", "locked":
-					armorStand.setInvulnerable(true);
+					armorStand.setPermanentlyInvulnerable(true);
 					// no good way to disable slots
 					try (ProblemReporter.ScopedCollector problemreporter$scopedcollector = new ProblemReporter.ScopedCollector(Reference.LOGGER)) {
 						TagValueOutput output = TagValueOutput.createWithContext(problemreporter$scopedcollector, armorStand.registryAccess());

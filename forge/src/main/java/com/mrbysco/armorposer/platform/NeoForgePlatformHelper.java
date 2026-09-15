@@ -1,14 +1,15 @@
 package com.mrbysco.armorposer.platform;
 
 import com.mrbysco.armorposer.Reference;
+import com.mrbysco.armorposer.client.util.ChannelHelper;
 import com.mrbysco.armorposer.data.GroupData;
 import com.mrbysco.armorposer.data.RenameData;
 import com.mrbysco.armorposer.data.SwapData;
 import com.mrbysco.armorposer.data.SyncData;
-import com.mrbysco.armorposer.packets.ArmorStandRenamePayload;
-import com.mrbysco.armorposer.packets.ArmorStandSwapPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncPayload;
-import com.mrbysco.armorposer.packets.ArmorStandUpdateGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandRenamePayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSwapPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandUpdateGroupsPayload;
 import com.mrbysco.armorposer.platform.services.IPlatformHelper;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.ProblemReporter;
@@ -40,7 +41,8 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 			armorStand.load(TagValueInput.create(ProblemReporter.DISCARDING, armorStand.registryAccess(), outputCompound));
 
 			SyncData data = new SyncData(armorStand.getUUID(), outputCompound);
-			ClientPacketDistributor.sendToServer(new ArmorStandSyncPayload(data));
+			if (ChannelHelper.hasChannel(Reference.SYNC_PACKET_ID_V1))
+				ClientPacketDistributor.sendToServer(new ArmorStandSyncPayload(data));
 		}
 	}
 
@@ -54,17 +56,20 @@ public class NeoForgePlatformHelper implements IPlatformHelper {
 	@Override
 	public void updateEntityGroups(ArmorStand armorStand, List<String> groups) {
 		GroupData data = new GroupData(armorStand.getUUID(), groups);
-		ClientPacketDistributor.sendToServer(new ArmorStandUpdateGroupsPayload(data));
+		if (ChannelHelper.hasChannel(Reference.UPDATE_GROUP_PACKET_ID_V1))
+			ClientPacketDistributor.sendToServer(new ArmorStandUpdateGroupsPayload(data));
 	}
 
 	@Override
 	public void swapSlots(ArmorStand armorStand, SwapData.Action action) {
-		ClientPacketDistributor.sendToServer(new ArmorStandSwapPayload(new SwapData(armorStand.getUUID(), action)));
+		if (ChannelHelper.hasChannel(Reference.SWAP_PACKET_ID_V1))
+			ClientPacketDistributor.sendToServer(new ArmorStandSwapPayload(new SwapData(armorStand.getUUID(), action)));
 	}
 
 	@Override
 	public void renameArmorStand(ArmorStand armorStand, String newName) {
-		ClientPacketDistributor.sendToServer(new ArmorStandRenamePayload(new RenameData(armorStand.getUUID(), newName)));
+		if (ChannelHelper.hasChannel(Reference.RENAME_PACKET_ID_V1))
+			ClientPacketDistributor.sendToServer(new ArmorStandRenamePayload(new RenameData(armorStand.getUUID(), newName)));
 	}
 
 	@Override

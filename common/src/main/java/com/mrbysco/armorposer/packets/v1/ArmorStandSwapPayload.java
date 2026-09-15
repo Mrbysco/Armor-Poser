@@ -1,4 +1,4 @@
-package com.mrbysco.armorposer.packets;
+package com.mrbysco.armorposer.packets.v1;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.data.SwapData;
@@ -12,7 +12,7 @@ public record ArmorStandSwapPayload(SwapData data) implements CustomPacketPayloa
 			o -> o.data,
 			ArmorStandSwapPayload::new
 	);
-	public static final Type<ArmorStandSwapPayload> ID = new Type<>(Reference.SWAP_PACKET_ID);
+	public static final Type<ArmorStandSwapPayload> ID = new Type<>(Reference.SWAP_PACKET_ID_V1);
 
 	@Override
 	public Type<? extends CustomPacketPayload> type() {

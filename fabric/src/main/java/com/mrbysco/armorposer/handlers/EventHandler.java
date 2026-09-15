@@ -2,9 +2,9 @@ package com.mrbysco.armorposer.handlers;
 
 import com.mrbysco.armorposer.Reference;
 import com.mrbysco.armorposer.config.PoserConfig;
-import com.mrbysco.armorposer.packets.ArmorStandLockedPayload;
-import com.mrbysco.armorposer.packets.ArmorStandScreenPayload;
-import com.mrbysco.armorposer.packets.ArmorStandSyncGroupsPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandLockedPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandScreenPayload;
+import com.mrbysco.armorposer.packets.v1.ArmorStandSyncGroupsPayload;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerPlayer;
@@ -24,9 +24,12 @@ public class EventHandler {
 		if (target instanceof ArmorStand armorstand) {
 			if (PoserConfig.COMMON.enableConfigGui.get() && player.isShiftKeyDown()) {
 				if (hand == InteractionHand.MAIN_HAND && !player.level().isClientSide()) {
-					ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandLockedPayload(armorstand.getId(), armorstand.isInvulnerable()));
-					ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandScreenPayload(armorstand.getId(), Reference.getRestrictedFeatures(player)));
-					ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandSyncGroupsPayload(Reference.getNearbyGroups(player)));
+					if (ServerPlayNetworking.canSend((ServerPlayer) player, Reference.LOCKED_PACKET_ID_V1))
+						ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandLockedPayload(armorstand.getId(), armorstand.isInvulnerable()));
+					if (ServerPlayNetworking.canSend((ServerPlayer) player, Reference.SCREEN_PACKET_ID_V1))
+						ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandScreenPayload(armorstand.getId(), Reference.getRestrictedFeatures(player)));
+					if (ServerPlayNetworking.canSend((ServerPlayer) player, Reference.SYNC_GROUP_PACKET_ID_V1))
+						ServerPlayNetworking.send((ServerPlayer) player, new ArmorStandSyncGroupsPayload(Reference.getNearbyGroups(player)));
 				}
 				return InteractionResult.SUCCESS;
 			}
