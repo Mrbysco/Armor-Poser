@@ -26,7 +26,7 @@ import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 public class ArmorPoser {
 
 	public ArmorPoser(IEventBus eventBus, ModContainer container, Dist dist) {
-		container.registerConfig(Type.COMMON, PoserConfig.commonSpec);
+		container.registerConfig(Type.LOCAL, PoserConfig.commonSpec);
 		eventBus.register(PoserConfigHandler.class);
 
 		eventBus.addListener(this::setupPackets);
