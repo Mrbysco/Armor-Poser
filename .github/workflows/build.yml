@@ -13,9 +13,10 @@ jobs:
       - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
+          distribution: 'microsoft'
           java-version: ${{ env.JDK_VERSION }}
-          cache: 'gradle'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - name: Build with Gradle
@@ -36,9 +37,10 @@ jobs:
       - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
+          distribution: 'microsoft'
           java-version: ${{ env.JDK_VERSION }}
-          cache: 'gradle'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - uses: actions/download-artifact@v8
@@ -59,9 +61,10 @@ jobs:
       - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
+          distribution: 'microsoft'
           java-version: ${{ env.JDK_VERSION }}
-          cache: 'gradle'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - uses: actions/download-artifact@v8
@@ -82,9 +85,10 @@ jobs:
       - name: Set up JDK ${{ env.JDK_VERSION }}
         uses: actions/setup-java@v6
         with:
-          distribution: 'temurin'
+          distribution: 'microsoft'
           java-version: ${{ env.JDK_VERSION }}
-          cache: 'gradle'
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v6
       - name: Make gradlew executable
         run: chmod +x ./gradlew
       - uses: actions/download-artifact@v8
