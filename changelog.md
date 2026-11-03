@@ -1,1 +1,1 @@
-* Update NeoForge support (Requires **26.3.0.37-beta** or newer)
+* Fix inability to scroll poses when one is selected
