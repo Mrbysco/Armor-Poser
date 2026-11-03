@@ -7,6 +7,7 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.world.phys.Vec2;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 public class ArmorStandData {
@@ -38,6 +39,7 @@ public class ArmorStandData {
 
 
 	public void readFromNBT(CompoundTag compound) {
+		Arrays.fill(this.pose, 0f);
 		this.invisible = compound.getBooleanOr("Invisible", false);
 		this.noBasePlate = compound.getBooleanOr("NoBasePlate", false);
 		this.noGravity = compound.getBooleanOr("NoGravity", false);
