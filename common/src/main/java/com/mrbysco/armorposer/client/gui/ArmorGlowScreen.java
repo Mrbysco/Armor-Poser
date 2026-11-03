@@ -245,11 +245,15 @@ public class ArmorGlowScreen extends Screen {
 	@Override
 	public void tick() {
 		if (armorListWidget[0].children().contains(selected)) {
-			armorListWidget[0].setSelected(selected);
-			armorListWidget[1].setSelected(null);
+			if (armorListWidget[0].getSelected() != selected) {
+				armorListWidget[0].setSelected(selected);
+				armorListWidget[1].setSelected(null);
+			}
 		} else if (armorListWidget[1].children().contains(selected)) {
-			armorListWidget[0].setSelected(null);
-			armorListWidget[1].setSelected(selected);
+			if (armorListWidget[1].getSelected() != selected) {
+				armorListWidget[1].setSelected(selected);
+				armorListWidget[0].setSelected(null);
+			}
 		}
 
 		if (this.groupMode) {

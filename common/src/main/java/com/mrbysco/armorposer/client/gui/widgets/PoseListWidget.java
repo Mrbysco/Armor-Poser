@@ -47,6 +47,7 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 			parent.buildUserPoseList(this::addEntry, location -> new ListEntry(location, this.parent));
 		else
 			parent.buildPoseList(this::addEntry, location -> new ListEntry(location, this.parent));
+		this.setScrollAmount(this.scrollAmount());
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class PoseListWidget extends ObjectSelectionList<PoseListWidget.ListEntry
 
 	@Override
 	public void setSelected(@Nullable PoseListWidget.ListEntry selected) {
-		this.parent.setSelected(getSelected(), selected, visible);
+		this.parent.setSelected(getSelected(), selected);
 		super.setSelected(selected);
 	}
 

@@ -51,6 +51,7 @@ public class ArmorGlowWidget extends ObjectSelectionList<ArmorGlowWidget.ListEnt
 			parent.buildVisiblePositions(this::addEntry, location -> new ArmorGlowWidget.ListEntry(location, this.parent));
 		else
 			parent.buildInvisiblePositions(this::addEntry, location -> new ArmorGlowWidget.ListEntry(location, this.parent));
+		this.setScrollAmount(this.scrollAmount());
 	}
 
 	@Override

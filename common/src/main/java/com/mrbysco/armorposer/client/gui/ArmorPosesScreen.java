@@ -175,11 +175,15 @@ public class ArmorPosesScreen extends Screen {
 	@Override
 	public void tick() {
 		if (poseListWidget[0].children().contains(selected)) {
-			poseListWidget[0].setSelected(selected);
-			poseListWidget[1].setSelected(null);
+			if (poseListWidget[0].getSelected() != selected) {
+				poseListWidget[0].setSelected(selected);
+				poseListWidget[1].setSelected(null);
+			}
 		} else if (poseListWidget[1].children().contains(selected)) {
-			poseListWidget[0].setSelected(null);
-			poseListWidget[1].setSelected(selected);
+			if (poseListWidget[1].getSelected() != selected) {
+				poseListWidget[1].setSelected(selected);
+				poseListWidget[0].setSelected(null);
+			}
 		}
 
 		if (!search.getValue().equals(lastFilterText)) {
@@ -265,7 +269,7 @@ public class ArmorPosesScreen extends Screen {
 		//Nope
 	}
 
-	public void setSelected(PoseListWidget.ListEntry previousEntry, PoseListWidget.ListEntry entry, boolean visible) {
+	public void setSelected(PoseListWidget.ListEntry previousEntry, PoseListWidget.ListEntry entry) {
 		if (this.selected == previousEntry) {
 			this.selected = entry;
 		} else {
